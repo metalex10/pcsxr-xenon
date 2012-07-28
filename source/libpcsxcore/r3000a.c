@@ -176,14 +176,14 @@ void psxBranchTest() {
 				cdrPlayInterrupt();
 			}
 		}
-		/*
+
 		if (psxRegs.interrupt & (1 << PSXINT_CDRDBUF)) { // cdr decoded buffer
 			if ((psxRegs.cycle - psxRegs.intCycle[PSXINT_CDRDBUF].sCycle) >= psxRegs.intCycle[PSXINT_CDRDBUF].cycle) {
 				psxRegs.interrupt &= ~(1 << PSXINT_CDRDBUF);
 				cdrDecodedBufferInterrupt();
 			}
 		}
-		*/
+
 		if (psxRegs.interrupt & (1 << PSXINT_CDRLID)) { // cdr lid states
 			if ((psxRegs.cycle - psxRegs.intCycle[PSXINT_CDRLID].sCycle) >= psxRegs.intCycle[PSXINT_CDRLID].cycle) {
 				psxRegs.interrupt &= ~(1 << PSXINT_CDRLID);

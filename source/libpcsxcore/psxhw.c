@@ -728,7 +728,7 @@ void psxHwWrite32(u32 add, u32 value) {
 		default:
 			// Dukes of Hazard 2 - car engine noise
 			if (add>=0x1f801c00 && add<0x1f801e00) {
-        SPU_writeRegister(add, value&0xffff);
+				SPU_writeRegister(add, value&0xffff);
 				
 				add += 2;
 				value >>= 16;

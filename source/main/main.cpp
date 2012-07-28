@@ -137,7 +137,9 @@ extern PluginTable plugins[];
 
 //#define cdfile "uda:/pcsxr/iso/medievil2.img.Z"
 
-#define cdfile "sda0:/devkit/pcsxr/tekken3.bin"
+//#define cdfile "sda0:/devkit/pcsxr/ff9.bin"
+
+#define cdfile "uda0:/ff9.bin.z"
 
 
 //#define cdfile "uda:/pcsxr/iso/sfa.bin"
@@ -213,7 +215,7 @@ int main() {
 	xenon_ata_init();
 	xenon_atapi_init();
 
-	// fatInitDefault();
+	fatInitDefault();
 	ntfs_md *mounts;
 	ntfsMountAll (&mounts, NTFS_READ_ONLY);
 	

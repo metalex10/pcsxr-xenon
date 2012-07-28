@@ -800,8 +800,7 @@ inline void psxLWR() {
 #endif
 
     if (!_Rt_) return;
-
-	// new func
+	
 	 _u32(_rRt_) = (_u32(_rRt_) & (u32)(0xffffff00 << (24 - shift))) | (mem >> shift);
 
 }
