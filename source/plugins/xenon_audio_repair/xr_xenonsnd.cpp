@@ -53,7 +53,7 @@ static void inline play_buffer(void) {
  * resamples pStereoSamples 
  * (taken from http://pcsx2.googlecode.com/svn/trunk/plugins/zerospu2/zerospu2.cpp)
  */
-void ResampleLinear(s16* pStereoSamples, s32 oldsamples, s16* pNewSamples, s32 newsamples) {
+static void ResampleLinear(s16* pStereoSamples, s32 oldsamples, s16* pNewSamples, s32 newsamples) {
     s32 newsampL, newsampR;
     s32 i;
     for (i = 0; i < newsamples; ++i) {

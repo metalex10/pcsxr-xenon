@@ -41,12 +41,6 @@ extern "C" {
 			void* pntr;
 		} syms[SYMS_PER_LIB];
 	} PluginTable;
-#define NUM_PLUGINS 8
-	
-	
-
-
-
 
 	long CDRCIMGplay(unsigned char *time);
 	long CDRCIMGgetTN(unsigned char *buffer);
@@ -112,12 +106,10 @@ extern "C" {
 	long NULL_SPUfreeze(unsigned long ulFreezeMode, SPUFreeze_t *);
 
 	/* SPU PEOPS 1.9 */
-	//dma.c
 	unsigned short CALLBACK PEOPS_SPUreadDMA(void);
 	void CALLBACK PEOPS_SPUreadDMAMem(unsigned short * pusPSXMem, int iSize);
 	void CALLBACK PEOPS_SPUwriteDMA(unsigned short val);
 	void CALLBACK PEOPS_SPUwriteDMAMem(unsigned short * pusPSXMem, int iSize);
-	//PEOPSspu.c
 	void CALLBACK PEOPS_SPUasync(unsigned long cycle);
 	void CALLBACK PEOPS_SPUupdate(void);
 	void CALLBACK PEOPS_SPUplayADPCMchannel(xa_decode_t *xap);
@@ -131,13 +123,33 @@ extern "C" {
 	void CALLBACK PEOPS_SPUabout(void);
 	void CALLBACK PEOPS_SPUregisterCallback(void (CALLBACK *callback)(void));
 	void CALLBACK PEOPS_SPUregisterCDDAVolume(void (CALLBACK *CDDAVcallback)(unsigned short, unsigned short));
-
 	void CALLBACK PEOPS_SPUplayCDDAchannel(short *pcm, int nbytes);
-	//registers.c
 	void CALLBACK PEOPS_SPUwriteRegister(unsigned long reg, unsigned short val);
 	unsigned short CALLBACK PEOPS_SPUreadRegister(unsigned long reg);
-	//freeze.c
 	long CALLBACK PEOPS_SPUfreeze(unsigned long ulFreezeMode, SPUFreeze_t * pF);
+	
+	/* XENON REPAIR AUDIO */
+	unsigned short CALLBACK XRAUDIO_SPUreadDMA(void);
+	void CALLBACK XRAUDIO_SPUreadDMAMem(unsigned short * pusPSXMem, int iSize);
+	void CALLBACK XRAUDIO_SPUwriteDMA(unsigned short val);
+	void CALLBACK XRAUDIO_SPUwriteDMAMem(unsigned short * pusPSXMem, int iSize);
+	void CALLBACK XRAUDIO_SPUasync(unsigned long cycle);
+	void CALLBACK XRAUDIO_SPUupdate(void);
+	void CALLBACK XRAUDIO_SPUplayADPCMchannel(xa_decode_t *xap);
+	long CALLBACK XRAUDIO_SPUinit(void);
+	long XRAUDIO_SPUopen(void);
+	void XRAUDIO_SPUsetConfigFile(char * pCfg);
+	long CALLBACK XRAUDIO_SPUclose(void);
+	long CALLBACK XRAUDIO_SPUshutdown(void);
+	long CALLBACK XRAUDIO_SPUtest(void);
+	long CALLBACK XRAUDIO_SPUconfigure(void);
+	void CALLBACK XRAUDIO_SPUabout(void);
+	void CALLBACK XRAUDIO_SPUregisterCallback(void (CALLBACK *callback)(void));
+	void CALLBACK XRAUDIO_SPUregisterCDDAVolume(void (CALLBACK *CDDAVcallback)(unsigned short, unsigned short));
+	void CALLBACK XRAUDIO_SPUplayCDDAchannel(short *pcm, int nbytes);
+	void CALLBACK XRAUDIO_SPUwriteRegister(unsigned long reg, unsigned short val);
+	unsigned short CALLBACK XRAUDIO_SPUreadRegister(unsigned long reg);
+	long CALLBACK XRAUDIO_SPUfreeze(unsigned long ulFreezeMode, SPUFreeze_t * pF);
 
 	/* CDR */
 	long CDR__open(void);
@@ -356,6 +368,53 @@ PEOPS_SPUregisterCallback}, \
 PEOPS_SPUregisterCDDAVolume}, \
 { "SPUasync", \
 PEOPS_SPUasync} \
+} }
+	
+	
+	
+#define SPU_XENON_PLUGIN \
+{ "/SPU",      \
+21,         \
+{ { "SPUinit",  \
+XRAUDIO_SPUinit }, \
+{ "SPUshutdown",	\
+XRAUDIO_SPUshutdown}, \
+{ "SPUopen", \
+XRAUDIO_SPUopen}, \
+{ "SPUclose", \
+XRAUDIO_SPUclose}, \
+{ "SPUconfigure", \
+XRAUDIO_SPUsetConfigFile}, \
+{ "SPUabout", \
+XRAUDIO_SPUabout}, \
+{ "SPUtest", \
+XRAUDIO_SPUtest}, \
+{ "SPUwriteRegister", \
+XRAUDIO_SPUwriteRegister}, \
+{ "SPUreadRegister", \
+XRAUDIO_SPUreadRegister}, \
+{ "SPUwriteDMA", \
+XRAUDIO_SPUwriteDMA}, \
+{ "SPUreadDMA", \
+XRAUDIO_SPUreadDMA}, \
+{ "SPUwriteDMAMem", \
+XRAUDIO_SPUwriteDMAMem}, \
+{ "SPUreadDMAMem", \
+XRAUDIO_SPUreadDMAMem}, \
+{ "SPUplayADPCMchannel", \
+XRAUDIO_SPUplayADPCMchannel}, \
+{ "SPUfreeze", \
+XRAUDIO_SPUfreeze}, \
+{ "SPUregisterCallback", \
+XRAUDIO_SPUregisterCallback}, \
+{ "SPUregisterCDDAVolume", \
+XRAUDIO_SPUregisterCDDAVolume}, \
+{ "SPUasync", \
+XRAUDIO_SPUasync}, \
+{ "SPUupdate", \
+XRAUDIO_SPUupdate}, \
+{ "SPUplayCDDAchannel", \
+XRAUDIO_SPUplayCDDAchannel} \
 } }
 
 #define GPU_PEOPS_PLUGIN \

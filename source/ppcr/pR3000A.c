@@ -2324,16 +2324,199 @@ REC_FUNC(SWL);
 REC_FUNC(SWR);
 
 static void recSB() {
+#if 0
+	if (IsConst(_Rs_)) {
+		u32 addr = iRegs[_Rs_].k + _Imm_;
+		int t = addr >> 16;
+
+		if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+			if (IsConst(_Rt_)) {
+				STB((uptr)&psxM[addr & 0x1fffff],0,GetHWReg32(_Rt_));
+				return;
+			} else {
+				//LWPRtoR(r3, &_rRtU_);
+				//RLWINM(PPCARG2, PPCARG2, 0, 24, 31);
+				//STBRtoM((uptr)&psxM[addr & 0x1fffff], r3);
+			}
+			return;
+		}
+		if (t == 0x1f80 && addr < 0x1f801000) {
+			if (IsConst(_Rt_)) {
+				STB((uptr)&psxH[addr & 0xFFFF],0,GetHWReg32(_Rt_));
+				return;
+			} else {
+				//LWPRtoR(r3, &_rRtU_);
+				//RLWINM(PPCARG2, PPCARG2, 0, 24, 31);
+				//STBRtoM((uptr)&psxH[addr & 0xfff], r3);
+			}
+			
+		}
+	}
+#endif
     preMemWrite(1);
     CALLFunc((u32) psxMemWrite8);
 }
 
 static void recSH() {
+	
+#if 0
+	if (IsConst(_Rs_)) {
+		u32 addr = iRegs[_Rs_].k + _Imm_;
+		int t = addr >> 16;
+
+		if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+			if (IsConst(_Rt_)) {
+				LIW(r3, (u16)iRegs[_Rt_].k);
+			} else {
+				LWPRtoR(r3, &_rRtU_);
+			}
+			STHRtoM((uptr)&psxM[addr & 0x1fffff], r3);
+			return;
+		}
+		if (t == 0x1f80 && addr < 0x1f801000) {
+			if (IsConst(_Rt_)) {
+				LIW(r3, (u16)iRegs[_Rt_].k);
+			} else {
+				LWPRtoR(r3, &_rRtU_);
+			}
+			STHRtoM((uptr)&psxH[addr & 0xfff], r3);
+			return;
+		}
+		if (t == 0x1f80) {
+			/*if (addr >= 0x1f801c00 && addr < 0x1f801e00) {
+				LIW(PPCARG1, addr);
+				if (IsConst(_Rt_)) {
+					LIW(PPCARG2, (u16)iRegs[_Rt_].k);
+				} else {
+					LWPRtoR(PPCARG2, &_rRtU_);
+					RLWINM(PPCARG2, PPCARG2, 0, 16, 31);
+				}
+				CALLFunc((uptr)&SPU_writeRegister);
+				return;
+			}*/
+			switch (addr) {
+				case 0x1f801100: case 0x1f801110: case 0x1f801120:
+					LIW(PPCARG1, (addr >> 4) & 0x3);
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG2, (u16)iRegs[_Rt_].k);
+					} else {
+						LHPRtoR(PPCARG2, &psxRegs.GPR.r[_Rt_].w.l);
+					}
+					CALLFunc((uptr)psxRcntWcount);
+					return;
+
+				case 0x1f801104: case 0x1f801114: case 0x1f801124:
+					LIW(PPCARG1, (addr >> 4) & 0x3);
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG2, (u16)iRegs[_Rt_].k);
+					} else {
+						LHPRtoR(PPCARG2, &psxRegs.GPR.r[_Rt_].w.l);
+					}
+					CALLFunc((uptr)psxRcntWmode);
+					return;
+	
+				case 0x1f801108: case 0x1f801118: case 0x1f801128:
+					LIW(PPCARG1, (addr >> 4) & 0x3);
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG2, (u16)iRegs[_Rt_].k);
+					} else {
+						LHPRtoR(PPCARG2, &psxRegs.GPR.r[_Rt_].w.l);
+					}
+					CALLFunc((uptr)psxRcntWtarget);
+					return;
+			}
+		}
+//		SysPrintf("unhandled w16 %x\n", addr);
+	}
+#endif
     preMemWrite(2);
     CALLFunc((u32) psxMemWrite16);
 }
 
 static void recSW() {
+	// mem[Rs + Im] = Rt
+#if 0
+	if (IsConst(_Rs_)) {
+		u32 addr = iRegs[_Rs_].k + _Imm_;
+		int t = addr >> 16;
+
+		if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+			if (IsConst(_Rt_)) {
+				LIW(r3, (u32)iRegs[_Rt_].k);
+			} else {
+				LWPRtoR(r3, &_rRtU_);
+			}
+			STWRtoM((uptr)&psxM[addr & 0x1fffff], r3);
+			return;
+		}
+		if (t == 0x1f80 && addr < 0x1f801000) {
+			if (IsConst(_Rt_)) {
+				LIW(r3, (u32)iRegs[_Rt_].k);
+			} else {
+				LWPRtoR(r3, &_rRtU_);
+			}
+			STWRtoM((uptr)&psxH[addr & 0xfff], r3);
+			return;
+		}
+		if (t == 0x1f80) {
+			switch (addr) {
+				case 0x1f801080: case 0x1f801084: 
+				case 0x1f801090: case 0x1f801094: 
+				case 0x1f8010a0: case 0x1f8010a4: 
+				case 0x1f8010b0: case 0x1f8010b4: 
+				case 0x1f8010c0: case 0x1f8010c4: 
+				case 0x1f8010d0: case 0x1f8010d4: 
+				case 0x1f8010e0: case 0x1f8010e4: 
+				case 0x1f801074:
+				case 0x1f8010f0:
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG1, iRegs[_Rt_].k);
+					} else {
+						LWPRtoR(PPCARG1, &_rRtU_);
+					}
+					STWRtoM((uptr)&psxH[addr & 0xffff], r3);
+					return;
+
+				case 0x1f801810:
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG1, iRegs[_Rt_].k);
+					} else {
+						LWPRtoR(PPCARG1, &_rRtU_);
+					}
+					CALLFunc((u32)&GPU_writeData);
+					return;
+
+				case 0x1f801814:
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG1, iRegs[_Rt_].k);
+					} else {
+						LWPRtoR(PPCARG1, &_rRtU_);
+					}
+					CALLFunc((u32)&GPU_writeStatus);
+					return;
+					
+				case 0x1f801820:
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG1, iRegs[_Rt_].k);
+					} else {
+						LWPRtoR(PPCARG1, &_rRtU_);
+					}
+					CALLFunc((u32)&mdecWrite0);
+					return;
+
+				case 0x1f801824:
+					if (IsConst(_Rt_)) {
+						LIW(PPCARG1, iRegs[_Rt_].k);
+					} else {
+						LWPRtoR(PPCARG1, &_rRtU_);
+					}
+					CALLFunc((u32)&mdecWrite1);
+					return;
+			}
+		}
+
+	}
+#endif
     preMemWrite(4);
     CALLFunc((u32) psxMemWrite32);
 }

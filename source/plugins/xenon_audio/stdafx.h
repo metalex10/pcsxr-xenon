@@ -42,36 +42,36 @@
 
 
 #ifdef LIBXENON
-#define SPUreadDMA			PEOPS_SPUreadDMA
-#define SPUreadDMAMem			PEOPS_SPUreadDMAMem
-#define SPUwriteDMA			PEOPS_SPUwriteDMA
-#define SPUwriteDMAMem			PEOPS_SPUwriteDMAMem
-#define SPUasync			PEOPS_SPUasync
-#define SPUupdate			PEOPS_SPUupdate
-#define SPUplayADPCMchannel		PEOPS_SPUplayADPCMchannel
-#define SPUinit				PEOPS_SPUinit
-#define SPUopen				PEOPS_SPUopen
-#define SPUsetConfigFile		PEOPS_SPUsetConfigFile
-#define SPUclose			PEOPS_SPUclose
-#define SPUshutdown			PEOPS_SPUshutdown
-#define SPUtest				PEOPS_SPUtest
-#define SPUconfigure			PEOPS_SPUconfigure
-#define SPUabout			PEOPS_SPUabout
-#define SPUregisterCallback		PEOPS_SPUregisterCallback
-#define SPUregisterCDDAVolume           PEOPS_SPUregisterCDDAVolume
-#define SPUwriteRegister		PEOPS_SPUwriteRegister
-#define SPUreadRegister			PEOPS_SPUreadRegister
-#define SPUfreeze			PEOPS_SPUfreeze
-#define SPUplayCDDAchannel              PEOPS_SPUplayCDDAchannel
+#define SPUreadDMA				XAUDIO_SPUreadDMA
+#define SPUreadDMAMem			XAUDIO_SPUreadDMAMem
+#define SPUwriteDMA				XAUDIO_SPUwriteDMA
+#define SPUwriteDMAMem			XAUDIO_SPUwriteDMAMem
+#define SPUasync				XAUDIO_SPUasync
+#define SPUupdate				XAUDIO_SPUupdate
+#define SPUplayADPCMchannel		XAUDIO_SPUplayADPCMchannel
+#define SPUinit					XAUDIO_SPUinit
+#define SPUopen					XAUDIO_SPUopen
+#define SPUsetConfigFile		XAUDIO_SPUsetConfigFile
+#define SPUclose				XAUDIO_SPUclose
+#define SPUshutdown				XAUDIO_SPUshutdown
+#define SPUtest					XAUDIO_SPUtest
+#define SPUconfigure			XAUDIO_SPUconfigure
+#define SPUabout				XAUDIO_SPUabout
+#define SPUregisterCallback		XAUDIO_SPUregisterCallback
+#define SPUregisterCDDAVolume	XAUDIO_SPUregisterCDDAVolume
+#define SPUwriteRegister		XAUDIO_SPUwriteRegister
+#define SPUreadRegister			XAUDIO_SPUreadRegister
+#define SPUfreeze				XAUDIO_SPUfreeze
+#define SPUplayCDDAchannel		XAUDIO_SPUplayCDDAchannel
 
 
-#define ReadConfig			SPUReadConfig
-#define ReadConfigFile			SPUReadConfigFile
-#define iDebugMode			SPUiDebugMode
+#define ReadConfig				XAUDIO_SPUReadConfig
+#define ReadConfigFile			XAUDIO_SPUReadConfigFile
+#define iDebugMode				XAUDIO_SPUiDebugMode
 
-#define PSEgetLibName           SPUPSEgetLibName
-#define PSEgetLibType           SPUPSEgetLibType
-#define PSEgetLibVersion        SPUPSEgetLibVersion
+#define PSEgetLibName			XAUDIO_SPUPSEgetLibName
+#define PSEgetLibType			XAUDIO_SPUPSEgetLibType
+#define PSEgetLibVersion		XAUDIO_SPUPSEgetLibVersion
 #endif
 
 #include "psemuxa.h"

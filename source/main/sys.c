@@ -6,30 +6,24 @@
 #include "misc.h"
 //#include "cheat.h"
 
-//#ifndef PCSXDF
-#if 1
-#define lpctr const char
-#else
-#define lpctr char
-//int cdOpenCase = 0;
-int NetOpened = 0;
-long LoadCdBios = 0;
-#endif
-
 #include "gamecube_plugins.h"
-PluginTable plugins[] = {
-	PAD1_PLUGIN,
-	PAD2_PLUGIN,
-	SPU_PEOPS_PLUGIN,
+
+#define NUM_PLUGINS 8
+
+PluginTable plugins[NUM_PLUGINS] = {
+	EMPTY_PLUGIN,
+	SPU_XENON_PLUGIN,
 	GPU_HW_PEOPS_PLUGIN,
 	GPU_PEOPS_PLUGIN,
 	CDRCIMG_PLUGIN,
-	EMPTY_PLUGIN,
-	EMPTY_PLUGIN
+	DF_PAD1_PLUGIN,
+	DF_PAD2_PLUGIN,
+	SPU_PEOPS_PLUGIN,
 };
 
 int SysInit() {
 	if (EmuInit() == -1) return -1;
+
 	LoadMcds(Config.Mcd1, Config.Mcd2);
 
 	return 0;
@@ -41,10 +35,9 @@ void SysReset() {
 
 void SysClose() {
 	EmuShutdown();
-	ReleasePlugins();
 }
 
-void SysPrintf(lpctr *fmt, ...) {
+void SysPrintf(const char *fmt, ...) {
 	va_list list;
 	char msg[512];
 
@@ -56,7 +49,7 @@ void SysPrintf(lpctr *fmt, ...) {
 
 }
 
-void SysMessage(lpctr *fmt, ...) {
+void SysMessage(const char *fmt, ...) {
 	va_list list;
 	char tmp[512];
 
@@ -69,27 +62,25 @@ void SysMessage(lpctr *fmt, ...) {
 static char *err = N_("Error Loading Symbol");
 static int errval;
 
-void *SysLoadLibrary(lpctr *lib) {
-	printf("SysLoadLibrary : %s\r\n",lib);
+void *SysLoadLibrary(const char *lib) {
 	int i;
 	for (i = 0; i < NUM_PLUGINS; i++)
-		if ((plugins[i].lib != NULL) && (!strcmp(lib, plugins[i].lib)))
-			return (void*) i;
+		if ((plugins[i].lib != NULL) && (!strcmp(lib, plugins[i].lib))) {
+			return (void*)&plugins[i];
+		}
 	return NULL;
 }
 
 void *cdrcimg_get_sym(const char *sym);
 
-void *SysLoadSym(void *lib, lpctr *sym) {
-	printf("SysLoadSym : %s\r\n",sym);
-	PluginTable* plugin = plugins + (int) lib;
+void *SysLoadSym(void *lib, const char *sym) {
+	PluginTable* plugin = (PluginTable*) lib;
 	int i;
-	for (i = 0; i < plugin->numSyms; i++)
+	for (i = 0; i < plugin->numSyms; i++) {
 		if (plugin->syms[i].sym && !strcmp(sym, plugin->syms[i].sym)) {
-			printf("SysLoadSym : %s -> %p\r\n",sym,plugin->syms[i].pntr);
 			return plugin->syms[i].pntr;
 		}
-	printf("SysLoadSym : %s not found\r\n",sym);
+	}
 	return NULL;
 }
 
