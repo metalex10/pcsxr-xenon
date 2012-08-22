@@ -2616,7 +2616,7 @@ void SetupTimer(void) {
     if (!iUseTimer) // linux: use thread
     {
         atexit(RemoveTimer);
-        xenon_run_thread_task(3, thread_stack + (3 * 0x100000), (void*) MAINThread);
+        xenon_run_thread_task(2, thread_stack + (2 * 0x100000), (void*) MAINThread);
     }
 #else
     if (!iUseTimer) // linux: use thread

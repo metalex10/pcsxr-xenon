@@ -52,7 +52,7 @@ namespace xegpu {
 		//         6: Extended + smoothed Sprites
 		peops_cfg.iFilterType = 6;
 
-		peops_cfg.bUseFrameLimit = TRUE; //bUseFrameLimit = TRUE;
+		peops_cfg.bUseFrameLimit = FALSE; //bUseFrameLimit = TRUE;
 		peops_cfg.bUseFrameSkip = FALSE;
 		peops_cfg.iFrameLimit = 2;
 		peops_cfg.fFrameRate = 200.0f;

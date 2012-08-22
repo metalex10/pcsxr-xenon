@@ -59,7 +59,7 @@ static boolean isMode1ISO = FALSE;
 #ifdef _WIN32
 static HANDLE threadid;
 #elif defined(LIBXENON)
-static unsigned int threadid;
+static unsigned int threadid = 3;
 static unsigned char thread_stack[0x10000];
 #else
 static pthread_t threadid;

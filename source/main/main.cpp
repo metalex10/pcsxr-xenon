@@ -139,7 +139,7 @@ extern PluginTable plugins[];
 
 //#define cdfile "uda0:/devkit/pcsxr/ff9.bin"
 
-#define cdfile "uda0:/tekken3.bin"
+#define cdfile "uda0:/Tekken 3 (USA) (Track 1).bin"
 
 
 //#define cdfile "uda:/pcsxr/iso/sfa.bin"
@@ -215,11 +215,11 @@ int main() {
 	xenon_ata_init();
 	xenon_atapi_init();
 
-	//fatInitDefault();
+	fatInitDefault();
 	
 	char mount[10];
 	sprintf(mount, "uda0");
-	fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
+	//fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
 	
 	ntfs_md *mounts;
 	//ntfsMountAll (&mounts, NTFS_READ_ONLY);
