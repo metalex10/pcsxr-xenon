@@ -18,7 +18,7 @@ PluginTable plugins[NUM_PLUGINS] = {
 	CDRCIMG_PLUGIN,
 	DF_PAD1_PLUGIN,
 	DF_PAD2_PLUGIN,
-	SPU_PEOPS_PLUGIN,
+	EMPTY_PLUGIN,
 };
 
 int SysInit() {

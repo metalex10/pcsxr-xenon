@@ -137,7 +137,7 @@ extern PluginTable plugins[];
 
 //#define cdfile "uda:/pcsxr/iso/medievil2.img.Z"
 
-#define cdfile "sda0:/devkit/pcsxr/ff9.bin"
+#define cdfile "sda0:/devkit/pcsxr/Castlevanina - SOTN.bin"
 
 //#define cdfile "uda0:/tekken3.bin"
 
@@ -199,10 +199,12 @@ extern "C" {
 }
 
 
-extern "C" DISC_INTERFACE usb2mass_ops;
+extern "C" DISC_INTERFACE usb2mass_ops_0;
 
 extern "C" void init_miss();
 int main() {
+
+	printf("main\n");
 
 	xenos_init(VIDEO_MODE_HDMI_720P);
 	xenon_make_it_faster(XENON_SPEED_FULL);
@@ -219,7 +221,7 @@ int main() {
 	
 	char mount[10];
 	sprintf(mount, "uda0");
-	fatMount(mount, &usb2mass_ops, 0, 2, 64);
+	fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
 	
 	ntfs_md *mounts;
 	ntfsMountAll (&mounts, NTFS_READ_ONLY);
@@ -277,7 +279,7 @@ int main() {
 	strcpy(Config.Mcd1, "sda0:/devkit/pcsxr/memcards/card1.mcd");
 	strcpy(Config.Mcd2, "sda0:/devkit/pcsxr/memcards/card2.mcd");
 
-	//useSoftGpu();
+	// useSoftGpu();
 	/*
 		strcpy(Config.Mcd1, "sda:/hdd1/xenon/memcards/card1.mcd");
 		strcpy(Config.Mcd2, "sda:/hdd1/xenon/memcards/card2.mcd");
@@ -297,6 +299,7 @@ int main() {
 			// Check for hle ...
 			if (Config.HLE == 1) {
 				printf("Can't continue ... bios not found ...\r\n");
+				//exit(0);
 			}
 
 			CheckCdrom();

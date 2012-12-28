@@ -187,11 +187,11 @@ extern PluginTable plugins[];
 
 void useSoftGpu(){
     PluginTable softGpu = GPU_PEOPS_PLUGIN;
-    plugins[5] = softGpu;
+    plugins[2] = softGpu;
 }
 
 void useHwGpu(){
     PluginTable hwGpu = GPU_HW_PEOPS_PLUGIN;
-    plugins[5] = hwGpu;
+    plugins[2] = hwGpu;
 }
 
