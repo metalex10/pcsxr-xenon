@@ -153,8 +153,7 @@ void printConfigInfo() {
 static void findDevices() {
 	for (int i = 3; i < STD_MAX; i++) {
 		if (devoptab_list[i]->structSize) {
-			//strcpy(device_list[device_list_size],devoptab_list[i]->name);
-			printf("%s:/", devoptab_list[i]->name);
+			printf("Device found: %s:/\n", devoptab_list[i]->name);
 		}
 	}
 }
@@ -219,12 +218,12 @@ int main() {
 
 	//fatInitDefault();
 	
-	char mount[10];
-	sprintf(mount, "uda0");
-	fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
+	//char mount[10];
+	//sprintf(mount, "uda0");
+	//fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
 	
 	ntfs_md *mounts;
-	ntfsMountAll (&mounts, NTFS_READ_ONLY);
+	//ntfsMountAll (&mounts, NTFS_READ_ONLY);
 	
 	
 	XTAFMount();
@@ -273,8 +272,8 @@ int main() {
 
 	Config.PsxAuto = 1; // autodetect system
 	
-	//Config.Cpu = CPU_DYNAREC;
-	Config.Cpu =  CPU_INTERPRETER;
+	Config.Cpu = CPU_DYNAREC;
+	//Config.Cpu =  CPU_INTERPRETER;
 
 	strcpy(Config.Mcd1, "sda0:/devkit/pcsxr/memcards/card1.mcd");
 	strcpy(Config.Mcd2, "sda0:/devkit/pcsxr/memcards/card2.mcd");
