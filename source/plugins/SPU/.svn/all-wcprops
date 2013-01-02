@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/85/trunk/Gamecube/SPU
+END
+resource.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/74/trunk/Gamecube/SPU/resource.h
+END
+spucfg.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/81/trunk/Gamecube/SPU/spucfg.h
+END
+adsr.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/74/trunk/Gamecube/SPU/adsr.h
+END
+stdafx.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/85/trunk/Gamecube/SPU/stdafx.h
+END
+gauss_i.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/74/trunk/Gamecube/SPU/gauss_i.h
+END
+cube_audio.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/85/trunk/Gamecube/SPU/cube_audio.cpp
+END
+dma.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/81/trunk/Gamecube/SPU/dma.c
+END
+readme_1_9.txt
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/74/trunk/Gamecube/SPU/readme_1_9.txt
+END
+cube_audio.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/81/trunk/Gamecube/SPU/cube_audio.h
+END
+regs.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/74/trunk/Gamecube/SPU/regs.h
+END
+externals.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/85/trunk/Gamecube/SPU/externals.c
+END
+dma.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/74/trunk/Gamecube/SPU/dma.h
+END
+registers.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/81/trunk/Gamecube/SPU/registers.c
+END
+xa.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/81/trunk/Gamecube/SPU/xa.c
+END
+Filemap.txt
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/74/trunk/Gamecube/SPU/Filemap.txt
+END
+externals.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/81/trunk/Gamecube/SPU/externals.h
+END
+registers.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/74/trunk/Gamecube/SPU/registers.h
+END
+spu.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/74/trunk/Gamecube/SPU/spu.h
+END
+xa.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/81/trunk/Gamecube/SPU/xa.h
+END
+PEOPSspu.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/85/trunk/Gamecube/SPU/PEOPSspu.c
+END
+License.txt
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/74/trunk/Gamecube/SPU/License.txt
+END
+freeze.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/81/trunk/Gamecube/SPU/freeze.c
+END
+reverb.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/83/trunk/Gamecube/SPU/reverb.c
+END
+spucfg.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/81/trunk/Gamecube/SPU/spucfg.c
+END
+psemuxa.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/74/trunk/Gamecube/SPU/psemuxa.h
+END
+psemu.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/81/trunk/Gamecube/SPU/psemu.c
+END
+adsr.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/82/trunk/Gamecube/SPU/adsr.c
+END
+version_1_9.txt
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/74/trunk/Gamecube/SPU/version_1_9.txt
+END
+reverb.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/81/trunk/Gamecube/SPU/reverb.h
+END
