@@ -1,59 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="80">
+<configurationDescriptor version="84">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df name="pcsxr-xenon" root=".">
-      <df name="build">
-      </df>
-      <df name="ex">
-        <in>cdriso.c</in>
-        <in>cdriso.h</in>
-        <in>cdrom.c</in>
-        <in>cdrom.h</in>
-        <in>cheat.c</in>
-        <in>cheat.h</in>
-        <in>coff.h</in>
-        <in>debug.h</in>
-        <in>decode_xa.c</in>
-        <in>decode_xa.h</in>
-        <in>disr3000a.c</in>
-        <in>gpu.h</in>
-        <in>gte.c</in>
-        <in>gte.h</in>
-        <in>gte_divider.h</in>
-        <in>mdec.c</in>
-        <in>mdec.h</in>
-        <in>misc.c</in>
-        <in>misc.h</in>
-        <in>plugins.c</in>
-        <in>plugins.h</in>
-        <in>ppf.c</in>
-        <in>ppf.h</in>
-        <in>psemu_plugin_defs.h</in>
-        <in>psxbios.c</in>
-        <in>psxbios.h</in>
-        <in>psxcommon.c</in>
-        <in>psxcommon.h</in>
-        <in>psxcounters.c</in>
-        <in>psxcounters.h</in>
-        <in>psxdma.c</in>
-        <in>psxdma.h</in>
-        <in>psxhle.c</in>
-        <in>psxhle.h</in>
-        <in>psxhw.c</in>
-        <in>psxhw.h</in>
-        <in>psxinterpreter.c</in>
-        <in>psxmem.c</in>
-        <in>psxmem.h</in>
-        <in>r3000a.c</in>
-        <in>r3000a.h</in>
-        <in>sio.c</in>
-        <in>sio.h</in>
-        <in>sjisfont.h</in>
-        <in>socket.h</in>
-        <in>spu.c</in>
-        <in>spu.h</in>
-        <in>system.h</in>
-      </df>
       <df name="include">
         <df name="sys">
           <in>mman.h</in>
@@ -62,1114 +10,6 @@
         <in>draw_c_p_psu.h</in>
         <in>draw_t_p_psu.h</in>
         <in>draw_v_vsu.h</in>
-      </df>
-      <df name="pcsx-r">
-        <df name="pcsxr">
-          <df name="autom4te.cache">
-          </df>
-          <df name="data">
-          </df>
-          <df name="debian-upstream">
-          </df>
-          <df name="doc">
-          </df>
-          <df name="gui">
-            <in>AboutDlg.c</in>
-            <in>AboutDlg.h</in>
-            <in>Cheat.c</in>
-            <in>Cheat.h</in>
-            <in>ConfDlg.c</in>
-            <in>ConfDlg.h</in>
-            <in>Config.c</in>
-            <in>DebugMemory.c</in>
-            <in>DebugMemory.h</in>
-            <in>Gtk2Gui.c</in>
-            <in>Linux.h</in>
-            <in>LnxMain.c</in>
-            <in>MemcardDlg.c</in>
-            <in>MemcardDlg.h</in>
-            <in>Plugin.c</in>
-            <in>gdk-compat.h</in>
-            <in>nopic.h</in>
-          </df>
-          <df name="include">
-          </df>
-          <df name="libpcsxcore">
-            <df name="ix86">
-              <in>iGte.h</in>
-              <in>iR3000A.c</in>
-              <in>ix86.c</in>
-              <in>ix86.h</in>
-            </df>
-            <df name="ix86_64">
-              <in>iGte.h</in>
-              <in>iR3000A-64.c</in>
-              <in>ix86-64.c</in>
-              <in>ix86-64.h</in>
-              <in>ix86_3dnow.c</in>
-              <in>ix86_cpudetect.c</in>
-              <in>ix86_fpu.c</in>
-              <in>ix86_mmx.c</in>
-              <in>ix86_sse.c</in>
-            </df>
-            <df name="ppc">
-              <in>pGte.h</in>
-              <in>pR3000A.c</in>
-              <in>pasm.s</in>
-              <in>ppc.c</in>
-              <in>ppc.h</in>
-              <in>ppc_mnemonics.h</in>
-              <in>reguse.c</in>
-              <in>reguse.h</in>
-            </df>
-            <in>cdriso.c</in>
-            <in>cdriso.h</in>
-            <in>cdrom.c</in>
-            <in>cdrom.h</in>
-            <in>cheat.c</in>
-            <in>cheat.h</in>
-            <in>coff.h</in>
-            <in>debug.c</in>
-            <in>debug.h</in>
-            <in>decode_xa.c</in>
-            <in>decode_xa.h</in>
-            <in>disr3000a.c</in>
-            <in>gpu.c</in>
-            <in>gpu.h</in>
-            <in>gte.c</in>
-            <in>gte.h</in>
-            <in>gte_divider.h</in>
-            <in>mdec.c</in>
-            <in>mdec.h</in>
-            <in>misc.c</in>
-            <in>misc.h</in>
-            <in>plugins.c</in>
-            <in>plugins.h</in>
-            <in>ppf.c</in>
-            <in>ppf.h</in>
-            <in>psemu_plugin_defs.h</in>
-            <in>psxbios.c</in>
-            <in>psxbios.h</in>
-            <in>psxcommon.c</in>
-            <in>psxcommon.h</in>
-            <in>psxcounters.c</in>
-            <in>psxcounters.h</in>
-            <in>psxdma.c</in>
-            <in>psxdma.h</in>
-            <in>psxhle.c</in>
-            <in>psxhle.h</in>
-            <in>psxhw.c</in>
-            <in>psxhw.h</in>
-            <in>psxinterpreter.c</in>
-            <in>psxmem.c</in>
-            <in>psxmem.h</in>
-            <in>r3000a.c</in>
-            <in>r3000a.h</in>
-            <in>sio.c</in>
-            <in>sio.h</in>
-            <in>sjisfont.h</in>
-            <in>socket.c</in>
-            <in>socket.h</in>
-            <in>spu.c</in>
-            <in>spu.h</in>
-            <in>system.h</in>
-          </df>
-          <df name="macosx">
-            <df name="English.lproj">
-            </df>
-            <df name="icons">
-            </df>
-            <df name="Pcsxr.xcodeproj">
-              <df name="xcuserdata">
-              </df>
-            </df>
-            <df name="Pcsxr.xcworkspace">
-              <df name="xcuserdata">
-              </df>
-            </df>
-            <df name="plugins">
-              <df name="Common">
-                <df name="SDL">
-                  <df name="include">
-                    <in>SDL.h</in>
-                    <in>SDL_audio.h</in>
-                    <in>SDL_config.h</in>
-                    <in>SDL_endian.h</in>
-                    <in>SDL_error.h</in>
-                    <in>SDL_haptic.h</in>
-                    <in>SDL_joystick.h</in>
-                    <in>SDL_main.h</in>
-                    <in>SDL_mutex.h</in>
-                    <in>SDL_platform.h</in>
-                    <in>SDL_rwops.h</in>
-                    <in>SDL_stdinc.h</in>
-                    <in>SDL_thread.h</in>
-                    <in>SDL_version.h</in>
-                    <in>begin_code.h</in>
-                    <in>close_code.h</in>
-                  </df>
-                  <df name="src">
-                    <df name="audio">
-                      <df name="macosx">
-                        <in>SDL_coreaudio.c</in>
-                        <in>SDL_coreaudio.h</in>
-                      </df>
-                      <in>SDL_audio.c</in>
-                      <in>SDL_audio_c.h</in>
-                      <in>SDL_audiocvt.c</in>
-                      <in>SDL_audiomem.h</in>
-                      <in>SDL_audiotypecvt.c</in>
-                      <in>SDL_mixer.c</in>
-                      <in>SDL_sysaudio.h</in>
-                      <in>SDL_wave.c</in>
-                      <in>SDL_wave.h</in>
-                    </df>
-                    <df name="file">
-                      <df name="cocoa">
-                        <in>SDL_rwopsbundlesupport.h</in>
-                        <in>SDL_rwopsbundlesupport.m</in>
-                      </df>
-                      <in>SDL_rwops.c</in>
-                    </df>
-                    <df name="haptic">
-                      <df name="darwin">
-                        <in>SDL_syshaptic.c</in>
-                      </df>
-                      <in>SDL_haptic.c</in>
-                      <in>SDL_haptic_c.h</in>
-                      <in>SDL_syshaptic.h</in>
-                    </df>
-                    <df name="joystick">
-                      <df name="darwin">
-                        <in>SDL_sysjoystick.c</in>
-                        <in>SDL_sysjoystick_c.h</in>
-                      </df>
-                      <in>SDL_joystick.c</in>
-                      <in>SDL_joystick_c.h</in>
-                      <in>SDL_sysjoystick.h</in>
-                    </df>
-                    <df name="thread">
-                      <df name="pthread">
-                        <in>SDL_syscond.c</in>
-                        <in>SDL_sysmutex.c</in>
-                        <in>SDL_sysmutex_c.h</in>
-                        <in>SDL_syssem.c</in>
-                        <in>SDL_systhread.c</in>
-                        <in>SDL_systhread_c.h</in>
-                      </df>
-                      <in>SDL_systhread.h</in>
-                      <in>SDL_thread.c</in>
-                      <in>SDL_thread_c.h</in>
-                    </df>
-                    <in>SDL.c</in>
-                    <in>SDL_error.c</in>
-                    <in>SDL_error_c.h</in>
-                  </df>
-                </df>
-              </df>
-              <df name="DFCdrom">
-                <df name="DFCdrom.xcodeproj">
-                </df>
-                <df name="English.lproj">
-                </df>
-                <df name="macsrc">
-                  <in>PluginConfigController.h</in>
-                  <in>PluginConfigController.m</in>
-                  <in>cdr-macosx.c</in>
-                  <in>cfg.c</in>
-                </df>
-              </df>
-              <df name="DFInput">
-                <df name="DFInput.xcodeproj">
-                </df>
-                <df name="English.lproj">
-                </df>
-                <df name="macsrc">
-                  <in>ControllerList.h</in>
-                  <in>ControllerList.m</in>
-                  <in>MappingCell.h</in>
-                  <in>MappingCell.m</in>
-                  <in>PadController.h</in>
-                  <in>PadController.m</in>
-                  <in>PadView.h</in>
-                  <in>PadView.m</in>
-                  <in>cfg.c</in>
-                  <in>cfg.h</in>
-                  <in>xkb.c</in>
-                </df>
-              </df>
-              <df name="DFNet">
-                <df name="DFNet.xcodeproj">
-                </df>
-                <df name="English.lproj">
-                </df>
-                <df name="macsrc">
-                  <in>PluginConfigController.h</in>
-                  <in>PluginConfigController.m</in>
-                  <in>SockDialog.h</in>
-                  <in>SockDialog.m</in>
-                  <in>cfg.c</in>
-                </df>
-              </df>
-              <df name="DFSound">
-                <df name="macsrc">
-                  <in>NamedSlider.h</in>
-                  <in>NamedSlider.m</in>
-                  <in>PluginController.h</in>
-                  <in>PluginController.m</in>
-                  <in>maccfg.h</in>
-                </df>
-                <df name="PeopsSPU.xcodeproj">
-                </df>
-                <df name="Resorces">
-                  <df name="OpenAL">
-                    <df name="English.lproj">
-                    </df>
-                  </df>
-                  <df name="SDL">
-                    <df name="English.lproj">
-                    </df>
-                  </df>
-                </df>
-              </df>
-              <df name="DFXVideo">
-                <df name="English.lproj">
-                </df>
-                <df name="macsrc">
-                  <in>ExtendedKeys.h</in>
-                  <in>PluginConfigController.h</in>
-                  <in>PluginConfigController.m</in>
-                  <in>PluginGLView.h</in>
-                  <in>PluginGLView.m</in>
-                  <in>PluginWindow.h</in>
-                  <in>PluginWindow.m</in>
-                  <in>PluginWindowController.h</in>
-                  <in>PluginWindowController.m</in>
-                  <in>drawgl.m</in>
-                </df>
-                <df name="PeopsSoftGPU.xcodeproj">
-                </df>
-              </df>
-              <df name="PeopsXgl">
-                <df name="English.lproj">
-                </df>
-                <df name="macsrc">
-                  <in>ExtendedKeys.h</in>
-                  <in>NetSfPeopsOpenGLPluginConfigController.h</in>
-                  <in>NetSfPeopsOpenGLPluginConfigController.m</in>
-                  <in>PluginGLView.h</in>
-                  <in>PluginGLView.m</in>
-                  <in>PluginWindow.h</in>
-                  <in>PluginWindow.m</in>
-                  <in>PluginWindowController.h</in>
-                  <in>PluginWindowController.m</in>
-                  <in>drawgl.h</in>
-                  <in>drawgl.m</in>
-                </df>
-                <df name="PeopsXGL.xcodeproj">
-                </df>
-              </df>
-            </df>
-            <df name="Resources">
-            </df>
-            <in>ConfigurationController.h</in>
-            <in>ConfigurationController.m</in>
-            <in>EmuThread.h</in>
-            <in>EmuThread.m</in>
-            <in>ExtendedKeys.h</in>
-            <in>PcsxrController.h</in>
-            <in>PcsxrController.m</in>
-            <in>PcsxrDiscHandler.h</in>
-            <in>PcsxrDiscHandler.m</in>
-            <in>PcsxrFileHandle.h</in>
-            <in>PcsxrFreezeStateHandler.h</in>
-            <in>PcsxrFreezeStateHandler.m</in>
-            <in>PcsxrMemCardController.h</in>
-            <in>PcsxrMemCardController.m</in>
-            <in>PcsxrMemCardHandler.h</in>
-            <in>PcsxrMemCardHandler.m</in>
-            <in>PcsxrMemoryObject.h</in>
-            <in>PcsxrMemoryObject.m</in>
-            <in>PcsxrPlugin.h</in>
-            <in>PcsxrPlugin.m</in>
-            <in>PcsxrPluginHandler.h</in>
-            <in>PcsxrPluginHandler.m</in>
-            <in>Plugin.c</in>
-            <in>PluginController.h</in>
-            <in>PluginController.m</in>
-            <in>PluginList.h</in>
-            <in>PluginList.m</in>
-            <in>config.h</in>
-            <in>main.m</in>
-          </df>
-          <df name="pixmaps">
-          </df>
-          <df name="plugins">
-            <df name="bladesio1">
-              <in>gui.c</in>
-              <in>settings.c</in>
-              <in>settings.h</in>
-              <in>sio1.c</in>
-              <in>sio1.h</in>
-            </df>
-            <df name="dfcdrom">
-              <df name="cdrcfg-0.1df">
-                <in>main.c</in>
-              </df>
-              <in>cdr-libcdio.c</in>
-              <in>cdr-linux.c</in>
-              <in>cdr-null.c</in>
-              <in>cdr.c</in>
-              <in>cdr.h</in>
-              <in>cfg.c</in>
-              <in>util.c</in>
-            </df>
-            <df name="dfinput">
-              <in>analog.c</in>
-              <in>cfg-gtk2.c</in>
-              <in>cfg.c</in>
-              <in>pad.c</in>
-              <in>pad.h</in>
-              <in>sdljoy.c</in>
-              <in>util.c</in>
-              <in>util.h</in>
-              <in>xkb.c</in>
-            </df>
-            <df name="dfnet">
-              <in>cfg.c</in>
-              <in>dfnet.c</in>
-              <in>dfnet.h</in>
-              <in>gui.c</in>
-              <in>unix.c</in>
-            </df>
-            <df name="dfsound">
-              <df name="spucfg-0.1df">
-                <in>main.c</in>
-              </df>
-              <in>adsr.c</in>
-              <in>adsr.h</in>
-              <in>alsa.c</in>
-              <in>cfg.c</in>
-              <in>cfg.h</in>
-              <in>dma.c</in>
-              <in>dma.h</in>
-              <in>dsoundoss.h</in>
-              <in>externals.c</in>
-              <in>externals.h</in>
-              <in>freeze.c</in>
-              <in>gauss_i.h</in>
-              <in>nullsnd.c</in>
-              <in>openal.c</in>
-              <in>oss.c</in>
-              <in>psemuxa.h</in>
-              <in>pulseaudio.c</in>
-              <in>registers.c</in>
-              <in>registers.h</in>
-              <in>regs.h</in>
-              <in>reverb.c</in>
-              <in>reverb.h</in>
-              <in>sdl.c</in>
-              <in>spu.c</in>
-              <in>spu.h</in>
-              <in>stdafx.h</in>
-              <in>xa.c</in>
-              <in>xa.h</in>
-            </df>
-            <df name="dfxvideo">
-              <df name="gpucfg-0.1df">
-                <in>main.c</in>
-              </df>
-              <in>cfg.c</in>
-              <in>cfg.h</in>
-              <in>draw.c</in>
-              <in>draw.h</in>
-              <in>externals.h</in>
-              <in>fps.c</in>
-              <in>fps.h</in>
-              <in>gpu.c</in>
-              <in>gpu.h</in>
-              <in>hq2x.h</in>
-              <in>hq3x.h</in>
-              <in>i386.asm</in>
-              <in>interp.h</in>
-              <in>key.c</in>
-              <in>key.h</in>
-              <in>menu.c</in>
-              <in>menu.h</in>
-              <in>prim.c</in>
-              <in>prim.h</in>
-              <in>soft.c</in>
-              <in>soft.h</in>
-              <in>swap.h</in>
-              <in>zn.c</in>
-            </df>
-            <df name="peopsxgl">
-              <df name="gpucfg">
-                <in>main.c</in>
-              </df>
-              <in>cfg.c</in>
-              <in>cfg.h</in>
-              <in>draw.c</in>
-              <in>draw.h</in>
-              <in>externals.h</in>
-              <in>fps.c</in>
-              <in>fps.h</in>
-              <in>gl_ext.h</in>
-              <in>gpu.c</in>
-              <in>gpu.h</in>
-              <in>gte_accuracy.c</in>
-              <in>gte_accuracy.h</in>
-              <in>key.c</in>
-              <in>key.h</in>
-              <in>menu.c</in>
-              <in>menu.h</in>
-              <in>prim.c</in>
-              <in>prim.h</in>
-              <in>soft.c</in>
-              <in>soft.h</in>
-              <in>stdafx.h</in>
-              <in>texture.c</in>
-              <in>texture.h</in>
-            </df>
-          </df>
-          <df name="po">
-          </df>
-          <df name="win32">
-            <df name="glue">
-              <df name="sys">
-                <in>mman.h</in>
-              </df>
-              <in>stdint.h</in>
-            </df>
-            <df name="gui">
-              <in>AboutDlg.c</in>
-              <in>AboutDlg.h</in>
-              <in>CheatDlg.c</in>
-              <in>ConfigurePlugins.c</in>
-              <in>NoPic.h</in>
-              <in>Win32.h</in>
-              <in>WndMain.c</in>
-              <in>plugin.c</in>
-              <in>plugin.h</in>
-            </df>
-            <df name="intl">
-              <in>bindtextdom.c</in>
-              <in>dcgettext.c</in>
-              <in>dgettext.c</in>
-              <in>explodename.c</in>
-              <in>finddomain.c</in>
-              <in>gettext.c</in>
-              <in>gettext.h</in>
-              <in>gettextP.h</in>
-              <in>hash-string.h</in>
-              <in>intl-compat.c</in>
-              <in>intlconfig.h</in>
-              <in>l10nflist.c</in>
-              <in>libgettext.h</in>
-              <in>libintl.h</in>
-              <in>loadinfo.h</in>
-              <in>loadmsgcat.c</in>
-              <in>localealias.c</in>
-              <in>textdomain.c</in>
-            </df>
-            <df name="plugins">
-              <df name="dfsound">
-                <df name="res">
-                </df>
-                <df name="winsrc">
-                  <in>cfg.c</in>
-                  <in>debug.c</in>
-                  <in>debug.h</in>
-                  <in>dsound.c</in>
-                  <in>dsound.h</in>
-                  <in>psemu.c</in>
-                  <in>record.c</in>
-                  <in>record.h</in>
-                  <in>winmain.c</in>
-                </df>
-                <in>DFSound.def</in>
-                <in>resource.h</in>
-              </df>
-              <df name="dfxvideo">
-                <df name="res">
-                </df>
-                <df name="winsrc">
-                  <in>cfg.c</in>
-                  <in>d3d.h</in>
-                  <in>d3dcaps.h</in>
-                  <in>d3dtypes.h</in>
-                  <in>ddraw.h</in>
-                  <in>draw.c</in>
-                  <in>dxguid.c</in>
-                  <in>fps.c</in>
-                  <in>key.c</in>
-                  <in>record.c</in>
-                  <in>record.h</in>
-                  <in>winmain.c</in>
-                </df>
-                <in>DFXVideo.def</in>
-                <in>resource.h</in>
-              </df>
-              <df name="PadSSSPSX">
-                <in>PadSSSPSX.cpp</in>
-                <in>PadSSSPSX.def</in>
-                <in>PadSSSPSX.h</in>
-                <in>PadSSSPSXres.h</in>
-              </df>
-              <df name="peopsxgl">
-                <df name="res">
-                </df>
-                <df name="winsrc">
-                  <in>cfg.c</in>
-                  <in>fps.c</in>
-                  <in>key.c</in>
-                  <in>ssave.c</in>
-                  <in>ssave.h</in>
-                  <in>winmain.c</in>
-                </df>
-                <in>gpuPeopsOpenGL.def</in>
-                <in>resource.h</in>
-              </df>
-            </df>
-            <df name="zlib">
-              <in>adler32.c</in>
-              <in>compress.c</in>
-              <in>crc32.c</in>
-              <in>deflate.c</in>
-              <in>deflate.h</in>
-              <in>gzio.c</in>
-              <in>infblock.c</in>
-              <in>infblock.h</in>
-              <in>infcodes.c</in>
-              <in>infcodes.h</in>
-              <in>inffast.c</in>
-              <in>inffast.h</in>
-              <in>inffixed.h</in>
-              <in>inflate.c</in>
-              <in>inftrees.c</in>
-              <in>inftrees.h</in>
-              <in>infutil.c</in>
-              <in>infutil.h</in>
-              <in>trees.c</in>
-              <in>trees.h</in>
-              <in>uncompr.c</in>
-              <in>zconf.h</in>
-              <in>zlib.h</in>
-              <in>zutil.c</in>
-              <in>zutil.h</in>
-            </df>
-            <in>config.h</in>
-            <in>resource.h</in>
-          </df>
-        </df>
-      </df>
-      <df name="revo">
-        <df name="data">
-        </df>
-        <df name="debian">
-        </df>
-        <df name="doc">
-        </df>
-        <df name="Gamecube">
-          <df name="GPU">
-            <in>cfg.c</in>
-            <in>cfg.h</in>
-            <in>draw.h</in>
-            <in>drawGX.c</in>
-            <in>externals.h</in>
-            <in>fps.c</in>
-            <in>fps.h</in>
-            <in>gpu.c</in>
-            <in>gpu.h</in>
-            <in>hq2x.h</in>
-            <in>hq3x.h</in>
-            <in>interp.h</in>
-            <in>key.c</in>
-            <in>key.h</in>
-            <in>menu.c</in>
-            <in>menu.h</in>
-            <in>ppc32.S</in>
-            <in>prim.c</in>
-            <in>prim.h</in>
-            <in>soft.c</in>
-            <in>soft.h</in>
-            <in>swap.h</in>
-          </df>
-          <df name="PAD">
-            <in>PlugPAD.c</in>
-            <in>pad.cpp</in>
-            <in>pad.h</in>
-          </df>
-          <df name="SPU">
-            <in>PEOPSspu.c</in>
-            <in>adsr.c</in>
-            <in>adsr.h</in>
-            <in>cube_audio.cpp</in>
-            <in>cube_audio.h</in>
-            <in>dma.c</in>
-            <in>dma.h</in>
-            <in>externals.c</in>
-            <in>externals.h</in>
-            <in>freeze.c</in>
-            <in>gauss_i.h</in>
-            <in>psemu.c</in>
-            <in>psemuxa.h</in>
-            <in>registers.c</in>
-            <in>registers.h</in>
-            <in>regs.h</in>
-            <in>resource.h</in>
-            <in>reverb.c</in>
-            <in>reverb.h</in>
-            <in>spu.h</in>
-            <in>spucfg.c</in>
-            <in>spucfg.h</in>
-            <in>stdafx.h</in>
-            <in>xa.c</in>
-            <in>xa.h</in>
-          </df>
-          <df name="storage">
-            <in>mount.h</in>
-            <in>wiidvd.cpp</in>
-            <in>wiidvd.h</in>
-            <in>wiifat.cpp</in>
-            <in>wiifat.h</in>
-            <in>wiismb.cpp</in>
-            <in>wiismb.h</in>
-          </df>
-          <df name="ui">
-            <in>configmenu.cpp</in>
-            <in>filebrowser.cpp</in>
-            <in>textmenu.cpp</in>
-            <in>textmenu.h</in>
-          </df>
-          <in>Config.cpp</in>
-          <in>Config.h</in>
-          <in>DEBUG.h</in>
-          <in>GamecubeMain.c</in>
-          <in>GamecubePlugins.h</in>
-          <in>Plugin.cpp</in>
-          <in>Plugin.h</in>
-          <in>TEXT.cpp</in>
-          <in>TEXT.h</in>
-          <in>debug.cpp</in>
-          <in>font.c</in>
-          <in>font.h</in>
-          <in>gcMisc.cpp</in>
-          <in>gcMisc.h</in>
-          <in>mem2.c</in>
-          <in>mem2.h</in>
-          <in>save_state.cpp</in>
-          <in>save_state.h</in>
-          <in>system.cpp</in>
-        </df>
-        <df name="gui">
-          <in>Cheat.c</in>
-          <in>Cheat.h</in>
-          <in>ConfDlg.c</in>
-          <in>ConfDlg.h</in>
-          <in>Config.c</in>
-          <in>Gtk2Gui.c</in>
-          <in>Linux.h</in>
-          <in>LnxMain.c</in>
-          <in>MemcardDlg.c</in>
-          <in>MemcardDlg.h</in>
-          <in>Plugin.c</in>
-          <in>nopic.h</in>
-        </df>
-        <df name="include">
-          <in>config.h</in>
-        </df>
-        <df name="libpcsxcore">
-          <df name="R3000A">
-            <df name="ix86">
-              <in>iGte.h</in>
-              <in>iR3000A.c</in>
-              <in>ix86.c</in>
-              <in>ix86.h</in>
-            </df>
-            <df name="ix86_64">
-              <in>iGte.h</in>
-              <in>iR3000A-64.cpp</in>
-              <in>ix86-64.cpp</in>
-              <in>ix86-64.h</in>
-              <in>ix86_3dnow.cpp</in>
-              <in>ix86_cpudetect.cpp</in>
-              <in>ix86_fpu.cpp</in>
-              <in>ix86_mmx.cpp</in>
-              <in>ix86_sse.cpp</in>
-            </df>
-            <df name="ppc">
-              <in>pGte.h</in>
-              <in>pR3000A.cpp</in>
-              <in>pasm.s</in>
-              <in>ppc.cpp</in>
-              <in>ppc.h</in>
-              <in>ppc_mnemonics.h</in>
-              <in>recOpcodeTable.h</in>
-              <in>regAlloc.cpp</in>
-              <in>regAlloc.h</in>
-            </df>
-            <in>R3000AOpcodeTable.h</in>
-            <in>disr3000a.cpp</in>
-            <in>gte.cpp</in>
-            <in>gte.h</in>
-            <in>gte_divider.h</in>
-            <in>psxinterpreter.cpp</in>
-            <in>r3000a.cpp</in>
-            <in>r3000a.h</in>
-          </df>
-          <in>cdriso.cpp</in>
-          <in>cdriso.h</in>
-          <in>cdrom.cpp</in>
-          <in>cdrom.h</in>
-          <in>cheat.cpp</in>
-          <in>cheat.h</in>
-          <in>coff.h</in>
-          <in>debug.cpp</in>
-          <in>debug.h</in>
-          <in>decode_xa.cpp</in>
-          <in>decode_xa.h</in>
-          <in>mdec.cpp</in>
-          <in>mdec.h</in>
-          <in>misc.cpp</in>
-          <in>misc.h</in>
-          <in>plugins.cpp</in>
-          <in>plugins.h</in>
-          <in>psemu_plugin_defs.h</in>
-          <in>psxbios.cpp</in>
-          <in>psxbios.h</in>
-          <in>psxcommon.h</in>
-          <in>psxcounters.cpp</in>
-          <in>psxcounters.h</in>
-          <in>psxdma.cpp</in>
-          <in>psxdma.h</in>
-          <in>psxevents.cpp</in>
-          <in>psxevents.h</in>
-          <in>psxhle.cpp</in>
-          <in>psxhle.h</in>
-          <in>psxhw.cpp</in>
-          <in>psxhw.h</in>
-          <in>psxmem.cpp</in>
-          <in>psxmem.h</in>
-          <in>sio.cpp</in>
-          <in>sio.h</in>
-          <in>socket.cpp</in>
-          <in>socket.h</in>
-          <in>spu.cpp</in>
-          <in>spu.h</in>
-          <in>system.h</in>
-        </df>
-        <df name="macosx">
-          <df name="English.lproj">
-            <df name="AddPluginSheet.nib">
-            </df>
-            <df name="Configuration.nib">
-            </df>
-            <df name="PCSX.nib">
-            </df>
-          </df>
-          <df name="icons">
-          </df>
-          <df name="Pcsx.xcodeproj">
-          </df>
-          <df name="plugins">
-            <df name="CDDeviceInterface">
-              <df name="CDDeviceInterfacePlugin.xcodeproj">
-              </df>
-              <df name="English.lproj">
-              </df>
-              <df name="src">
-                <in>PlugCD.c</in>
-                <in>PlugCD.h</in>
-              </df>
-            </df>
-            <df name="DFSound">
-              <df name="English.lproj">
-                <df name="NetSfPeopsSpuPluginMain.nib">
-                </df>
-              </df>
-              <df name="macsrc">
-                <in>NamedSlider.h</in>
-                <in>NamedSlider.m</in>
-                <in>PluginController.h</in>
-                <in>PluginController.m</in>
-              </df>
-              <df name="PeopsSPU.xcodeproj">
-              </df>
-              <df name="src">
-                <in>macosx.c</in>
-              </df>
-            </df>
-            <df name="DFXVideo">
-              <df name="English.lproj">
-                <df name="NetSfPeopsSoftGPUConfig.nib">
-                </df>
-              </df>
-              <df name="macsrc">
-                <in>ExtendedKeys.h</in>
-                <in>PluginConfigController.h</in>
-                <in>PluginConfigController.m</in>
-                <in>PluginGLView.h</in>
-                <in>PluginGLView.m</in>
-                <in>PluginWindow.h</in>
-                <in>PluginWindow.m</in>
-                <in>PluginWindowController.h</in>
-                <in>PluginWindowController.m</in>
-                <in>drawgl.m</in>
-              </df>
-              <df name="NetSfPeopsSoftGPUInterface.nib">
-              </df>
-              <df name="PeopsSoftGPU.xcodeproj">
-              </df>
-            </df>
-            <df name="HIDInput">
-              <df name="English.lproj">
-                <df name="NetPcsxHIDInputPluginMain.nib">
-                </df>
-              </df>
-              <df name="HID Utilities Source">
-                <in>HIDLib.h</in>
-                <in>HID_Config_Utilities.c</in>
-                <in>HID_Config_Utilities.h</in>
-                <in>HID_Error_Handler.c</in>
-                <in>HID_Error_Handler.h</in>
-                <in>HID_Name_Lookup.c</in>
-                <in>HID_Name_Lookup.h</in>
-                <in>HID_Queue_Utilities.c</in>
-                <in>HID_Queue_Utilities.h</in>
-                <in>HID_Transaction_Utilities.c</in>
-                <in>HID_Transaction_Utilities.h</in>
-                <in>HID_Utilities.c</in>
-                <in>HID_Utilities.h</in>
-                <in>HID_Utilities_External.h</in>
-                <in>HID_Utilities_Internal.h</in>
-                <in>IOHIDPowerUsage.h</in>
-                <in>PID.h</in>
-              </df>
-              <df name="HIDInput.xcodeproj">
-              </df>
-              <df name="src">
-                <in>ControllerList.h</in>
-                <in>ControllerList.m</in>
-                <in>ExtendedKeys.h</in>
-                <in>HID_Utilities.h</in>
-                <in>KeyConfig.h</in>
-                <in>KeyConfig.m</in>
-                <in>MappingCell.h</in>
-                <in>MappingCell.m</in>
-                <in>PadController.h</in>
-                <in>PadController.m</in>
-                <in>PadView.h</in>
-                <in>PadView.m</in>
-                <in>PlugPAD.c</in>
-                <in>PlugPAD.h</in>
-              </df>
-            </df>
-          </df>
-          <df name="Resources">
-          </df>
-          <in>ConfigurationController.h</in>
-          <in>ConfigurationController.m</in>
-          <in>EmuThread.h</in>
-          <in>EmuThread.m</in>
-          <in>ExtendedKeys.h</in>
-          <in>PcsxController.h</in>
-          <in>PcsxController.m</in>
-          <in>PcsxPlugin.h</in>
-          <in>PcsxPlugin.m</in>
-          <in>PcsxPluginDocument.h</in>
-          <in>PcsxPluginDocument.m</in>
-          <in>Plugin.c</in>
-          <in>PluginController.h</in>
-          <in>PluginController.m</in>
-          <in>PluginList.h</in>
-          <in>PluginList.m</in>
-          <in>config.h</in>
-          <in>main.m</in>
-        </df>
-        <df name="pixmaps">
-        </df>
-        <df name="plugins">
-          <df name="dfcdrom">
-            <df name="cdrcfg-0.1df">
-              <in>main.c</in>
-            </df>
-            <in>cdr-linux.c</in>
-            <in>cdr-null.c</in>
-            <in>cdr.c</in>
-            <in>cdr.h</in>
-            <in>cfg.c</in>
-          </df>
-          <df name="dfinput">
-            <in>analog.c</in>
-            <in>cfg-gtk2.c</in>
-            <in>cfg.c</in>
-            <in>pad.c</in>
-            <in>pad.h</in>
-            <in>sdljoy.c</in>
-            <in>xkb.c</in>
-          </df>
-          <df name="dfsound">
-            <df name="spucfg-0.1df">
-              <in>main.c</in>
-            </df>
-            <in>adsr.c</in>
-            <in>adsr.h</in>
-            <in>alsa.c</in>
-            <in>cfg.c</in>
-            <in>cfg.h</in>
-            <in>dma.c</in>
-            <in>dma.h</in>
-            <in>dsoundoss.h</in>
-            <in>externals.h</in>
-            <in>freeze.c</in>
-            <in>gauss_i.h</in>
-            <in>nullsnd.c</in>
-            <in>oss.c</in>
-            <in>psemu.c</in>
-            <in>psemuxa.h</in>
-            <in>registers.c</in>
-            <in>registers.h</in>
-            <in>regs.h</in>
-            <in>reverb.c</in>
-            <in>reverb.h</in>
-            <in>spu.c</in>
-            <in>spu.h</in>
-            <in>stdafx.h</in>
-            <in>xa.c</in>
-            <in>xa.h</in>
-          </df>
-          <df name="dfxvideo">
-            <df name="gpucfg-0.1df">
-              <in>main.c</in>
-            </df>
-            <in>cfg.c</in>
-            <in>cfg.h</in>
-            <in>draw.c</in>
-            <in>draw.h</in>
-            <in>externals.h</in>
-            <in>fps.c</in>
-            <in>fps.h</in>
-            <in>gpu.c</in>
-            <in>gpu.h</in>
-            <in>hq2x.h</in>
-            <in>hq3x.h</in>
-            <in>i386.asm</in>
-            <in>interp.h</in>
-            <in>key.c</in>
-            <in>key.h</in>
-            <in>menu.c</in>
-            <in>menu.h</in>
-            <in>prim.c</in>
-            <in>prim.h</in>
-            <in>soft.c</in>
-            <in>soft.h</in>
-            <in>swap.h</in>
-            <in>zn.c</in>
-          </df>
-          <df name="peopsxgl">
-            <df name="gpucfg">
-              <in>callbacks.c</in>
-              <in>callbacks.h</in>
-              <in>interface.c</in>
-              <in>interface.h</in>
-              <in>main.c</in>
-              <in>support.c</in>
-              <in>support.h</in>
-            </df>
-            <in>cfg.c</in>
-            <in>cfg.h</in>
-            <in>draw.c</in>
-            <in>draw.h</in>
-            <in>externals.h</in>
-            <in>fps.c</in>
-            <in>fps.h</in>
-            <in>gl_ext.h</in>
-            <in>gpu.c</in>
-            <in>gpu.h</in>
-            <in>key.c</in>
-            <in>key.h</in>
-            <in>menu.c</in>
-            <in>menu.h</in>
-            <in>prim.c</in>
-            <in>prim.h</in>
-            <in>soft.c</in>
-            <in>soft.h</in>
-            <in>stdafx.h</in>
-            <in>texture.c</in>
-            <in>texture.h</in>
-          </df>
-        </df>
-        <df name="po">
-        </df>
-        <df name="win32">
-          <df name="glue">
-            <df name="sys">
-              <in>mman.h</in>
-            </df>
-            <in>stdint.h</in>
-          </df>
-          <df name="gui">
-            <in>AboutDlg.c</in>
-            <in>AboutDlg.h</in>
-            <in>CheatDlg.c</in>
-            <in>ConfigurePlugins.c</in>
-            <in>NoPic.h</in>
-            <in>Win32.h</in>
-            <in>WndMain.c</in>
-            <in>plugin.c</in>
-            <in>plugin.h</in>
-          </df>
-          <df name="intl">
-            <in>bindtextdom.c</in>
-            <in>dcgettext.c</in>
-            <in>dgettext.c</in>
-            <in>explodename.c</in>
-            <in>finddomain.c</in>
-            <in>gettext.c</in>
-            <in>gettext.h</in>
-            <in>gettextP.h</in>
-            <in>hash-string.h</in>
-            <in>intl-compat.c</in>
-            <in>intlconfig.h</in>
-            <in>l10nflist.c</in>
-            <in>libgettext.h</in>
-            <in>libintl.h</in>
-            <in>loadinfo.h</in>
-            <in>loadmsgcat.c</in>
-            <in>localealias.c</in>
-            <in>textdomain.c</in>
-          </df>
-          <df name="zlib">
-            <in>adler32.c</in>
-            <in>compress.c</in>
-            <in>crc32.c</in>
-            <in>deflate.c</in>
-            <in>deflate.h</in>
-            <in>gzio.c</in>
-            <in>infblock.c</in>
-            <in>infblock.h</in>
-            <in>infcodes.c</in>
-            <in>infcodes.h</in>
-            <in>inffast.c</in>
-            <in>inffast.h</in>
-            <in>inffixed.h</in>
-            <in>inflate.c</in>
-            <in>inftrees.c</in>
-            <in>inftrees.h</in>
-            <in>infutil.c</in>
-            <in>infutil.h</in>
-            <in>trees.c</in>
-            <in>trees.h</in>
-            <in>uncompr.c</in>
-            <in>zconf.h</in>
-            <in>zlib.h</in>
-            <in>zutil.c</in>
-            <in>zutil.h</in>
-          </df>
-          <in>config.h</in>
-          <in>resource.h</in>
-        </df>
       </df>
       <df name="shaders">
         <in>fxaa.ps.h</in>
@@ -1189,6 +29,7 @@
         <in>s2xsai.vs.h</in>
         <in>scale2x.ps.h</in>
         <in>scale2x.vs.h</in>
+        <in>scaling.inc</in>
         <in>vs.h</in>
         <in>xbr_2x_ps.h</in>
         <in>xbr_2x_vs.h</in>
@@ -1572,6 +413,17 @@
           </df>
         </df>
         <df name="ppcr">
+          <df name="disasm">
+            <in>asm_ppc.c</in>
+            <in>dis-asm.h</in>
+            <in>mybfd.h</in>
+            <in>opintl.h</in>
+            <in>ppc-dis.c</in>
+            <in>ppc-opc.c</in>
+            <in>ppc.h</in>
+          </df>
+          <in>libxenon_vm.c</in>
+          <in>libxenon_vm.h</in>
           <in>pR3000A.c</in>
           <in>pR3000A.h</in>
           <in>pasm.S</in>
@@ -1582,357 +434,6 @@
           <in>reguse.h</in>
         </df>
         <in>config.h</in>
-      </df>
-      <df name="sxre">
-        <df name="new_dynarec">
-          <in>emu_if.c</in>
-          <in>emu_if.h</in>
-          <in>linkage_ppc.c</in>
-          <in>new_dynarec.h</in>
-          <in>pcsxmem.c</in>
-          <in>pcsxmem.h</in>
-        </df>
-        <in>cdriso.c</in>
-        <in>cdriso.h</in>
-        <in>cdrom.c</in>
-        <in>cdrom.h</in>
-        <in>cheat.c</in>
-        <in>cheat.h</in>
-        <in>coff.h</in>
-        <in>debug.h</in>
-        <in>decode_xa.c</in>
-        <in>decode_xa.h</in>
-        <in>disr3000a.c</in>
-        <in>gpu.h</in>
-        <in>gte.c</in>
-        <in>gte.h</in>
-        <in>gte_arm.h</in>
-        <in>gte_divider.c</in>
-        <in>gte_divider.h</in>
-        <in>gte_neon.h</in>
-        <in>mdec.c</in>
-        <in>mdec.h</in>
-        <in>misc.c</in>
-        <in>misc.h</in>
-        <in>plugins.c</in>
-        <in>plugins.h</in>
-        <in>ppf.c</in>
-        <in>ppf.h</in>
-        <in>psemu_plugin_defs.h</in>
-        <in>psxbios.c</in>
-        <in>psxbios.h</in>
-        <in>psxcommon.c</in>
-        <in>psxcommon.h</in>
-        <in>psxcounters.c</in>
-        <in>psxcounters.h</in>
-        <in>psxdma.c</in>
-        <in>psxdma.h</in>
-        <in>psxhle.c</in>
-        <in>psxhle.h</in>
-        <in>psxhw.c</in>
-        <in>psxhw.h</in>
-        <in>psxinterpreter.c</in>
-        <in>psxmem.c</in>
-        <in>psxmem.h</in>
-        <in>r3000a.c</in>
-        <in>r3000a.h</in>
-        <in>sio.c</in>
-        <in>sio.h</in>
-        <in>sjisfont.h</in>
-        <in>socket.c</in>
-        <in>socket.h</in>
-        <in>spu.c</in>
-        <in>spu.h</in>
-        <in>system.h</in>
-      </df>
-      <df name="tt">
-        <df name="pcsx_rearmed">
-          <df name="frontend">
-            <df name="320240">
-              <df name="skin">
-              </df>
-              <in>pollux_set.c</in>
-            </df>
-            <df name="common">
-              <in>fonts.c</in>
-              <in>fonts.h</in>
-              <in>input.c</in>
-              <in>input.h</in>
-              <in>lprintf.h</in>
-              <in>menu.c</in>
-              <in>menu.h</in>
-              <in>plat.h</in>
-              <in>posix.h</in>
-              <in>readpng.c</in>
-              <in>readpng.h</in>
-            </df>
-            <df name="gp2x">
-              <in>in_gp2x.c</in>
-              <in>in_gp2x.h</in>
-            </df>
-            <df name="linux">
-              <in>fbdev.c</in>
-              <in>fbdev.h</in>
-              <in>in_evdev.c</in>
-              <in>in_evdev.h</in>
-              <in>plat.c</in>
-              <in>xenv.c</in>
-              <in>xenv.h</in>
-            </df>
-            <df name="pandora">
-              <df name="skin">
-              </df>
-              <in>picorestore.c</in>
-            </df>
-            <df name="warm">
-            </df>
-            <in>Cheat.h</in>
-            <in>blit320.h</in>
-            <in>blit320.s</in>
-            <in>config.h</in>
-            <in>in_tsbutton.c</in>
-            <in>in_tsbutton.h</in>
-            <in>main.c</in>
-            <in>main.h</in>
-            <in>menu.c</in>
-            <in>menu.h</in>
-            <in>nopic.h</in>
-            <in>omap.h</in>
-            <in>pcnt.h</in>
-            <in>pl_gun_ts.c</in>
-            <in>pl_gun_ts.h</in>
-            <in>plat.h</in>
-            <in>plat_dummy.c</in>
-            <in>plat_omap.c</in>
-            <in>plat_pandora.c</in>
-            <in>plat_pollux.c</in>
-            <in>plugin.c</in>
-            <in>plugin.h</in>
-            <in>plugin_lib.c</in>
-            <in>plugin_lib.h</in>
-            <in>psemu_plugin_defs.h</in>
-            <in>xkb.c</in>
-          </df>
-          <df name="libpcsxcore">
-            <df name="ix86">
-              <in>iGte.h</in>
-              <in>iR3000A.c</in>
-              <in>ix86.c</in>
-              <in>ix86.h</in>
-            </df>
-            <df name="ix86_64">
-              <in>iGte.h</in>
-              <in>iR3000A-64.c</in>
-              <in>ix86-64.c</in>
-              <in>ix86-64.h</in>
-              <in>ix86_3dnow.c</in>
-              <in>ix86_cpudetect.c</in>
-              <in>ix86_fpu.c</in>
-              <in>ix86_mmx.c</in>
-              <in>ix86_sse.c</in>
-            </df>
-            <df name="new_dynarec">
-              <in>assem_arm.c</in>
-              <in>assem_arm.h</in>
-              <in>emu_if.c</in>
-              <in>emu_if.h</in>
-              <in>fpu.c</in>
-              <in>fpu.h</in>
-              <in>linkage_arm.s</in>
-              <in>new_dynarec.c</in>
-              <in>new_dynarec.h</in>
-              <in>pcsxmem.c</in>
-              <in>pcsxmem.h</in>
-              <in>pcsxmem_inline.c</in>
-            </df>
-            <df name="ppc">
-              <in>pGte.h</in>
-              <in>pR3000A.c</in>
-              <in>pasm.s</in>
-              <in>ppc.c</in>
-              <in>ppc.h</in>
-              <in>ppc_mnemonics.h</in>
-              <in>reguse.c</in>
-              <in>reguse.h</in>
-            </df>
-            <in>cdriso.c</in>
-            <in>cdriso.h</in>
-            <in>cdrom.c</in>
-            <in>cdrom.h</in>
-            <in>cheat.c</in>
-            <in>cheat.h</in>
-            <in>coff.h</in>
-            <in>debug.c</in>
-            <in>debug.h</in>
-            <in>decode_xa.c</in>
-            <in>decode_xa.h</in>
-            <in>disr3000a.c</in>
-            <in>gpu.h</in>
-            <in>gte.c</in>
-            <in>gte.h</in>
-            <in>gte_arm.h</in>
-            <in>gte_arm.s</in>
-            <in>gte_divider.c</in>
-            <in>gte_divider.h</in>
-            <in>gte_neon.h</in>
-            <in>gte_neon.s</in>
-            <in>mdec.c</in>
-            <in>mdec.h</in>
-            <in>misc.c</in>
-            <in>misc.h</in>
-            <in>plugins.c</in>
-            <in>plugins.h</in>
-            <in>ppf.c</in>
-            <in>ppf.h</in>
-            <in>psemu_plugin_defs.h</in>
-            <in>psxbios.c</in>
-            <in>psxbios.h</in>
-            <in>psxcommon.c</in>
-            <in>psxcommon.h</in>
-            <in>psxcounters.c</in>
-            <in>psxcounters.h</in>
-            <in>psxdma.c</in>
-            <in>psxdma.h</in>
-            <in>psxhle.c</in>
-            <in>psxhle.h</in>
-            <in>psxhw.c</in>
-            <in>psxhw.h</in>
-            <in>psxinterpreter.c</in>
-            <in>psxmem.c</in>
-            <in>psxmem.h</in>
-            <in>r3000a.c</in>
-            <in>r3000a.h</in>
-            <in>sio.c</in>
-            <in>sio.h</in>
-            <in>sjisfont.h</in>
-            <in>socket.c</in>
-            <in>socket.h</in>
-            <in>spu.c</in>
-            <in>spu.h</in>
-            <in>system.h</in>
-          </df>
-          <df name="maemo">
-            <in>hildon.c</in>
-            <in>maemo_common.h</in>
-            <in>main.c</in>
-          </df>
-          <df name="plugins">
-            <df name="cdrcimg">
-              <in>cdrcimg.c</in>
-              <in>cdrcimg.h</in>
-            </df>
-            <df name="dfinput">
-              <in>guncon.c</in>
-              <in>main.c</in>
-              <in>main.h</in>
-              <in>pad.c</in>
-            </df>
-            <df name="dfsound">
-              <in>adsr.c</in>
-              <in>adsr.h</in>
-              <in>alsa.c</in>
-              <in>arm_utils.s</in>
-              <in>cfg.c</in>
-              <in>cfg.h</in>
-              <in>dma.c</in>
-              <in>dma.h</in>
-              <in>dsoundoss.h</in>
-              <in>externals.h</in>
-              <in>freeze.c</in>
-              <in>gauss_i.h</in>
-              <in>nullsnd.c</in>
-              <in>oss.c</in>
-              <in>psemuxa.h</in>
-              <in>pulseaudio.c</in>
-              <in>registers.c</in>
-              <in>registers.h</in>
-              <in>reverb.c</in>
-              <in>sdl.c</in>
-              <in>spu.c</in>
-              <in>spu.h</in>
-              <in>stdafx.h</in>
-              <in>xa.c</in>
-              <in>xa.h</in>
-            </df>
-            <df name="dfxvideo">
-              <in>draw.c</in>
-              <in>draw_fb.c</in>
-              <in>fps.c</in>
-              <in>gpu.c</in>
-              <in>gpu.h</in>
-              <in>gpulib_if.c</in>
-              <in>prim.c</in>
-              <in>soft.c</in>
-            </df>
-            <df name="gpu-gles">
-              <in>gpuDraw.c</in>
-              <in>gpuDraw.h</in>
-              <in>gpuExternals.h</in>
-              <in>gpuFps.c</in>
-              <in>gpuFps.h</in>
-              <in>gpuPlugin.c</in>
-              <in>gpuPlugin.h</in>
-              <in>gpuPrim.c</in>
-              <in>gpuPrim.h</in>
-              <in>gpuStdafx.h</in>
-              <in>gpuTexture.c</in>
-              <in>gpuTexture.h</in>
-              <in>gpulib_if.c</in>
-              <in>hud.c</in>
-            </df>
-            <df name="gpu_neon">
-              <df name="psx_gpu">
-                <in>common.h</in>
-                <in>psx_gpu.c</in>
-                <in>psx_gpu.h</in>
-                <in>psx_gpu_arm_neon.S</in>
-                <in>psx_gpu_main.c</in>
-                <in>psx_gpu_parse.c</in>
-                <in>psx_gpu_standard.c</in>
-                <in>vector_ops.h</in>
-              </df>
-              <in>psx_gpu_if.c</in>
-            </df>
-            <df name="gpu_unai">
-              <in>debug.h</in>
-              <in>gpu.cpp</in>
-              <in>gpu.h</in>
-              <in>gpu_arm.h</in>
-              <in>gpu_arm.s</in>
-              <in>gpu_blit.h</in>
-              <in>gpu_command.h</in>
-              <in>gpu_fixedpoint.h</in>
-              <in>gpu_inner.h</in>
-              <in>gpu_inner_blend.h</in>
-              <in>gpu_inner_light.h</in>
-              <in>gpu_raster_image.h</in>
-              <in>gpu_raster_line.h</in>
-              <in>gpu_raster_polygon.h</in>
-              <in>gpu_raster_sprite.h</in>
-              <in>gpulib_if.cpp</in>
-              <in>port.h</in>
-              <in>profiler.h</in>
-            </df>
-            <df name="gpulib">
-              <in>cspace.c</in>
-              <in>cspace.h</in>
-              <in>cspace_neon.s</in>
-              <in>gpu.c</in>
-              <in>gpu.h</in>
-              <in>test.c</in>
-              <in>vout_fb.c</in>
-              <in>vout_sdl.c</in>
-            </df>
-            <df name="spunull">
-              <in>register.h</in>
-              <in>spunull.c</in>
-              <in>xa.h</in>
-            </df>
-          </df>
-          <df name="tools">
-            <in>psxcimg.c</in>
-          </df>
-        </df>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -1953,6 +454,8 @@
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>Xenon|GNU</compilerSet>
       </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
@@ -2108,45 +611,45 @@
           </incDir>
         </cTool>
       </folder>
-      <item path="include/config.h" ex="true" tool="3" flavor="0">
+      <item path="include/config.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="include/draw_c_p_psu.h" ex="true" tool="3" flavor="0">
+      <item path="include/draw_c_p_psu.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="include/draw_t_p_psu.h" ex="true" tool="3" flavor="0">
+      <item path="include/draw_t_p_psu.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="include/draw_v_vsu.h" ex="true" tool="3" flavor="0">
+      <item path="include/draw_v_vsu.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/fxaa_v2.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/fxaa_v2.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/hq4x.ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/hq4x.ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/hq4x.vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/hq4x.vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/post.ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/post.ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/post.vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/post.vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/s2xsai.ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/s2xsai.ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/s2xsai.vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/s2xsai.vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/scale2x.ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/scale2x.ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/scale2x.vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/scale2x.vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/xbr_2x_ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/xbr_2x_ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/xbr_2x_vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/xbr_2x_vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/xbr_5x_crt_ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/xbr_5x_crt_ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/xbr_5x_crt_vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/xbr_5x_crt_vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/xbr_5x_psx_ps.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/xbr_5x_psx_ps.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="shaders/xbr_5x_psx_vs.h" ex="true" tool="3" flavor="0">
+      <item path="shaders/xbr_5x_psx_vs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/gui/FreeTypeGX.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/FreeTypeGX.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon_stable/xenon/include/c++/4.6.1/xenon/32/bits</pElem>
@@ -2157,13 +660,17 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/VecMatrix.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/VecMatrix.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/gui/VecVector.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/VecVector.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/gui/demo.h" ex="true" tool="3" flavor="0">
+      <item path="source/gui/demo.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/gui/g_filebrowser.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/g_filebrowser.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/sys</pElem>
@@ -2172,7 +679,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/g_video.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/g_video.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2182,7 +689,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/gettext.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/gettext.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
@@ -2190,16 +697,16 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/gui_audio.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/gui_audio.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>build</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/gui_audio.h" ex="true" tool="3" flavor="0">
+      <item path="source/gui/gui_audio.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/gui/gui_input.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/gui_input.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/input</pElem>
@@ -2211,9 +718,9 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/gui_oggplayer.c" ex="true" tool="0" flavor="0">
+      <item path="source/gui/gui_oggplayer.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/gui/gui_screencapture.c" ex="false" tool="0" flavor="2">
+      <item path="source/gui/gui_screencapture.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
@@ -2222,7 +729,7 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/gui/gui_utils.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/gui_utils.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
@@ -2232,26 +739,35 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/gui_wchar.c" ex="false" tool="0" flavor="2">
+      <item path="source/gui/gui_wchar.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/gui/libwiigui/gui_button.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/libwiigui/gui_button.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/gui/libwiigui/gui_element.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/gui/libwiigui/gui_filebrowser.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/libwiigui/gui_image.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/libwiigui/gui_image.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2261,7 +777,7 @@
       <item path="source/gui/libwiigui/gui_imagedata.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2272,12 +788,12 @@
       <item path="source/gui/libwiigui/gui_keyboard.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/gui/libwiigui/gui_optionbrowser.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2287,16 +803,18 @@
       <item path="source/gui/libwiigui/gui_savebrowser.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/libwiigui/gui_sound.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/libwiigui/gui_sound.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/gui/libwiigui/gui_text.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/libwiigui/gui_text.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/freetype2/freetype</pElem>
@@ -2307,22 +825,27 @@
       <item path="source/gui/libwiigui/gui_trigger.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/ppc</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/gui/libwiigui/gui_window.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/gui/libwiigui/gui_window.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/gui/pngu.c" ex="true" tool="0" flavor="0">
+      <item path="source/gui/pngu.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/gui/shader/ps.tc.h" ex="true" tool="3" flavor="0">
+      <item path="source/gui/shader/ps.tc.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/httpd/fsdata.c" ex="true" tool="0" flavor="0">
+      <item path="source/httpd/fsdata.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/httpd/httpd.c" ex="false" tool="0" flavor="2">
+      <item path="source/httpd/httpd.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
@@ -2332,9 +855,11 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/httpd/screen.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/httpd/screen.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/httpd/tftp.c" ex="false" tool="0" flavor="2">
+      <item path="source/httpd/tftp.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/ppc</pElem>
@@ -2345,96 +870,133 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/httpd/tftp.h" ex="true" tool="3" flavor="0">
+      <item path="source/httpd/tftp.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/httpd/vfs.c" ex="false" tool="0" flavor="2">
+      <item path="source/httpd/vfs.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/cdriso.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/cdriso.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/cdrom.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/cdrom.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/cheat.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/cheat.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/decode_xa.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/decode_xa.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/disr3000a.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/disr3000a.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/gte.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/gte.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/mdec.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/mdec.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/misc.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/misc.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/plugins.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/plugins.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/ppf.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/ppf.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/psxbios.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxbios.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/psxcommon.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxcommon.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/psxcounters.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxcounters.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/psxdma.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxdma.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/psxhle.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxhle.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/psxhw.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxhw.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/psxinterpreter.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxinterpreter.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/psxmem.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/psxmem.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/r3000a.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/r3000a.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/libpcsxcore/sio.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/sio.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/libpcsxcore/socket.h" ex="true" tool="3" flavor="0">
+      <item path="source/libpcsxcore/socket.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/libpcsxcore/spu.c" ex="false" tool="0" flavor="2">
+      <item path="source/libpcsxcore/spu.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/main/gui.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/main/gui.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/main/libxenon_miss.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/libxenon_miss.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/main/main.cpp" ex="true" tool="1" flavor="0">
+      <item path="source/main/main.cpp" ex="true" tool="1" flavor2="0">
       </item>
-      <item path="source/main/no_debug.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/no_debug.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>source/libpcsxcore</pElem>
@@ -2443,7 +1005,7 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/main/plugin.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/plugin.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>source/libpcsxcore</pElem>
@@ -2451,9 +1013,9 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/main/plugin.h" ex="true" tool="3" flavor="0">
+      <item path="source/main/plugin.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/main/profile.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/profile.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/ppc</pElem>
@@ -2462,9 +1024,9 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/main/profile.h" ex="true" tool="3" flavor="0">
+      <item path="source/main/profile.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/main/screencapture.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/screencapture.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
@@ -2472,9 +1034,9 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/main/screencapture.h" ex="true" tool="3" flavor="0">
+      <item path="source/main/screencapture.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/main/sys.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/sys.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>source/libpcsxcore</pElem>
@@ -2482,19 +1044,23 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/main/x_thread.c" ex="false" tool="0" flavor="2">
+      <item path="source/main/x_thread.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/main/x_thread.h" ex="true" tool="3" flavor="0">
+      <item path="source/main/x_thread.h" ex="true" tool="3" flavor2="0">
       </item>
       <item path="source/plugins/Pokopom/ConfigDialog.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/plugins/Pokopom/Controller.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>build</pElem>
@@ -2504,32 +1070,37 @@
       <item path="source/plugins/Pokopom/Controller2.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/Pokopom/ControllerGuitar.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>build</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/Pokopom/Exports.def" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/Pokopom/Exports.def" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/Pokopom/FileIO.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/Pokopom/FileIO.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>build</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/Pokopom/Main.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/Pokopom/Main.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/Pokopom/Settings.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/Pokopom/Settings.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/plugins/Pokopom/Xinput.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/Pokopom/Xinput.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/input</pElem>
@@ -2539,7 +1110,10 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/Pokopom/pokoMain.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/Pokopom/pokoMain.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon_stable/xenon/include/c++/4.6.1/xenon/32/bits</pElem>
@@ -2547,33 +1121,49 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/Pokopom/resource.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/Pokopom/resource.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/cdr/PlugCD.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/cdr/PlugCD.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/plugins/cdr/PlugCD.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/cdr/PlugCD.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/cdrcimg/cdrcimg.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/cdrcimg/cdrcimg.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/plugins/dfinput/inp_analog.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/dfinput/inp_analog.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/plugins/dfinput/inp_cfg.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/dfinput/inp_cfg.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/plugins/dfinput/inp_pad.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/dfinput/inp_pad.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>source/libpcsxcore</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/plugins/dfinput/inp_sdljoy.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/dfinput/inp_sdljoy.c"
+            ex="false"
+            tool="0"
+            flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/plugins/dfinput/inp_xkb.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/dfinput/inp_xkb.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
       <item path="source/plugins/peopsxgl/GpuRenderer.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2582,14 +1172,14 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/cfg.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/peopsxgl/cfg.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/main</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/draw.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/peopsxgl/draw.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2597,14 +1187,16 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/gl_ext.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/peopsxgl/gl_ext.h" ex="true" tool="3" flavor2="0">
       </item>
       <item path="source/plugins/peopsxgl/gte_accuracy.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/hw_gpu.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/peopsxgl/hw_gpu.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/ppc</pElem>
@@ -2613,11 +1205,11 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/interface.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/peopsxgl/interface.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/peopsxgl/interp.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/peopsxgl/interp.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/peopsxgl/prim.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/peopsxgl/prim.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2625,14 +1217,17 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/soft.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/peopsxgl/soft.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/peopsxgl/texture.cpp" ex="false" tool="1" flavor="4">
+      <item path="source/plugins/peopsxgl/texture.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2643,7 +1238,7 @@
       <item path="source/plugins/peopsxgl/texture_load.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2654,7 +1249,7 @@
       <item path="source/plugins/peopsxgl/texture_load_wnd.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2665,7 +1260,7 @@
       <item path="source/plugins/peopsxgl/texture_movie.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/xenos</pElem>
@@ -2673,95 +1268,103 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="source/plugins/xenon_audio/adsr.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/adsr.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/cfg.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/cfg.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/dma.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/dma.h" ex="true" tool="3" flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/dsoundoss.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/externals.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/gauss_i.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/gauss_i.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/psemuxa.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/psemuxa.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/registers.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/regs.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/regs.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/reverb.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/reverb.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/spu.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/spu.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/stdafx.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/stdafx.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/x_adsr.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/xenon_audio/x_adsr.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/x_cfg.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/xenon_audio/x_cfg.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/x_dma.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/xenon_audio/x_dma.c" ex="true" tool="0" flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/x_externals.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/x_freeze.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/x_nullsnd.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/x_registers.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/x_reverb.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/x_spu.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/xenon_audio/x_spu.c" ex="true" tool="0" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/x_xa.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/xenon_audio/x_xa.c" ex="true" tool="0" flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio/x_xenonsnd.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_audio/xa.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_audio/xa.h" ex="true" tool="3" flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair/WINRES.H"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair/a_adsr.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/plugins/xenon_audio_repair/a_cfg.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2771,7 +1374,7 @@
       <item path="source/plugins/xenon_audio_repair/a_dma.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2781,7 +1384,7 @@
       <item path="source/plugins/xenon_audio_repair/a_freeze.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2791,12 +1394,14 @@
       <item path="source/plugins/xenon_audio_repair/a_psemu.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/plugins/xenon_audio_repair/a_registers.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2806,12 +1411,14 @@
       <item path="source/plugins/xenon_audio_repair/a_reverb.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/plugins/xenon_audio_repair/a_spu.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2821,12 +1428,14 @@
       <item path="source/plugins/xenon_audio_repair/a_xa.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="source/plugins/xenon_audio_repair/a_zn.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2836,27 +1445,27 @@
       <item path="source/plugins/xenon_audio_repair/adsr.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair/afxres.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair/alsa.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair/oss.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair/xr_xenonsnd.cpp"
             ex="false"
             tool="1"
-            flavor="4">
+            flavor2="4">
         <ccTool>
           <incDir>
             <pElem>source/plugins/xenon_audio_repair</pElem>
@@ -2867,192 +1476,194 @@
       <item path="source/plugins/xenon_audio_repair110/WINRES.H"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/adsr.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/afxres.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/cfg.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/debug.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/dma.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/dsoundoss.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/externals.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/freeze.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/gauss_i.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/oss.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/psemuxa.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/record.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/registers.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/regs.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/resource.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/reverb.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/spu.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/stdafx.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xa.h"
             ex="true"
             tool="3"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_adsr.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_cfg.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_debug.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_dma.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_freeze.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_output.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_psemu.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_record.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_registers.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_reverb.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_spu.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_spuPeopsSound.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_stdafx.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/xr_xa.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_audio_repair110/zn.cpp"
             ex="true"
             tool="1"
-            flavor="0">
+            flavor2="0">
       </item>
       <item path="source/plugins/xenon_cdrom/cdr-null.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_cdrom/cdr.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_cdrom/cdr.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_gfx/hq2x.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_gfx/hq2x.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_gfx/hq3x.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_gfx/hq3x.h" ex="true" tool="3" flavor2="0">
       </item>
-      <item path="source/plugins/xenon_gfx/v_cfg.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_gfx/v_cfg.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/plugins/xenon_gfx/v_draw.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_gfx/v_draw.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
@@ -3061,7 +1672,7 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/plugins/xenon_gfx/v_fps.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_gfx/v_fps.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/ppc</pElem>
@@ -3069,7 +1680,7 @@
           </incDir>
         </cTool>
       </item>
-      <item path="source/plugins/xenon_gfx/v_gpu.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_gfx/v_gpu.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include/ppc</pElem>
@@ -3079,35 +1690,47 @@
       <item path="source/plugins/xenon_gfx/v_gpu_endian.c"
             ex="true"
             tool="0"
-            flavor="0">
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_gfx/v_prim.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_gfx/v_prim.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/plugins/xenon_gfx/v_soft.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_gfx/v_soft.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>/usr/local/xenon/usr/include</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/plugins/xenon_gfx/v_texture.c" ex="true" tool="0" flavor="0">
+      <item path="source/plugins/xenon_gfx/v_texture.c"
+            ex="true"
+            tool="0"
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_gfx/v_texture.h" ex="true" tool="3" flavor="0">
+      <item path="source/plugins/xenon_gfx/v_texture.h"
+            ex="true"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="source/plugins/xenon_input/pad.c" ex="false" tool="0" flavor="2">
+      <item path="source/plugins/xenon_input/pad.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/ppcr/pR3000A.c" ex="false" tool="0" flavor="2">
+      <item path="source/ppcr/pR3000A.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>source/libpcsxcore</pElem>
           </incDir>
         </cTool>
       </item>
-      <item path="source/ppcr/pasm.S" ex="true" tool="4" flavor="0">
+      <item path="source/ppcr/pasm.S" ex="true" tool="4" flavor2="0">
       </item>
-      <item path="source/ppcr/ppc.c" ex="false" tool="0" flavor="2">
+      <item path="source/ppcr/ppc.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
       </item>
-      <item path="source/ppcr/reguse.c" ex="false" tool="0" flavor="2">
+      <item path="source/ppcr/reguse.c" ex="false" tool="0" flavor2="2">
         <cTool>
           <incDir>
             <pElem>source/libpcsxcore</pElem>
