@@ -81,6 +81,7 @@ extern PluginTable plugins[];
  */
 /*
 #define cdfile "uda:/psxisos/CTR - Crash Team Racing (USA).bin"
+#define cdfile "uda:/psxisos/Hot Wheels Turbo Racing (USA).bin"
  */
 //#define cdfile "uda:/psxisos/Tekken 3 (USA)/Tekken 3 (USA) (Track 1).bin"
 //#define cdfile "uda:/psxisos/CTR - Crash Team Racing (USA).bin"
@@ -107,6 +108,7 @@ extern PluginTable plugins[];
 
 
 //#define cdfile "uda:/psxisos/CTR - Crash Team Racing (USA).bin"
+//#define cdfile "uda:/psxisos/Hot Wheels Turbo Racing (USA).bin"
 //#define cdfile "uda:/psxisos/R4 - Ridge Racer Type 4 (USA)/R4 - Ridge Racer Type 4 (USA).bin"
 
 // #define cdfile "uda:/psxisos/Metal Gear Solid (France) (Disc 1)/Metal Gear Solid (France) (Disc 1).bin"
@@ -123,6 +125,7 @@ extern PluginTable plugins[];
 #define cdfile "uda:/Tekken 3 (USA) (Track 1).bin.Z"
 
 //#define cdfile "uda:/CTR - Crash Team Racing (USA).bin.Z"
+//#define cdfile "uda:/Hot Wheels Turbo Racing (USA).bin.Z"
 
 #define cdfile "uda:/Resident Evil (USA).iso.Z"
 #define cdfile "uda:/0cimg/medievil-scus-94227-/Medievil.bin.Z"
