@@ -208,6 +208,7 @@ bool LoadLanguage()
 	
 	char *file, *eof;
 	
+	/*
 	switch(EMUSettings.language)
 	{
 		case LANG_JAPANESE: file = (char *)jp_lang; eof = file + jp_lang_size; break;
@@ -226,7 +227,8 @@ bool LoadLanguage()
 		case LANG_TURKISH: file = (char *)tr_lang; eof = file + tr_lang_size; break;
 		default: return false;
 	}
-
+	*/
+	 file = (char *)fr_lang; eof = file + fr_lang_size;
 	gettextCleanUp();
 
 	while (file && file < eof)

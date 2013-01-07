@@ -193,29 +193,8 @@ char * StripDevice(char * path) {
  * Attempts to mount/configure the device specified
  ***************************************************************************/
 bool ChangeInterface(int device, bool silent) {
-//        if (isMounted[device])
-//                return true;
-
-        //bool mounted = false;
-        bool mounted = true;
-
-        switch (device) {
-                case DEVICE_HDD:
-                case DEVICE_USB:
-                        //mounted = MountFAT(device, silent);
-                        return true;
-                        break;
-                case DEVICE_DVD:
-                        return false;
-                        //mounted = MountDVD(silent);
-                        break;
-                case DEVICE_SMB:
-                        //mounted = ConnectShare(silent);
-                        return false;
-                        break;
-        }
-
-        return mounted;
+	TR
+	return true;
 }
 
 bool ChangeInterface(char * filepath, bool silent) {
@@ -303,19 +282,6 @@ static bool ParseDirEntries() {
                                 isdir = 1;
                         else
                                 isdir = 0;
-
-                        // don't show the file if it's not a valid ROM
-                        if (parseFilter && !isdir) {
-                                ext = GetExt(entry->d_name);
-
-                                if (ext == NULL)
-                                        continue;
-
-                                if (stricmp(ext, "smc") != 0 && stricmp(ext, "fig") != 0 &&
-                                        stricmp(ext, "sfc") != 0 && stricmp(ext, "swc") != 0 &&
-                                        stricmp(ext, "zip") != 0 && stricmp(ext, "7z") != 0)
-                                        continue;
-                        }
                 }
 
                 if (!AddBrowserEntry()) {
@@ -337,6 +303,15 @@ static bool ParseDirEntries() {
                 }
                 i++;
         }
+		
+		if ( i == 0 && dir && entry == NULL) { // probably an empty xtaf folder
+			AddBrowserEntry();
+			sprintf(browserList[browser.numEntries + i].displayname, "Up One Level");
+			snprintf(browserList[browser.numEntries + i].filename, MAXJOLIET, "..");
+			browserList[browser.numEntries + i].icon = ICON_FOLDER;
+			browserList[browser.numEntries + i].isdir = 1;
+			i++;
+		}
 
         if (!parseHalt) {
                 // Sort the file list
@@ -388,63 +363,61 @@ static bool ParseDirEntries() {
  **************************************************************************/
 int
 ParseDirectory(bool waitParse, bool filter) {
-        int retry = 1;
-        bool mounted = false;
-        parseFilter = filter;
+	int retry = 1;
+	bool mounted = false;
+	parseFilter = filter;
 
-        ResetBrowser(); // reset browser
+	ResetBrowser(); // reset browser
 
-        // add trailing slash
-        if (browser.dir[strlen(browser.dir) - 1] != '/')
-                strcat(browser.dir, "/");
+	// add trailing slash
+	if (browser.dir[strlen(browser.dir) - 1] != '/')
+		strcat(browser.dir, "/");
 
-        // open the directory
-        while (dir == NULL && retry == 1) {
-                mounted = ChangeInterface(browser.dir, NOTSILENT);
+	// open the directory
+	while (dir == NULL && retry == 1) {
+		mounted = ChangeInterface(browser.dir, NOTSILENT);
 
-                if (mounted)
-                        dir = opendir(browser.dir);
-                else
-                        return -1;
+		if (mounted)
+				dir = opendir(browser.dir);
+		else
+				return -1;
 
-                if (dir == NULL) {
-                        retry = ErrorPromptRetry("Error opening directory!");
-                }
-        }
+		if (dir == NULL) {
+				retry = ErrorPromptRetry("Error opening directory!");
+		}
+	}
 
-        // if we can't open the dir, try higher levels
-        if (dir == NULL) {
-                char * devEnd = strrchr(browser.dir, '/');
+	// if we can't open the dir, try higher levels
+	if (dir == NULL) {
+		char * devEnd = strrchr(browser.dir, '/');
 
-                while (!IsDeviceRoot(browser.dir)) {
-                        devEnd[0] = 0; // strip slash
-                        devEnd = strrchr(browser.dir, '/');
+		while (!IsDeviceRoot(browser.dir)) {
+				devEnd[0] = 0; // strip slash
+				devEnd = strrchr(browser.dir, '/');
 
-                        if (devEnd == NULL)
-                                break;
+				if (devEnd == NULL)
+						break;
 
-                        devEnd[1] = 0; // strip remaining file listing
-                        dir = opendir(browser.dir);
-                        if (dir)
-                                break;
-                }
-        }
+				devEnd[1] = 0; // strip remaining file listing
+				dir = opendir(browser.dir);
+				if (dir)
+						break;
+		}
+	}
 
-        if (dir == NULL)
-                return -1;
+	if (dir == NULL)
+		return -1;
 
-        if (IsDeviceRoot(browser.dir)) {
-                AddBrowserEntry();
-                sprintf(browserList[0].filename, "..");
-                sprintf(browserList[0].displayname, "Up One Level");
-                browserList[0].length = 0;
-                browserList[0].isdir = 1; // flag this as a dir
-                browserList[0].icon = ICON_FOLDER;
-                browser.numEntries++;
-        }
-
-        parseHalt = false;
-        //ParseDirEntries(); // index first 20 entries
+	if (IsDeviceRoot(browser.dir)) {
+		AddBrowserEntry();
+		sprintf(browserList[0].filename, "..");
+		sprintf(browserList[0].displayname, "Up One Level");
+		browserList[0].length = 0;
+		browserList[0].isdir = 1; // flag this as a dir
+		browserList[0].icon = ICON_FOLDER;
+		browser.numEntries++;
+	}
+	parseHalt = false;
 	
 	// wait
 	while(ParseDirEntries());

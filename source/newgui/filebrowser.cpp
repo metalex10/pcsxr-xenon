@@ -21,6 +21,7 @@
 #include <string.h>
 #include <malloc.h>
 #include <debug.h>
+#include <sys/iosupport.h>
 #include "emu.h"
 #include "filebrowser.h"
 #include "menu.h"
@@ -37,6 +38,8 @@ BROWSERENTRY * browserList = NULL; // list of files/folders in browser
 
 static char szpath[MAXPATHLEN];
 static bool inSz = false;
+
+char pathPrefix[STD_MAX][8];
 
 unsigned long SNESROMSize = 0;
 bool loadingFile = false;
@@ -155,6 +158,12 @@ bool IsDeviceRoot(char * path)
 		return false;
 
 	s = strchr(path, ':');
+	
+	if (s == NULL) {
+		return false;
+	}
+	
+	printf("%p\n",s);
 	
 	if ( strcmp(s, ":/") == 0) {
 		return true;
@@ -336,10 +345,10 @@ static bool IsValidROM()
 		{
 			if(p != NULL)
 			{
-				if (stricmp(p, ".smc") == 0 ||
-					stricmp(p, ".fig") == 0 ||
-					stricmp(p, ".sfc") == 0 ||
-					stricmp(p, ".swc") == 0)
+				if (stricmp(p, ".iso") == 0 ||
+					stricmp(p, ".bin") == 0 ||
+					stricmp(p, ".nrg") == 0 ||
+					stricmp(p, ".ccd") == 0)
 				{
 					return true;
 				}
@@ -457,39 +466,29 @@ int BrowserChangeFolder()
 		browser.dir[0] = 0;
 		int i=0;
 		
-		AddBrowserEntry();
-		sprintf(browserList[i].filename, "uda:/");
-		sprintf(browserList[i].displayname, "USB Mass Storage");
-		browserList[i].length = 0;
-		browserList[i].isdir = 1;
-		browserList[i].icon = ICON_SD;
-		i++;
+		for (int idev = 3; idev < STD_MAX; idev++) {
+			if (devoptab_list[idev]->structSize) {
+				printf("Device found: %s:/\n", devoptab_list[idev]->name);
+				AddBrowserEntry();
+				sprintf(browserList[i].filename, "%s:/", devoptab_list[idev]->name);
+				sprintf(browserList[i].displayname, "TODO: %s", devoptab_list[idev]->name);
+				browserList[i].length = 0;
+				browserList[i].isdir = 1;
+				if (browserList[i].filename[0] == 'd') {
+					browserList[i].icon = ICON_DVD;
+				} else if (browserList[i].filename[0] == 's') {
+					browserList[i].icon = ICON_SD;
+				} else if (browserList[i].filename[0] == 'u') {
+					browserList[i].icon = ICON_USB;
+				} else {
+					browserList[i].icon = ICON_USB;
+				}
+				sprintf(pathPrefix[i], "%s:/", devoptab_list[idev]->name);
+				i++;
+			}
+		}
 		
-		AddBrowserEntry();
-		sprintf(browserList[i].filename, "sda0:/");
-		sprintf(browserList[i].displayname, "Hard Drive");
-		browserList[i].length = 0;
-		browserList[i].isdir = 1;
-		browserList[i].icon = ICON_SD;
-		i++;
-                
-		AddBrowserEntry();
-		sprintf(browserList[i].filename, "smb:/");
-		sprintf(browserList[i].displayname, "Network Share");
-		browserList[i].length = 0;
-		browserList[i].isdir = 1;
-		browserList[i].icon = ICON_SMB;
-		i++;
-		
-		AddBrowserEntry();
-		sprintf(browserList[i].filename, "dvd:/");
-		sprintf(browserList[i].displayname, "Data DVD");
-		browserList[i].length = 0;
-		browserList[i].isdir = 1;
-		browserList[i].icon = ICON_DVD;
-		i++;
-		
-		browser.numEntries += i;
+		browser.numEntries = i;
 	}
 	
 	if(browser.dir[0] == 0)

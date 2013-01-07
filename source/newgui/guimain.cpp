@@ -42,6 +42,7 @@
 #include "filebrowser.h"
 #include "input.h"
 #include "FreeTypeGX.h"
+#include "utils/gettext.h"
 
 extern "C" {
 	#include "config.h"
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
 	InitVideo();
 	ResetVideo_Menu (); // change to menu video mode
 	SetupPads();
-	fatInitDefault(); // Initialize libFAT for SD and USB
+	// fatInitDefault(); // Initialize libFAT for SD and USB
 	XTAFMount();
 
 #if 0
@@ -136,6 +137,7 @@ int main(int argc, char *argv[])
 	browserList = (BROWSERENTRY *)malloc(sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
 	
 	InitGUIThreads();
+	LoadLanguage();
 
 	while (1) // main loop
 	{

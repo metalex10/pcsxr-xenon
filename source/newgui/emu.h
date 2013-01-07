@@ -15,7 +15,7 @@
  ***************************************************************************/
 
 #pragma once
-
+#include <sys/iosupport.h>
 #include "FreeTypeGX.h"
 
 #define APPNAME 		"PCSXR Xenon"
@@ -27,8 +27,7 @@
 #define SILENT 1
 
 // todo dynamic ....
-const char pathPrefix[9][8] =
-{ "", "uda:/", "sda0:/" };
+extern char pathPrefix[STD_MAX][8];
 
 enum {
 	DEVICE_AUTO,
