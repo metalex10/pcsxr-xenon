@@ -35,9 +35,7 @@
 
 BROWSERINFO browser;
 BROWSERENTRY * browserList = NULL; // list of files/folders in browser
-
-static char szpath[MAXPATHLEN];
-static bool inSz = false;
+DEVICES_INFO devsinfo;
 
 char pathPrefix[STD_MAX][8];
 
@@ -162,8 +160,6 @@ bool IsDeviceRoot(char * path)
 	if (s == NULL) {
 		return false;
 	}
-	
-	printf("%p\n",s);
 	
 	if ( strcmp(s, ":/") == 0) {
 		return true;
@@ -403,6 +399,8 @@ void StripExt(char* returnstring, char * inputstring)
  ***************************************************************************/
 int BrowserLoadFile()
 {
+	char loadingfile[2048];
+
 	int loaded = 0;
 	int device;
 
@@ -415,24 +413,19 @@ int BrowserLoadFile()
 	if(!IsValidROM())
 		goto done;
 
-	// store the filename (w/o ext) - used for sram/freeze naming
-	StripExt(ROMInfo.filename, browserList[browser.selIndex].filename);
-	strcpy(loadedFile, browserList[browser.selIndex].filename);
-        
-	if (SNESROMSize <= 0)
-	{
-		ErrorPrompt("Error loading game!");
-	}
-	else
-	{
-		// load SRAM or snapshot
-		if (EMUSettings.AutoLoad == 1)
-			LoadSRAMAuto(SILENT);
-		else if (EMUSettings.AutoLoad == 2)
-			LoadSnapshotAuto(SILENT);
-
+	MakeFilePath(loadingfile, FILE_ROM, NULL, 0);
+	
+	// load SRAM or snapshot
+	if (EMUSettings.AutoLoad == 1)
+		LoadSRAMAuto(SILENT);
+	else if (EMUSettings.AutoLoad == 2)
+		LoadSnapshotAuto(SILENT);
+	
+	if (EMUInterface.Start(loadingfile) == 0) {
 		ResetBrowser();
 		loaded = 1;
+	} else {
+		ErrorPrompt("Error loading game!");
 	}
 done:
 	CancelAction();
@@ -466,6 +459,8 @@ int BrowserChangeFolder()
 		browser.dir[0] = 0;
 		int i=0;
 		
+		devsinfo.save.nbr = devsinfo.load.nbr = 0;
+		
 		for (int idev = 3; idev < STD_MAX; idev++) {
 			if (devoptab_list[idev]->structSize) {
 				printf("Device found: %s:/\n", devoptab_list[idev]->name);
@@ -484,6 +479,15 @@ int BrowserChangeFolder()
 					browserList[i].icon = ICON_USB;
 				}
 				sprintf(pathPrefix[i], "%s:/", devoptab_list[idev]->name);
+				
+				if (devoptab_list[idev]->write_r != NULL) {
+					sprintf(devsinfo.save.path[devsinfo.save.nbr], "%s:/", devoptab_list[idev]->name);				
+					devsinfo.save.nbr++;
+				}
+				
+				sprintf(devsinfo.load.path[devsinfo.load.nbr], "%s:/", devoptab_list[idev]->name);				
+				devsinfo.load.nbr++;
+				
 				i++;
 			}
 		}

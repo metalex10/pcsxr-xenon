@@ -265,8 +265,15 @@ static bool ParseDirEntries() {
         int isdir;
 
         int i = 0;
+		
+		AddBrowserEntry();
+		sprintf(browserList[browser.numEntries + i].displayname, "Up One Level");
+		snprintf(browserList[browser.numEntries + i].filename, MAXJOLIET, "..");
+		browserList[browser.numEntries + i].icon = ICON_FOLDER;
+		browserList[browser.numEntries + i].isdir = 1;
+		i++;
 
-        while (i < 20 && !parseHalt) {
+        while (1) {
                 entry = readdir(dir);
 
                 if (entry == NULL)
@@ -276,7 +283,7 @@ static bool ParseDirEntries() {
                         continue;
 
                 if (strcmp(entry->d_name, "..") == 0) {
-                        isdir = 1;
+                        continue;
                 } else {
                         if (entry->d_type == DT_DIR)
                                 isdir = 1;
@@ -303,15 +310,6 @@ static bool ParseDirEntries() {
                 }
                 i++;
         }
-		
-		if ( i == 0 && dir && entry == NULL) { // probably an empty xtaf folder
-			AddBrowserEntry();
-			sprintf(browserList[browser.numEntries + i].displayname, "Up One Level");
-			snprintf(browserList[browser.numEntries + i].filename, MAXJOLIET, "..");
-			browserList[browser.numEntries + i].icon = ICON_FOLDER;
-			browserList[browser.numEntries + i].isdir = 1;
-			i++;
-		}
 
         if (!parseHalt) {
                 // Sort the file list
@@ -375,15 +373,9 @@ ParseDirectory(bool waitParse, bool filter) {
 
 	// open the directory
 	while (dir == NULL && retry == 1) {
-		mounted = ChangeInterface(browser.dir, NOTSILENT);
-
-		if (mounted)
-				dir = opendir(browser.dir);
-		else
-				return -1;
-
+		dir = opendir(browser.dir);
 		if (dir == NULL) {
-				retry = ErrorPromptRetry("Error opening directory!");
+			retry = ErrorPromptRetry("Error opening directory!");
 		}
 	}
 
@@ -407,20 +399,12 @@ ParseDirectory(bool waitParse, bool filter) {
 
 	if (dir == NULL)
 		return -1;
-
-	if (IsDeviceRoot(browser.dir)) {
-		AddBrowserEntry();
-		sprintf(browserList[0].filename, "..");
-		sprintf(browserList[0].displayname, "Up One Level");
-		browserList[0].length = 0;
-		browserList[0].isdir = 1; // flag this as a dir
-		browserList[0].icon = ICON_FOLDER;
-		browser.numEntries++;
-	}
+		
 	parseHalt = false;
 	
 	// wait
 	while(ParseDirEntries());
+	
 	return browser.numEntries;
 }
 

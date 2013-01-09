@@ -30,6 +30,8 @@
 #include <xenon_smc/xenon_smc.h>
 #include <debug.h>
 
+#include "cmount.h"
+
 #include "filelist.h"
 #include "emu.h"
 #include "video.h"
@@ -97,6 +99,7 @@ int main(int argc, char *argv[])
 	usb_init();
 	usb_do_poll();
 	xenon_ata_init();
+	xenon_atapi_init();
 	xenon_sound_init();
 
 	InitDeviceThread();
@@ -104,9 +107,10 @@ int main(int argc, char *argv[])
 	InitVideo();
 	ResetVideo_Menu (); // change to menu video mode
 	SetupPads();
-	// fatInitDefault(); // Initialize libFAT for SD and USB
-	XTAFMount();
-
+	// XTAFMount();
+	
+	//fatInitDefault(); // Initialize libFAT for SD and USB
+	mount_all();
 #if 0
 	DefaultSettings (); // Set defaults
 	S9xUnmapAllControls ();
@@ -138,6 +142,8 @@ int main(int argc, char *argv[])
 	
 	InitGUIThreads();
 	LoadLanguage();
+	
+	EMUInterface.ScanRootdir();
 
 	while (1) // main loop
 	{

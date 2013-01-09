@@ -28,7 +28,8 @@
 #include <usb/usbmain.h>
 #include <ppc/timebase.h>
 #include <sys/iosupport.h>
- 
+#include <sys/types.h>
+#include <dirent.h>
 #include "emu.h"
 
 #include "config.h"
@@ -59,6 +60,11 @@ static void _SetIso(const char * fname) {
 	fclose(fd);
 }
 
+SEMUInterface::SEMUInterface() {
+	//strcpy(rootdir, "uda:/pcsxr/");
+	strcpy(rootdir, "sda0:/devkit/pcsxr/");
+}
+
 int SEMUInterface::Reset() {
 	EmuReset();
 	return 1;
@@ -84,16 +90,16 @@ int SEMUInterface::Start(const char * filename) {
 
 	strcpy(Config.Bios, "SCPH1001.BIN"); // Use actual BIOS
 	
-	strcpy(Config.BiosDir, "sda0:/pcsxr/bios");
-	strcpy(Config.PatchesDir, "sda0:/pcsxr/patches_/");
+	sprintf(Config.BiosDir, "%s/bios/", rootdir);
+	sprintf(Config.BiosDir, "%s/patches/", rootdir);
+	sprintf(Config.Mcd1, "%s/memcards/card1.mcd", rootdir);
+	sprintf(Config.Mcd2, "%s/memcards/card2.mcd", rootdir);
 
 	Config.PsxAuto = 1; // autodetect system
 	
 	Config.Cpu = CPU_DYNAREC;
 	//Config.Cpu =  CPU_INTERPRETER;
 
-	strcpy(Config.Mcd1, "sda0:/pcsxr/memcards/card1.mcd");
-	strcpy(Config.Mcd2, "sda0:/pcsxr/memcards/card2.mcd");
 	
 	_SetIso(filename);
 	if (LoadPlugins() == 0) {
@@ -146,10 +152,58 @@ static XenosSurface * surf = NULL;
 XenosSurface * SEMUInterface::GetSurface() {
 	if (surf == NULL) {
 		surf = Xe_CreateTexture(g_pVideoDevice, 1280, 720, 0, XE_FMT_8888 | XE_FMT_ARGB, 1);
+		
+		u8 * surfbuf;
+		surfbuf = (u8*) Xe_Surface_LockRect(g_pVideoDevice, surf, 0, 0, 0, 0, XE_LOCK_WRITE);
+		memset(surfbuf, 0xFF, 1280 * 720 * 4);
+		Xe_Surface_Unlock(g_pVideoDevice, surf);
+		
 	}
 	return surf;
 }
 
+void SEMUInterface::SetRootdir(const char * dirname) {
+	strcpy(rootdir, dirname);
+}
+int SEMUInterface::ScanRootdir() {
+	// parse each device and get try to get rootdir
+	int found = 0;
+	/*
+	char path[MAXPATHLEN];
+	char * available_dir[] = {
+		"/pcsxr/", "/devkit/pcsxr/",
+	};
+	
+	for (int idev = 3; idev < STD_MAX; idev++) {
+		if (devoptab_list[idev]->structSize) {
+			// printf("Device found: %s:/\n", devoptab_list[idev]->name);
+			for (int p=0; p<2; p++) {
+				sprintf(path, "%s:%s", devoptab_list[idev]->name, available_dir[p]);
+				printf("look for found: %s\n", path);
+				DIR * dir = opendir (path);
+				if (dir) {				
+					closedir(dir);
+					found = 1;
+					printf("use %s as rootdir\n", path);
+					break;
+				}
+				closedir(dir);				
+			}
+		}
+		if (found) {
+			break;
+		}
+	}
+	if (found) {
+		SetRootdir(path);
+	}
+	*/
+	return found;
+}
+
+extern "C" void systemPoll() {
+	// network_poll();
+}
 
 class SEMUInterface EMUInterface;
 struct SROMInfo ROMInfo;

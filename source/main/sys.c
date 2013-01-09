@@ -64,9 +64,14 @@ static int errval;
 
 void *SysLoadLibrary(const char *lib) {
 	int i;
+	printf("SysLoadLibrary(%s)\n", lib);
 	for (i = 0; i < NUM_PLUGINS; i++)
-		if ((plugins[i].lib != NULL) && (!strcmp(lib, plugins[i].lib))) {
-			return (void*)&plugins[i];
+		if ((plugins[i].lib != NULL)) {
+			printf("Found :%s - %d\n", plugins[i].lib, strcmp(lib, plugins[i].lib));
+			if ((strcmp(lib, plugins[i].lib) == 0)) {
+				printf("Found !!\n");
+				return (void*)&plugins[i];
+			}
 		}
 	return NULL;
 }

@@ -112,7 +112,10 @@ struct SROMInfo {
 
 // Emu interface
 class SEMUInterface {
+private:
+	char rootdir[MAXPATHLEN];
 public:
+	SEMUInterface();
 	int Reset();
 	int Resume();
 	int Pause();
@@ -122,6 +125,8 @@ public:
 	int SaveStates(const char * filename);
 	int LoadMCD(const char * filename);
 	int SaveMCD(const char * filename);
+	void SetRootdir(const char * dirname);
+	int ScanRootdir();
 	XenosSurface * GetSurface();
 };
 

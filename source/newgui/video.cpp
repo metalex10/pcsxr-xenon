@@ -74,6 +74,10 @@ typedef struct {
         float u, v; // 48
 } __attribute__((packed)) DrawVerticeFormats;
 
+extern "C" struct XenosDevice * getVideoDevice(){
+    return g_pVideoDevice;
+}
+
 // Init Matrices
 void InitMatrices() {
         matrix4x4 WVP;

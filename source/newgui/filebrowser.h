@@ -20,6 +20,13 @@
 #define MAXJOLIET 255
 #define MAX_BROWSER_SIZE	1000
 
+typedef struct {
+	struct {		
+		char path[32][8];
+		int nbr;
+	} load, save;
+} DEVICES_INFO;
+
 typedef struct
 {
 	char dir[MAXPATHLEN + 1]; // directory path of browserList
@@ -41,6 +48,7 @@ typedef struct
 
 extern BROWSERINFO browser;
 extern BROWSERENTRY * browserList;
+extern DEVICES_INFO devsinfo;
 
 enum
 {

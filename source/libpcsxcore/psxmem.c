@@ -330,9 +330,9 @@ void psxMemWrite32(u32 mem, u32 value) {
 						for (i = 0; i < 0x80; i++) psxMemWLUT[i + 0x0000] = (void *)&psxM[(i & 0x1f) << 16];
 						memcpy(psxMemWLUT + 0x8000, psxMemWLUT, 0x80 * sizeof(void *));
 						memcpy(psxMemWLUT + 0xa000, psxMemWLUT, 0x80 * sizeof(void *));
-
+#ifdef PSXMEM_LOG
 						PSXMEM_LOG("psxMemWrite32 %8.8lx = %x\n", mem, value);
-
+#endif
 						break;
 					default:
 #ifdef PSXMEM_LOG

@@ -136,7 +136,7 @@ WindowPrompt(const char *title, const char *msg, const char *btn1Label, const ch
 	GuiImage dialogBoxImg(&dialogBox);
 
 	GuiText titleTxt(title, 26, (GXColor) {
-		70, 70, 10, 255
+		210, 210, 210, 255
 	});
 	titleTxt.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
 	titleTxt.SetPosition(0, 14);
@@ -3134,7 +3134,7 @@ static int MenuSettings() {
 	menuBtn.SetTrigger(trigA);
 	menuBtn.SetTrigger(trig2);
 	menuBtn.SetEffectGrow();
-
+/*
 	GuiText networkBtnTxt("Network", 22, (GXColor) {
 		0, 0, 0, 255
 	});
@@ -3154,7 +3154,7 @@ static int MenuSettings() {
 	networkBtn.SetTrigger(trigA);
 	networkBtn.SetTrigger(trig2);
 	networkBtn.SetEffectGrow();
-
+*/
 	GuiText backBtnTxt("Go Back", 22, (GXColor) {
 		0, 0, 0, 255
 	});
@@ -3194,7 +3194,9 @@ static int MenuSettings() {
 	w.Append(&titleTxt);
 	w.Append(&savingBtn);
 	w.Append(&menuBtn);
+	#if 0
 	w.Append(&networkBtn);
+	#endif
 	w.Append(&backBtn);
 	w.Append(&resetBtn);
 
@@ -3210,8 +3212,10 @@ static int MenuSettings() {
 			menu = MENU_SETTINGS_FILE;
 		} else if (menuBtn.GetState() == STATE_CLICKED) {
 			menu = MENU_SETTINGS_MENU;
+			/*
 		} else if (networkBtn.GetState() == STATE_CLICKED) {
 			menu = MENU_SETTINGS_NETWORK;
+		*/
 		} else if (backBtn.GetState() == STATE_CLICKED) {
 			menu = MENU_GAMESELECTION;
 		} else if (resetBtn.GetState() == STATE_CLICKED) {
@@ -3338,53 +3342,15 @@ static int MenuSettingsFile() {
 
 		if (ret >= 0 || firstRun) {
 			firstRun = false;
-
-			// some load/save methods are not implemented - here's where we skip them
-			// they need to be skipped in the order they were enumerated
-
-			// no SD/USB ports on GameCube
-#ifdef HW_DOL
-			if (EMUSettings.LoadMethod == DEVICE_SD)
-				EMUSettings.LoadMethod++;
-			if (EMUSettings.SaveMethod == DEVICE_SD)
-				EMUSettings.SaveMethod++;
-			if (EMUSettings.LoadMethod == DEVICE_USB)
-				EMUSettings.LoadMethod++;
-			if (EMUSettings.SaveMethod == DEVICE_USB)
-				EMUSettings.SaveMethod++;
-#endif
-
-			// saving to DVD is impossible
-			if (EMUSettings.SaveMethod == DEVICE_DVD)
-				EMUSettings.SaveMethod++;
-
-			// don't allow SD Gecko on Wii
-#ifdef HW_RVL
-			if (EMUSettings.LoadMethod == DEVICE_SD_SLOTA)
-				EMUSettings.LoadMethod++;
-			if (EMUSettings.SaveMethod == DEVICE_SD_SLOTA)
-				EMUSettings.SaveMethod++;
-			if (EMUSettings.LoadMethod == DEVICE_SD_SLOTB)
-				EMUSettings.LoadMethod++;
-			if (EMUSettings.SaveMethod == DEVICE_SD_SLOTB)
-				EMUSettings.SaveMethod++;
-#endif
-
+			
 			// correct load/save methods out of bounds
-			if (EMUSettings.LoadMethod > 6)
+			if (EMUSettings.LoadMethod >= devsinfo.load.nbr)
 				EMUSettings.LoadMethod = 0;
-			if (EMUSettings.SaveMethod > 6)
+			if (EMUSettings.SaveMethod >= devsinfo.save.nbr)
 				EMUSettings.SaveMethod = 0;
 
-			if (EMUSettings.LoadMethod == DEVICE_AUTO) sprintf(options.value[0], "Auto Detect");
-			else if (EMUSettings.LoadMethod == DEVICE_USB) sprintf(options.value[0], "USB");
-			else if (EMUSettings.LoadMethod == DEVICE_DVD) sprintf(options.value[0], "DVD");
-			else if (EMUSettings.LoadMethod == DEVICE_SMB) sprintf(options.value[0], "Network");
-			else if (EMUSettings.LoadMethod == DEVICE_HDD) sprintf(options.value[0], "Hard Disc Drive");
-
-			if (EMUSettings.SaveMethod == DEVICE_AUTO) sprintf(options.value[1], "Auto Detect");
-			else if (EMUSettings.SaveMethod == DEVICE_USB) sprintf(options.value[1], "USB");
-			else if (EMUSettings.SaveMethod == DEVICE_SMB) sprintf(options.value[1], "Network");
+			sprintf(options.value[0], devsinfo.load.path[EMUSettings.LoadMethod]);
+			sprintf(options.value[1], devsinfo.save.path[EMUSettings.SaveMethod]);
 
 			snprintf(options.value[2], 35, "%s", EMUSettings.LoadFolder);
 			snprintf(options.value[3], 35, "%s", EMUSettings.SaveFolder);
