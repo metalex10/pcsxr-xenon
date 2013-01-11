@@ -40,7 +40,6 @@ GUI_FLAGS	:=  -DUSE_GUI
 TARGET		:=  $(notdir $(CURDIR))
 BUILD		:=  build
 
-MCHK = -Wl,-wrap,malloc  -Wl,-wrap,memalign -Wl,-wrap,realloc -Wl,-wrap,calloc -Wl,-wrap,free -DMCHK
 
 #SOURCES		:=  source/shaders lib/zlib source/libpcsxcore_df source/main  source/main/usb source/plugins/xenon_input source/plugins/xenon_audio_repair source/fakegl   source/plugins/cdr   source/plugins/xenon_gfx source/ppc #  source/plugins/gxvideo # source/dynarec
 PLUGINS_GPU	:=  source/plugins/peopsxgl source/plugins/xenon_gfx source/plugins/peopsxgl_cleanup
@@ -59,14 +58,17 @@ INCLUDES	:=  shaders include lib/zlib source/libpcsxcore $(GUI_INC)
 # options for code generation
 #---------------------------------------------------------------------------------
 ASFLAGS	= -Wa,$(INCLUDE) -Wa,-a32
-# CFLAGS	= -ffunction-sections -fdata-sections -g -O4 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS)
 
-CFLAGS	=  $(MCHK) -ffunction-sections -fdata-sections -g -O0 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS)
+
+MCHK = -Wl,-wrap,malloc  -Wl,-wrap,memalign -Wl,-wrap,realloc -Wl,-wrap,calloc -Wl,-wrap,free -DMCHK
+
+CFLAGS	= -ffunction-sections -fdata-sections -g -O4 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS)
+#CFLAGS	=  $(MCHK) -ffunction-sections -fdata-sections -g -O0 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS)
 
 CXXFLAGS	=	$(CFLAGS)
 
-# LDFLAGS	=	-g $(MACHDEP) -Wl,--gc-sections -Wl,-Map,$(notdir $@).map
-LDFLAGS	=	-g $(MCHK) $(MACHDEP) -Wl,--gc-sections -Wl,-Map,$(notdir $@).map
+LDFLAGS	=	-g $(MACHDEP) -Wl,--gc-sections -Wl,-Map,$(notdir $@).map
+# LDFLAGS	=	-g $(MCHK) $(MACHDEP) -Wl,--gc-sections -Wl,-Map,$(notdir $@).map
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
@@ -152,7 +154,7 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile -j4
 
 #---------------------------------------------------------------------------------
 clean:

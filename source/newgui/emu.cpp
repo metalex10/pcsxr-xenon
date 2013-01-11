@@ -39,6 +39,9 @@
 #include "sio.h"
 #include "misc.h"
 
+extern "C" int cpuRunning;
+extern "C" int pcsx_run_gui;
+
 static void _SetIso(const char * fname) {
 	FILE *fd = fopen(fname, "rb");
 	if (fd == NULL) {
@@ -66,16 +69,23 @@ SEMUInterface::SEMUInterface() {
 }
 
 int SEMUInterface::Reset() {
+	cpuRunning = 1;
 	EmuReset();
 	return 1;
 }
 
-int SEMUInterface::Resume() {
+int SEMUInterface::ConfigRequested() {
+	int need_config = pcsx_run_gui;
+	pcsx_run_gui = 0;
+	return need_config;
+}
+
+int SEMUInterface::ResetRequested() {
 	return -1;
 }
 
-int SEMUInterface::Pause() {
-	return -1;
+void SEMUInterface::Step() {
+	psxCpu->ExecuteBlock();
 }
 
 int SEMUInterface::Start(const char * filename) {
@@ -100,6 +110,7 @@ int SEMUInterface::Start(const char * filename) {
 	Config.Cpu = CPU_DYNAREC;
 	//Config.Cpu =  CPU_INTERPRETER;
 
+	cpuRunning = 1;
 	
 	_SetIso(filename);
 	if (LoadPlugins() == 0) {
@@ -119,15 +130,20 @@ int SEMUInterface::Start(const char * filename) {
 			CheckCdrom();
 			LoadCdrom();
 
-			psxCpu->Execute();
+			//psxCpu->Execute();
 		}
 	}
 	
-	return 0;
+	return 1;
+}
+
+int SEMUInterface::Running() {
+	return cpuRunning;
 }
 
 int SEMUInterface::PowerOff() {
-	return -1;
+	cpuRunning = 0;
+	return cpuRunning;
 }
 
 int SEMUInterface::LoadStates(const char * filename) {

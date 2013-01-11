@@ -407,8 +407,6 @@ int BrowserLoadFile()
 	if(!FindDevice(browser.dir, &device))
 		return 0;
 
-	GetFileSize(browser.selIndex);
-
 	// check that this is a valid ROM
 	if(!IsValidROM())
 		goto done;
@@ -421,7 +419,7 @@ int BrowserLoadFile()
 	else if (EMUSettings.AutoLoad == 2)
 		LoadSnapshotAuto(SILENT);
 	
-	if (EMUInterface.Start(loadingfile) == 0) {
+	if (EMUInterface.Start(loadingfile)) {
 		ResetBrowser();
 		loaded = 1;
 	} else {

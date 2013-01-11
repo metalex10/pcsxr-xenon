@@ -52,11 +52,7 @@ void PSxInputReadPort(PadDataS* pad, int port) {
         if(old[port].logo){
             reset_time++;
             if(reset_time>50){
-                if (g.PadState[port].JoyDev.back){
-                        exit(0);//return to xell
-                }else{
-                        enableCapture();
-                }
+                SysRunGui();
             }
         }
         else{

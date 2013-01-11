@@ -31,6 +31,8 @@
 R3000Acpu *psxCpu = NULL;
 psxRegisters psxRegs;
 
+int cpuRunning = 1;
+
 int psxInit() {
 	SysPrintf(_("Running PCSXR Version %s (%s).\n"), PACKAGE_VERSION, __DATE__);
 

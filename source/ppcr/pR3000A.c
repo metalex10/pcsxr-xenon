@@ -38,7 +38,7 @@
 int do_disasm = 0;
 static int force_disasm = 0;
 
-static int cpu_running = 0;
+extern int cpuRunning;
 
 void DCFlushRange(void* startaddr, unsigned int len) {
     if (len == 0) return;
@@ -776,8 +776,6 @@ static int allocMem() {
 int recInit() {
     
 	recInitDynaMemVM();
-	
-	cpu_running=1;
     return allocMem();
 }
 
@@ -796,9 +794,6 @@ void recReset() {
 }
 
 static void recShutdown() {
-    cpu_running=0;
-    //ppcShutdown();
-
 	recDestroyDynaMemVM();
 	
 }
@@ -825,8 +820,7 @@ __inline static void execute() {
 }
 
 void recExecute() {
-    cpu_running=1;
-    while (cpu_running) 
+    while (cpuRunning) 
         execute();
 }
 

@@ -3640,7 +3640,7 @@ MainMenu(int menu) {
 	if (currentMenu == MENU_GAMESELECTION) bgMusic->Play(); // startup music
 #endif
 
-	while (currentMenu != MENU_EXIT || SNESROMSize <= 0) {
+	while (currentMenu != MENU_EXIT || EMUInterface.Running() <= 0) {
 		switch (currentMenu) {
 			case MENU_GAMESELECTION:
 				currentMenu = MenuGameSelection();

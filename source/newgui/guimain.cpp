@@ -113,28 +113,8 @@ int main(int argc, char *argv[])
 	mount_all();
 #if 0
 	DefaultSettings (); // Set defaults
-	S9xUnmapAllControls ();
-	SetDefaultButtonMap ();
-
-	// Allocate SNES Memory
-	if (!Memory.Init ())
-		ExitApp();
-
-	// Allocate APU
-	if (!S9xInitAPU ())
-		ExitApp();
-
-	S9xSetRenderPixelFormat (RGB565); // Set Pixel Renderer to match 565
-	S9xInitSound (64, 0); // Initialise Sound System
-
-	// Initialise Graphics
-	//setGFX ();
-	if (!S9xGraphicsInit ())
-		ExitApp();
-	
-	//AllocGfxMem();
-	S9xInitSync(); // initialize frame sync
 #endif
+
 	InitFreeType((u8*)font_ttf, font_ttf_size); // Initialize font system
 	
 	savebuffer = (unsigned char *)malloc(SAVEBUFFERSIZE);
@@ -144,12 +124,13 @@ int main(int argc, char *argv[])
 	LoadLanguage();
 	
 	EMUInterface.ScanRootdir();
-
+	EMUInterface.PowerOff();
+	
 	while (1) // main loop
 	{
 		ResumeDeviceThread();
 
-		if(SNESROMSize == 0)
+		if(EMUInterface.Running() == 0)
 			MainMenu(MENU_GAMESELECTION);
 		else
 			MainMenu(MENU_GAME);
@@ -157,12 +138,17 @@ int main(int argc, char *argv[])
 		ConfigRequested = 0;
 		ScreenshotRequested = 0;
 
-		// stop checking if devices were removed/inserted
-		// since we're starting emulation again
-		HaltDeviceThread();
-
 		while(1) // emulation loop
 		{
+			EMUInterface.Step();
+			
+			if (EMUInterface.ResetRequested() > 0) {
+				EMUInterface.Reset();
+			}
+			if (EMUInterface.ConfigRequested() > 0) {			
+				ResetVideo_Menu();
+				break;
+			}
 #if 0
 			S9xMainLoop ();
 			ReportButtons ();

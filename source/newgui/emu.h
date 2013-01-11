@@ -117,9 +117,11 @@ private:
 public:
 	SEMUInterface();
 	int Reset();
-	int Resume();
-	int Pause();
+	int ConfigRequested();
+	int ResetRequested();
+	int Running();
 	int Start(const char * filename);
+	void Step();
 	int PowerOff();
 	int LoadStates(const char * filename);
 	int SaveStates(const char * filename);

@@ -33,6 +33,7 @@
 static int branch = 0;
 static int branch2 = 0;
 static u32 branchPC;
+extern int cpuRunning;
 
 // These macros are used to assemble the repassembler functions
 
@@ -1010,7 +1011,7 @@ static void intReset() {
 static void intExecute() {
     do {
         execI();
-	} while(1);
+	} while(cpuRunning);
 }
 
 static void intExecuteBlock() {

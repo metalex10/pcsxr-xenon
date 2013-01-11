@@ -106,6 +106,10 @@ void SysUpdate() {
 
 }
 
-void SysRunGui() {
+int pcsx_run_gui = 0;
 
+void SysRunGui() {
+#ifdef USE_GUI
+	pcsx_run_gui = 1;
+#endif
 }
