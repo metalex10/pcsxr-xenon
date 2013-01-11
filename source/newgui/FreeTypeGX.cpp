@@ -90,7 +90,7 @@ static wchar_t *UTF8_to_UNICODE(wchar_t *unicode, const char *utf8, int len) {
 }
 
 wchar_t* charToWideChar(const char* strChar) {
-        wchar_t *strWChar = new wchar_t[strlen(strChar) + 1];
+        wchar_t *strWChar = (wchar_t *)malloc((strlen(strChar) + 1) * sizeof(wchar_t));
         if (!strWChar)
                 return NULL;
         

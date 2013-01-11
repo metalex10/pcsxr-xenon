@@ -71,7 +71,7 @@ void ClearFontData() {
  */
 
 wchar_t* charToWideChar(const char* strChar) {
-    wchar_t *strWChar = new wchar_t[strlen(strChar) + 1];
+    wchar_t *strWChar = (wchar_t *) malloc(strlen(strChar) + 1);
     if (!strWChar)
         return NULL;
 

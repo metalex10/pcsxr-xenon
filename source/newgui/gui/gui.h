@@ -63,6 +63,7 @@ extern FreeTypeGX *fontSystem[];
 #define MAX_SAVES 				100
 #define MAX_OPTIONS 			150
 #define MAX_KEYBOARD_DISPLAY	32
+#define MAX_CHAR_LEN			100
 
 typedef void (*UpdateCallback)(void * e);
 
@@ -695,10 +696,10 @@ class GuiText : public GuiElement
 		void Draw();
 	protected:
 		GXColor color; //!< Font color
-		wchar_t* text; //!< Translated Unicode text value
-		wchar_t *textDyn[20]; //!< Text value, if max width, scrolling, or wrapping enabled
+		wchar_t text[MAX_CHAR_LEN]; //!< Translated Unicode text value
+		wchar_t textDyn[20][MAX_CHAR_LEN]; //!< Text value, if max width, scrolling, or wrapping enabled
 		int textDynNum; //!< Number of text lines
-		char * origText; //!< Original text data (English)
+		char origText[MAX_CHAR_LEN]; //!< Original text data (English)
 		int size; //!< Font size
 		int maxWidth; //!< Maximum width of the generated text object (for text wrapping)
 		int textScroll; //!< Scrolling toggle

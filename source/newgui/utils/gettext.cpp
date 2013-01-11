@@ -203,6 +203,7 @@ static char * memfgets(char * dst, int maxlen, char * src)
 
 bool LoadLanguage()
 {
+	return false;
 	char line[200];
 	char *lastID = NULL;
 	
@@ -281,11 +282,13 @@ bool LoadLanguage()
 
 const char *gettext(const char *msgid)
 {
+/*
 	MSG *msg = findMSG(hash_string(msgid));
 
 	if (msg && msg->msgstr)
 	{
 		return msg->msgstr;
 	}
+	*/
 	return msgid;
 }
