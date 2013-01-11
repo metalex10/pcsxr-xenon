@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <unistd.h>
 #include <xenos/xenos.h>
 #include <xenos/xe.h>
 #include <xenon_sound/sound.h>
@@ -19,7 +19,6 @@
 #define BP {printf("[Breakpoint] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);getch();}
 #define TR {printf("[Trace] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);}
 
-#define MAXPATHLEN 256
 #define PACKAGE_VERSION "1.9"
 #define PREFIX "./"
 

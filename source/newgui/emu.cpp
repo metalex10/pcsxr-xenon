@@ -91,7 +91,7 @@ int SEMUInterface::Start(const char * filename) {
 	strcpy(Config.Bios, "SCPH1001.BIN"); // Use actual BIOS
 	
 	sprintf(Config.BiosDir, "%s/bios/", rootdir);
-	sprintf(Config.BiosDir, "%s/patches/", rootdir);
+	sprintf(Config.PatchesDir, "%s/patches/", rootdir);
 	sprintf(Config.Mcd1, "%s/memcards/card1.mcd", rootdir);
 	sprintf(Config.Mcd2, "%s/memcards/card2.mcd", rootdir);
 
@@ -168,7 +168,6 @@ void SEMUInterface::SetRootdir(const char * dirname) {
 int SEMUInterface::ScanRootdir() {
 	// parse each device and get try to get rootdir
 	int found = 0;
-	/*
 	char path[MAXPATHLEN];
 	char * available_dir[] = {
 		"/pcsxr/", "/devkit/pcsxr/",
@@ -197,7 +196,6 @@ int SEMUInterface::ScanRootdir() {
 	if (found) {
 		SetRootdir(path);
 	}
-	*/
 	return found;
 }
 
