@@ -1374,9 +1374,9 @@ static int MenuGame() {
 				//				gameScreenPng = NULL;
 
 				gameScreenImg = new GuiImage(screenwidth, screenheight, (GXColor) {
-					175, 200, 215, 255
+					255, 255, 255, 255
 				});
-				gameScreenImg->ColorStripe(10);
+				// gameScreenImg->ColorStripe(10);
 				mainWindow->Insert(gameScreenImg, 0);
 				ResumeGui();
 #ifndef NO_SOUND
@@ -1580,8 +1580,6 @@ static int MenuGameSaves(int action) {
 				strftime(saves.time[j], 10, "%I:%M %p", timeinfo);
 			}
 			j++;
-		} else {
-			printf("%d FindGameSaveNum %s %d\n", n, tmp, device);
 		}
 	}
 

@@ -48,16 +48,7 @@ void PSxInputReadPort(PadDataS* pad, int port) {
     }
 
     if (g.PadState[port].JoyDev.logo) {
-       // exit(0);
-        if(old[port].logo){
-            reset_time++;
-            if(reset_time>50){
-                SysRunGui();
-            }
-        }
-        else{
-            reset_time = 0;
-        }
+		SysRunGui();
     }
  
     pad->controllerType = g.cfg.PadDef[port].Type; // Standard Pad

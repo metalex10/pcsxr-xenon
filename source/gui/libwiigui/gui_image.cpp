@@ -243,7 +243,7 @@ void GuiImage::Draw() {
     } else {
         Menu_DrawImg(currLeft, thisTop, width, height, image, imageangle, currScaleX, currScaleY, this->GetAlpha());
     }
-
+/*
     if (stripe > 0) {
         int thisHeight = this->GetHeight();
         int thisWidth = this->GetWidth();
@@ -252,5 +252,6 @@ void GuiImage::Draw() {
             Menu_DrawRectangle(currLeft, thisTop + y, thisWidth, 3, (XeColor) {
                 stripe, 0, 0, 0}, 1);
     }
+	*/
     this->UpdateEffects();
 }
