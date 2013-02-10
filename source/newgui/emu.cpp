@@ -14,6 +14,7 @@
  * This file controls overall program flow. Most things start and end here!
  ***************************************************************************/
 #include <unistd.h>
+#include <libgen.h>
 #include <xenos/xenos.h>
 #include <xenos/xe.h>
 #include <xenon_sound/sound.h>
@@ -30,6 +31,8 @@
 #include <sys/iosupport.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <string>
+#include <vector>
 #include "emu.h"
 
 #include "config.h"
@@ -39,8 +42,32 @@
 #include "sio.h"
 #include "misc.h"
 
+extern struct XenosDevice * g_pVideoDevice;
 extern "C" int cpuRunning;
 extern "C" int pcsx_run_gui;
+
+char *basename(char *path)
+{
+    static char base[PATH_MAX];
+    char *end;
+
+    strcpy(base,".");
+
+    if (path == NULL || *path == '\0')
+        return base;
+
+    if ((end = strrchr(path, '/')) != NULL);
+    else if ((end = strrchr(path, '\\')) != NULL);
+    else if ((end = strrchr(path, ':')) != NULL);
+    else { strcpy(base,path); return base; }
+
+    end++;
+
+    if (*end != '\0')
+        strcpy(base,end);
+
+    return base;
+}
 
 static void _SetIso(const char * fname) {
 	FILE *fd = fopen(fname, "rb");
@@ -64,7 +91,7 @@ static void _SetIso(const char * fname) {
 }
 
 SEMUInterface::SEMUInterface() {
-	//strcpy(rootdir, "uda:/pcsxr/");
+	// Default dir
 	strcpy(rootdir, "sda0:/devkit/pcsxr/");
 }
 
@@ -77,6 +104,10 @@ int SEMUInterface::Reset() {
 int SEMUInterface::ConfigRequested() {
 	int need_config = pcsx_run_gui;
 	pcsx_run_gui = 0;
+	if (need_config) {
+		// disable scissor ! will be renabled by the gpu
+		g_pVideoDevice->scissor_enable = 0;
+	}
 	return need_config;
 }
 
@@ -97,7 +128,6 @@ int SEMUInterface::Start(const char * filename) {
 	strcpy(Config.Spu, "SPU");
 	strcpy(Config.Pad1, "PAD1");
 	strcpy(Config.Pad2, "PAD2");
-
 	strcpy(Config.Bios, "SCPH1001.BIN"); // Use actual BIOS
 	
 	sprintf(Config.BiosDir, "%s/bios/", rootdir);
@@ -105,12 +135,18 @@ int SEMUInterface::Start(const char * filename) {
 	sprintf(Config.Mcd1, "%s/memcards/card1.mcd", rootdir);
 	sprintf(Config.Mcd2, "%s/memcards/card2.mcd", rootdir);
 
+	Config.SlowBoot = 1;
 	Config.PsxAuto = 1; // autodetect system
 	
 	Config.Cpu = CPU_DYNAREC;
 	//Config.Cpu =  CPU_INTERPRETER;
 
 	cpuRunning = 1;
+	
+	strcpy(ROMInfo.filename, filename);
+	strcpy(ROMInfo.diplayname, basename((char*) filename));
+	
+	printf("Loading %s!\n", filename);
 	
 	_SetIso(filename);
 	if (LoadPlugins() == 0) {
@@ -131,10 +167,12 @@ int SEMUInterface::Start(const char * filename) {
 			LoadCdrom();
 
 			//psxCpu->Execute();
+			SysReset();
+			return 1;
 		}
 	}
-	
-	return 1;
+	printf("Plugin error !\n");
+	return -1;
 }
 
 int SEMUInterface::Running() {
@@ -147,18 +185,25 @@ int SEMUInterface::PowerOff() {
 }
 
 int SEMUInterface::LoadStates(const char * filename) {
-	return -1;
+	printf("LoadStates: %s\n", filename);
+	return LoadState(filename)==0;
 }
 
 int SEMUInterface::SaveStates(const char * filename) {
-	return -1;
+	printf("SaveStates: %s\n", filename);
+	return SaveState(filename)==0;
 }
 
 int SEMUInterface::LoadMCD(const char * filename) {
-	return -1;
+	strcpy(Config.Mcd1, filename);
+	LoadMcd(1, Config.Mcd1);
+
+	return 0;
 }
 
 int SEMUInterface::SaveMCD(const char * filename) {
+	//strcpy(Config.Mcd1, filename);
+	//LoadMcd(1, filename)
 	return -1;
 }
 
@@ -185,15 +230,16 @@ int SEMUInterface::ScanRootdir() {
 	// parse each device and get try to get rootdir
 	int found = 0;
 	char path[MAXPATHLEN];
-	char * available_dir[] = {
-		"/pcsxr/", "/devkit/pcsxr/",
-	};
+	std::vector<std::string> available_dir;
+	
+	// @todo parse from config !
+	available_dir.push_back("/pcsxr/");
+	available_dir.push_back("/devkit/pcsxr/");
 	
 	for (int idev = 3; idev < STD_MAX; idev++) {
 		if (devoptab_list[idev]->structSize) {
-			// printf("Device found: %s:/\n", devoptab_list[idev]->name);
-			for (int p=0; p<2; p++) {
-				sprintf(path, "%s:%s", devoptab_list[idev]->name, available_dir[p]);
+			for (int p=0; p<available_dir.size(); p++) {
+				sprintf(path, "%s:%s", devoptab_list[idev]->name, available_dir[p].c_str());
 				printf("look for found: %s\n", path);
 				DIR * dir = opendir (path);
 				if (dir) {				

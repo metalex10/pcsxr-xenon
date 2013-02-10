@@ -49,25 +49,7 @@ bool loadingFile = false;
 ****************************************************************************/
 int autoLoadMethod()
 {
-	ShowAction ("Attempting to determine load device...");
 	int device  = 0;
-#if 0
-	int device = DEVICE_AUTO;
-	if(ChangeInterface(DEVICE_USB, SILENT))
-		device = DEVICE_USB;
-	else if(ChangeInterface(DEVICE_HDD, SILENT))
-		device = DEVICE_HDD;
-	else if(ChangeInterface(DEVICE_DVD, SILENT))
-		device = DEVICE_DVD;
-	else if(ChangeInterface(DEVICE_SMB, SILENT))
-		device = DEVICE_SMB;
-	else
-		ErrorPrompt("Unable to locate a load device!");
-
-	if(EMUSettings.LoadMethod == DEVICE_AUTO)
-		EMUSettings.LoadMethod = device; // save device found for later use
-#endif
-	CancelAction();
 	return device;
 }
 
@@ -78,27 +60,7 @@ int autoLoadMethod()
 ****************************************************************************/
 int autoSaveMethod(bool silent)
 {
-	if(!silent)
-		ShowAction ("Attempting to determine save device...");
 	int device  = 0;
-#if 0
-	int device = DEVICE_AUTO;
-
-	if(ChangeInterface(DEVICE_USB, SILENT))
-		device = DEVICE_USB;
-	else if(ChangeInterface(DEVICE_HDD, SILENT))
-		device = DEVICE_HDD;
-	else if(ChangeInterface(DEVICE_DVD, SILENT))
-		device = DEVICE_DVD;
-	else if(ChangeInterface(DEVICE_SMB, SILENT))
-		device = DEVICE_SMB;
-	else if(!silent)
-		ErrorPrompt("Unable to locate a save device!");
-
-	if(EMUSettings.SaveMethod == DEVICE_AUTO)
-		EMUSettings.SaveMethod = device; // save device found for later use
-#endif
-	CancelAction();
 	return device;
 }
 
@@ -238,6 +200,12 @@ bool MakeFilePath(char filepath[], int type, char * filename, int filenum)
 	char folder[1024];
 	char ext[4];
 	char temppath[MAXPATHLEN];
+	
+	if (filepath == NULL) {
+		return false;
+	}
+	
+	printf("Makefile path for [filename]%s - [type]%d - [filenum]%d\n", filename, type,  filenum);
 
 	if(type == FILE_ROM)
 	{
@@ -255,17 +223,13 @@ bool MakeFilePath(char filepath[], int type, char * filename, int filenum)
 	}
 	else
 	{
-		if(EMUSettings.SaveMethod == DEVICE_AUTO)
-			EMUSettings.SaveMethod = autoSaveMethod(SILENT);
-
-		if(EMUSettings.SaveMethod == DEVICE_AUTO)
-			return false;
-
+		// char  * savename = strchr(filename, '/') + 1;
+		char  * savename = filename;
 		switch(type)
 		{
 			case FILE_SRAM:
 			case FILE_SNAPSHOT:
-				sprintf(folder, EMUSettings.SaveFolder);
+				sprintf(folder, "%s%s", devsinfo.save.path[EMUSettings.SaveMethod], EMUSettings.SaveFolder);
 
 				if(type == FILE_SRAM) sprintf(ext, "srm");
 				else sprintf(ext, "frz");
@@ -273,23 +237,23 @@ bool MakeFilePath(char filepath[], int type, char * filename, int filenum)
 				if(filenum >= -1)
 				{
 					if(filenum == -1)
-						sprintf(file, "%s.%s", filename, ext);
+						sprintf(temppath, "%s%s.%s", folder, savename, ext);
 					else if(filenum == 0)
-						sprintf(file, "%s Auto.%s", filename, ext);
+						sprintf(temppath, "%s%s Auto.%s", folder, savename, ext);
 					else
-						sprintf(file, "%s %i.%s", filename, filenum, ext);
+						sprintf(temppath, "%s%s %i.%s", folder, savename, filenum, ext);
 				}
 				else
 				{
-					sprintf(file, "%s", filename);
+					sprintf(temppath, "%s%s", folder, savename);
 				}
+				printf("temppath:%s\n", temppath);
+				printf("folder:%s\n", folder);
 				break;
 			case FILE_CHEAT:
-				sprintf(folder, EMUSettings.CheatFolder);
-				sprintf(file, "%s.cht", ROMInfo.filename);
+				sprintf(temppath, "%s%s.cht", folder, savename);
 				break;
 		}
-		sprintf (temppath, "%s%s/%s", pathPrefix[EMUSettings.SaveMethod], folder, file);
 	}
 	CleanupPath(temppath); // cleanup path
 	snprintf(filepath, MAXPATHLEN, "%s", temppath);
@@ -344,7 +308,8 @@ static bool IsValidROM()
 				if (stricmp(p, ".iso") == 0 ||
 					stricmp(p, ".bin") == 0 ||
 					stricmp(p, ".nrg") == 0 ||
-					stricmp(p, ".ccd") == 0)
+					stricmp(p, ".ccd") == 0 ||
+					stricmp(p, ".cue") == 0)
 				{
 					return true;
 				}
@@ -352,24 +317,6 @@ static bool IsValidROM()
 		}
 	}
 	ErrorPrompt("Unknown file type!");
-	return false;
-}
-
-/****************************************************************************
- * IsSz
- *
- * Checks if the specified file is a 7z
- ***************************************************************************/
-bool IsSz()
-{
-	if (strlen(browserList[browser.selIndex].filename) > 4)
-	{
-		char * p = strrchr(browserList[browser.selIndex].filename, '.');
-
-		if (p != NULL)
-			if(stricmp(p, ".7z") == 0)
-				return true;
-	}
 	return false;
 }
 
@@ -404,25 +351,29 @@ int BrowserLoadFile()
 	int loaded = 0;
 	int device;
 
-	if(!FindDevice(browser.dir, &device))
+	if(!FindDevice(browser.dir, &device)) {
+		printf("Device not found !\n");
 		return 0;
+	}
 
 	// check that this is a valid ROM
 	if(!IsValidROM())
 		goto done;
 
-	MakeFilePath(loadingfile, FILE_ROM, NULL, 0);
+	if (MakeFilePath(loadingfile, FILE_ROM, NULL, 0)) {	
+		// load SRAM or snapshot
+		if (EMUSettings.AutoLoad == 1)
+			LoadSRAMAuto(SILENT);
+		else if (EMUSettings.AutoLoad == 2)
+			LoadSnapshotAuto(SILENT);
+		
+		if (EMUInterface.Start(loadingfile)) {
+			ResetBrowser();
+			loaded = 1;
+		}
+	}
 	
-	// load SRAM or snapshot
-	if (EMUSettings.AutoLoad == 1)
-		LoadSRAMAuto(SILENT);
-	else if (EMUSettings.AutoLoad == 2)
-		LoadSnapshotAuto(SILENT);
-	
-	if (EMUInterface.Start(loadingfile)) {
-		ResetBrowser();
-		loaded = 1;
-	} else {
+	if (loaded == 0) {
 		ErrorPrompt("Error loading game!");
 	}
 done:
@@ -457,7 +408,7 @@ int BrowserChangeFolder()
 		browser.dir[0] = 0;
 		int i=0;
 		
-		devsinfo.save.nbr = devsinfo.load.nbr = 0;
+		devsinfo.save.nbr = 0;
 		
 		for (int idev = 3; idev < STD_MAX; idev++) {
 			if (devoptab_list[idev]->structSize) {
@@ -478,14 +429,11 @@ int BrowserChangeFolder()
 				}
 				sprintf(pathPrefix[i], "%s:/", devoptab_list[idev]->name);
 				
+				// add the device to save dev list
 				if (devoptab_list[idev]->write_r != NULL) {
 					sprintf(devsinfo.save.path[devsinfo.save.nbr], "%s:/", devoptab_list[idev]->name);				
 					devsinfo.save.nbr++;
-				}
-				
-				sprintf(devsinfo.load.path[devsinfo.load.nbr], "%s:/", devoptab_list[idev]->name);				
-				devsinfo.load.nbr++;
-				
+				}				
 				i++;
 			}
 		}
@@ -495,15 +443,15 @@ int BrowserChangeFolder()
 	
 	if(browser.dir[0] == 0)
 	{
-		EMUSettings.LoadFolder[0] = 0;
-		EMUSettings.LoadMethod = 0;
+		//EMUSettings.LoadFolder[0] = 0;
+		//EMUSettings.LoadMethod = 0;
 	}
 	else
 	{
 		char * path = StripDevice(browser.dir);
 		if(path != NULL)
-			strcpy(EMUSettings.LoadFolder, path);
-		FindDevice(browser.dir, &EMUSettings.LoadMethod);
+			strcpy(EMUSettings.SaveFolder, path);
+		FindDevice(browser.dir, &EMUSettings.SaveMethod);
 	}
 
 	return browser.numEntries;
@@ -516,16 +464,16 @@ int BrowserChangeFolder()
 int
 OpenGameList ()
 {
-	int device = EMUSettings.LoadMethod;
+	int device = EMUSettings.SaveMethod;
 	
 	//device = DEVICE_USB;
 //
-	if(device == DEVICE_AUTO && strlen(EMUSettings.LoadFolder) > 0)
+	if(device == DEVICE_AUTO && strlen(EMUSettings.SaveFolder) > 0)
 		device = autoLoadMethod();
 
 	// change current dir to roms directory
 	if(device > 0)
-		sprintf(browser.dir, "%s%s/", pathPrefix[device], EMUSettings.LoadFolder);
+		sprintf(browser.dir, "%s%s/", pathPrefix[device], EMUSettings.SaveFolder);
 	else
 		browser.dir[0] = 0;
 		

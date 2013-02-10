@@ -149,22 +149,7 @@ int main(int argc, char *argv[])
 				ResetVideo_Menu();
 				break;
 			}
-#if 0
-			S9xMainLoop ();
-			ReportButtons ();
-
-			if(ResetRequested)
-			{
-				S9xSoftReset (); // reset game
-				ResetRequested = 0;
-			}
-			if (ConfigRequested)
-			{
-				ConfigRequested = 0;
-				ResetVideo_Menu();
-				break;
-			}
-#endif			
+			
 		} // emulation loop
 	} // main loop
 }

@@ -1412,15 +1412,21 @@ static int MenuGame() {
  * Determines the save file number of the given file name
  * Returns -1 if none is found
  ***************************************************************************/
+ #include <libgen.h>
+
 static int FindGameSaveNum(char * savefile, int device) {
 	int n = -1;
-	int romlen = strlen(ROMInfo.filename);
+	int d = 0;
+	int romlen = strlen(ROMInfo.diplayname);
 	int savelen = strlen(savefile);
 
 	int diff = savelen - romlen;
 
-	if (strncmp(savefile, ROMInfo.filename, romlen) != 0)
+	d = strncmp(savefile, ROMInfo.diplayname, romlen);	
+	
+	if (d != 0) {
 		return -1;
+	}
 
 	if (savefile[romlen] == ' ') {
 		if (diff == 5 && strncmp(&savefile[romlen + 1], "Auto", 4) == 0)
@@ -1524,8 +1530,12 @@ static int MenuGameSaves(int action) {
 	ResumeGui();
 
 	memset(&saves, 0, sizeof (saves));
-
-	sprintf(browser.dir, "%s%s", pathPrefix[EMUSettings.SaveMethod], EMUSettings.SaveFolder);
+	
+	// correct load/save methods out of bounds
+	if (EMUSettings.SaveMethod >= devsinfo.save.nbr)
+		EMUSettings.SaveMethod = 0;
+	
+	sprintf(browser.dir, "%s%s", devsinfo.save.path[EMUSettings.SaveMethod], EMUSettings.SaveFolder);
 	ParseDirectory(true, false);
 
 	len = strlen(ROMInfo.diplayname);
@@ -1534,6 +1544,7 @@ static int MenuGameSaves(int action) {
 	AllocSaveBuffer();
 
 	for (i = 0; i < browser.numEntries; i++) {
+		printf("[MenuGameSaves] %s\n", browserList[i].filename);
 		len2 = strlen(browserList[i].filename);
 
 		if (len2 < 6 || len2 - len < 5)
@@ -1556,19 +1567,21 @@ static int MenuGameSaves(int action) {
 			strcpy(saves.filename[j], browserList[i].filename);
 
 			if (saves.type[j] == FILE_SNAPSHOT) {
-				sprintf(scrfile, "%s%s/%s.png", pathPrefix[EMUSettings.SaveMethod], EMUSettings.SaveFolder, tmp);
+				sprintf(scrfile, "%s%s/%s.png", devsinfo.save.path[EMUSettings.SaveMethod], EMUSettings.SaveFolder, tmp);
 
 				memset(savebuffer, 0, SAVEBUFFERSIZE);
 				if (LoadFile(scrfile, SILENT))
 					saves.previewImg[j] = new GuiImageData(savebuffer, 64, 48);
 			}
-			snprintf(filepath, 1024, "%s%s/%s", pathPrefix[EMUSettings.SaveMethod], EMUSettings.SaveFolder, saves.filename[j]);
+			snprintf(filepath, 1024, "%s%s/%s", devsinfo.save.path[EMUSettings.SaveMethod], EMUSettings.SaveFolder, saves.filename[j]);
 			if (stat(filepath, &filestat) == 0) {
 				timeinfo = localtime(&filestat.st_mtime);
 				strftime(saves.date[j], 20, "%a %b %d", timeinfo);
 				strftime(saves.time[j], 10, "%I:%M %p", timeinfo);
 			}
 			j++;
+		} else {
+			printf("%d FindGameSaveNum %s %d\n", n, tmp, device);
 		}
 	}
 
@@ -3248,10 +3261,8 @@ static int MenuSettingsFile() {
 	int i = 0;
 	bool firstRun = true;
 	OptionList options;
-	sprintf(options.name[i++], "Load Device");
-	sprintf(options.name[i++], "Save Device");
-	sprintf(options.name[i++], "Load Folder");
-	sprintf(options.name[i++], "Save Folder");
+	sprintf(options.name[i++], "Save / Load Device");
+	sprintf(options.name[i++], "Save / Load Folder");
 	sprintf(options.name[i++], "Cheats Folder");
 	sprintf(options.name[i++], "Auto Load");
 	sprintf(options.name[i++], "Auto Save");
@@ -3308,32 +3319,24 @@ static int MenuSettingsFile() {
 
 		switch (ret) {
 			case 0:
-				EMUSettings.LoadMethod++;
-				break;
-
-			case 1:
 				EMUSettings.SaveMethod++;
 				break;
 
-			case 2:
-				OnScreenKeyboard(EMUSettings.LoadFolder, MAXPATHLEN);
-				break;
-
-			case 3:
+			case 1:
 				OnScreenKeyboard(EMUSettings.SaveFolder, MAXPATHLEN);
 				break;
 
-			case 4:
+			case 2:
 				OnScreenKeyboard(EMUSettings.CheatFolder, MAXPATHLEN);
 				break;
 
-			case 5:
+			case 3:
 				EMUSettings.AutoLoad++;
 				if (EMUSettings.AutoLoad > 2)
 					EMUSettings.AutoLoad = 0;
 				break;
 
-			case 6:
+			case 4:
 				EMUSettings.AutoSave++;
 				if (EMUSettings.AutoSave > 3)
 					EMUSettings.AutoSave = 0;
@@ -3344,26 +3347,21 @@ static int MenuSettingsFile() {
 			firstRun = false;
 			
 			// correct load/save methods out of bounds
-			if (EMUSettings.LoadMethod >= devsinfo.load.nbr)
-				EMUSettings.LoadMethod = 0;
 			if (EMUSettings.SaveMethod >= devsinfo.save.nbr)
 				EMUSettings.SaveMethod = 0;
 
-			sprintf(options.value[0], devsinfo.load.path[EMUSettings.LoadMethod]);
-			sprintf(options.value[1], devsinfo.save.path[EMUSettings.SaveMethod]);
+			sprintf(options.value[0], devsinfo.save.path[EMUSettings.SaveMethod]);
+			snprintf(options.value[1], 35, "%s", EMUSettings.SaveFolder);
+			snprintf(options.value[2], 35, "%s", EMUSettings.CheatFolder);
 
-			snprintf(options.value[2], 35, "%s", EMUSettings.LoadFolder);
-			snprintf(options.value[3], 35, "%s", EMUSettings.SaveFolder);
-			snprintf(options.value[4], 35, "%s", EMUSettings.CheatFolder);
+			if (EMUSettings.AutoLoad == 0) sprintf(options.value[3], "Off");
+			else if (EMUSettings.AutoLoad == 1) sprintf(options.value[3], "SRAM");
+			else if (EMUSettings.AutoLoad == 2) sprintf(options.value[3], "Snapshot");
 
-			if (EMUSettings.AutoLoad == 0) sprintf(options.value[5], "Off");
-			else if (EMUSettings.AutoLoad == 1) sprintf(options.value[5], "SRAM");
-			else if (EMUSettings.AutoLoad == 2) sprintf(options.value[5], "Snapshot");
-
-			if (EMUSettings.AutoSave == 0) sprintf(options.value[6], "Off");
-			else if (EMUSettings.AutoSave == 1) sprintf(options.value[6], "SRAM");
-			else if (EMUSettings.AutoSave == 2) sprintf(options.value[6], "Snapshot");
-			else if (EMUSettings.AutoSave == 3) sprintf(options.value[6], "Both");
+			if (EMUSettings.AutoSave == 0) sprintf(options.value[4], "Off");
+			else if (EMUSettings.AutoSave == 1) sprintf(options.value[4], "SRAM");
+			else if (EMUSettings.AutoSave == 2) sprintf(options.value[4], "Snapshot");
+			else if (EMUSettings.AutoSave == 3) sprintf(options.value[4], "Both");
 
 			optionBrowser.TriggerUpdate();
 		}

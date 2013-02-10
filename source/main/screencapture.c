@@ -18,6 +18,7 @@ void enableCapture() {
 }
 
 void doScreenCapture() {
+#if 0
     if (do_capture) {
         struct ati_info *ai = (struct ati_info*) 0xec806100ULL;
 
@@ -61,6 +62,6 @@ void doScreenCapture() {
 
         printf("ScreenCapture : File saved to : %s\r\n", filename);
     }
-
+#endif
     do_capture = 0;
 }

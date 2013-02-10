@@ -1936,8 +1936,6 @@ EXTERN long CALLBACK GPUdmaChain(uint32_t *baseAddrL, uint32_t addr) {
 	short count;
 	unsigned int DMACommandCounter = 0;
 
-	if (bIsFirstFrame) GLinitialize();
-
 	GPUIsBusy;
 
 	lUsedAddr[0] = lUsedAddr[1] = lUsedAddr[2] = 0xffffff;

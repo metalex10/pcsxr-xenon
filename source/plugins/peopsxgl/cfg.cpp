@@ -67,10 +67,10 @@ namespace xegpu {
 		peops_cfg.bUseFixes = FALSE;
 
 		//         0: Emulated vram - effects need FVP
-		//         1: Black - Fast but no special effects
+		//         1: Black - Fast but no special effects <- speed up !!
 		//         2: Gfx card buffer - Can be slow
 		//         3: Gfx card buffer & software - slow
-		peops_cfg.iFrameTexType = 0;
+		peops_cfg.iFrameTexType = 1;
 
 		//        0: Emulated vram - OK for most games <- speed up !!
 		//        1: Gfx card buffer reads
@@ -85,7 +85,7 @@ namespace xegpu {
 		peops_cfg.bKeepRatio = FALSE;
 		peops_cfg.iVRamSize = 256;
 		peops_cfg.iTexGarbageCollection = 1;
-		peops_cfg.iHiResTextures = 1; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
+		peops_cfg.iHiResTextures = 0; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
 
 		if (peops_cfg.iUseMask) peops_cfg.iZBufferDepth = 16; // set zbuffer depth
 		else peops_cfg.iZBufferDepth = 0;

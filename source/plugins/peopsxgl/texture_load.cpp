@@ -560,7 +560,6 @@ GpuTex * SelectSubTextureS(int TextureMode, uint32_t GivenClutId) {
 // Black texture ...
 /////////////////////////////////////////////////////////////////////////////
 GpuTex * BlackFake15BitTexture(void) {
-    TR;
     int pmult;
     short x1, x2, y1, y2;
 
@@ -611,7 +610,6 @@ GpuTex * BlackFake15BitTexture(void) {
 
 /////////////////////////////////////////////////////////////////////////////
 GpuTex * Fake15BitTexture(void) {
-    TR;
     int pmult;
     short x1, x2, y1, y2;
     int iYAdjust;

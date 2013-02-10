@@ -24,7 +24,7 @@ typedef struct {
 	struct {		
 		char path[32][8];
 		int nbr;
-	} load, save;
+	} save;
 } DEVICES_INFO;
 
 typedef struct

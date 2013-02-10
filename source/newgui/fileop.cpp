@@ -156,22 +156,21 @@ bool MountDVD(bool silent) {
 	return false;
 }
 
-bool FindDevice(char * filepath, int * device) {
-	if (strncmp(filepath, "uda0:", 4) == 0) {
-			*device = DEVICE_USB;
-			return true;
-	}
-	else if (strncmp(filepath, "sda0:", 4) == 0) {
-			*device = DEVICE_HDD;
-			return true;
-	}
-	else if (strncmp(filepath, "smb:", 4) == 0) {
-			*device = DEVICE_SMB;
-			return true;
-	}
-	else if (strncmp(filepath, "dvd0:", 4) == 0) {
-			*device = DEVICE_DVD;
-			return true;
+bool FindDevice(char * filepath, int * device) {	
+	if (strstr(filepath, ":/")) {
+		switch(filepath[0]) {
+			case 's': // sda
+				*device = DEVICE_HDD;
+				break;
+			case 'd': // dvd
+				*device = DEVICE_DVD;
+				break;
+			case 'u': // uda
+			default:
+				*device = DEVICE_USB;
+				break;
+		}
+		return true;
 	}
 	return false;
 }
@@ -306,7 +305,7 @@ static bool ParseDirEntries() {
                                 snprintf(browserList[browser.numEntries + i].displayname, MAXJOLIET, "%s", browserList[browser.numEntries + i].filename);
                         browserList[browser.numEntries + i].icon = ICON_FOLDER;
                 } else {
-                        StripExt(browserList[browser.numEntries + i].displayname, browserList[browser.numEntries + i].filename); // hide file extension
+                        strcpy(browserList[browser.numEntries + i].displayname, browserList[browser.numEntries + i].filename);
                 }
                 i++;
         }
@@ -371,6 +370,8 @@ ParseDirectory(bool waitParse, bool filter) {
 	if (browser.dir[strlen(browser.dir) - 1] != '/')
 		strcat(browser.dir, "/");
 
+	printf("ParseDirectory : %s\n", browser.dir);
+		
 	// open the directory
 	while (dir == NULL && retry == 1) {
 		dir = opendir(browser.dir);
@@ -384,16 +385,16 @@ ParseDirectory(bool waitParse, bool filter) {
 		char * devEnd = strrchr(browser.dir, '/');
 
 		while (!IsDeviceRoot(browser.dir)) {
-				devEnd[0] = 0; // strip slash
-				devEnd = strrchr(browser.dir, '/');
+			devEnd[0] = 0; // strip slash
+			devEnd = strrchr(browser.dir, '/');
 
-				if (devEnd == NULL)
-						break;
+			if (devEnd == NULL)
+					break;
 
-				devEnd[1] = 0; // strip remaining file listing
-				dir = opendir(browser.dir);
-				if (dir)
-						break;
+			devEnd[1] = 0; // strip remaining file listing
+			dir = opendir(browser.dir);
+			if (dir)
+				break;
 		}
 	}
 
