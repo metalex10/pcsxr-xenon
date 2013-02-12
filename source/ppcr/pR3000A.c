@@ -38,7 +38,7 @@
 int do_disasm = 0;
 static int force_disasm = 0;
 
-extern int cpuRunning;
+int cpuRunning = 1;
 
 void DCFlushRange(void* startaddr, unsigned int len) {
     if (len == 0) return;

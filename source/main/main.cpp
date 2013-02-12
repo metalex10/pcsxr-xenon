@@ -46,8 +46,8 @@ extern PluginTable plugins[];
 #define cdfile "uda0:/psxisos/a-tekkn3.bin"
 #define cdfile "sda0:/psxisos/tekken3.bin"
 #define cdfile "sda0:/psxisos/gt.bin"
-#define cdfile "sda0:/psxisos/cb3.bin"
-#define cdfile "uda0:/Crash Bandicoot - Warped (USA).bin"
+#define cdfile "uda0:/Final Fantasy IX (USA) (Disc 1) (v1.1).bin"
+//#define cdfile "uda0:/Crash Bandicoot - Warped (USA).bin"
 
 void printConfigInfo() {
 

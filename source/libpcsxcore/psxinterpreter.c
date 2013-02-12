@@ -504,25 +504,36 @@ void psxSLTU() 	{ if (!_Rd_) return; _rRd_ = _u32(_rRs_) < _u32(_rRt_); }	// Rd 
 * Format:  OP rs, rt                                     *
 *********************************************************/
 void psxDIV() {
-	if (_i32(_rRt_) != 0) {
-		_i32(_rLo_) = _i32(_rRs_) / _i32(_rRt_);
-		_i32(_rHi_) = _i32(_rRs_) % _i32(_rRt_);
-	}
-	else {
-		_i32(_rLo_) = 0xffffffff;
-		_i32(_rHi_) = _i32(_rRs_);
-	}
+	const s32 Rt = _i32(_rRt_);
+    const s32 Rs = _i32(_rRs_);
+
+    if( Rt == 0 )
+    {
+		_i32(_rHi_) = Rs;
+		_i32(_rLo_) = (Rs >= 0) ? -1 : 1;
+		return;
+    }
+    if( Rs == 0x80000000 && Rt == 0xffffffff )
+    {
+		_i32(_rHi_) = 0;
+		_i32(_rLo_) = Rs;
+		return;
+    }
+
+    _i32(_rHi_) = Rs % Rt;
+    _i32(_rLo_) = Rs / Rt;
 }
 
 void psxDIVU() {
-	if (_rRt_ != 0) {
-		_rLo_ = _rRs_ / _rRt_;
-		_rHi_ = _rRs_ % _rRt_;
-	}
-	else {
-		_rLo_ = 0xffffffff;
+    if( _rRt_ == 0 )
+    {
 		_rHi_ = _rRs_;
-	}
+		_rLo_ = 0xffffffff;
+		return;
+    }
+
+    _rHi_ = _rRs_ % _rRt_;
+    _rLo_ = _rRs_ / _rRt_;
 }
 
 void psxMULT() {
@@ -565,9 +576,15 @@ void psxSRL() { if (!_Rd_) return; _u32(_rRd_) = _u32(_rRt_) >> _Sa_; } // Rd = 
 * Shift arithmetic with variant register shift           *
 * Format:  OP rd, rt, rs                                 *
 *********************************************************/
-void psxSLLV() { if (!_Rd_) return; _u32(_rRd_) = _u32(_rRt_) << _u32(_rRs_); } // Rd = Rt << rs
-void psxSRAV() { if (!_Rd_) return; _i32(_rRd_) = _i32(_rRt_) >> _u32(_rRs_); } // Rd = Rt >> rs (arithmetic)
-void psxSRLV() { if (!_Rd_) return; _u32(_rRd_) = _u32(_rRt_) >> _u32(_rRs_); } // Rd = Rt >> rs (logical)
+__inline u32 Shamt() {
+	int shamt = (_u32(_rRs_) & 0x1f);
+	if(shamt >= 0 && shamt < 32) return shamt;
+	return 0;
+}
+
+void psxSLLV() { if (!_Rd_) return; _u32(_rRd_)  =  _u32(_rRt_)  << Shamt(); } // Rd = Rt << rs
+void psxSRAV() { if (!_Rd_) return; _i32(_rRd_)  =  _i32(_rRt_)  >> Shamt(); } // Rd = Rt >> rs (arithmetic)
+void psxSRLV() { if (!_Rd_) return; _u32(_rRd_)  =  _u32(_rRt_)  >> Shamt(); } // Rd = Rt >> rs (logical)
 
 /*********************************************************
 * Load higher 16 bits of the first word in GPR with imm  *
@@ -647,6 +664,7 @@ void psxJALR() {
 #define _oB_ (_u32(_rRs_) + _Imm_)
 
 void psxLB() {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -656,8 +674,7 @@ void psxLB() {
 
 		return;
 	}
-
-
+#endif
 
 	if (_Rt_) {
 		_i32(_rRt_) = (signed char)psxMemRead8(_oB_); 
@@ -667,6 +684,7 @@ void psxLB() {
 }
 
 void psxLBU() {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -676,8 +694,7 @@ void psxLBU() {
 
 		return;
 	}
-
-
+#endif
 
 	if (_Rt_) {
 		_u32(_rRt_) = psxMemRead8(_oB_);
@@ -687,6 +704,7 @@ void psxLBU() {
 }
 
 void psxLH() {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -696,8 +714,7 @@ void psxLH() {
 
 		return;
 	}
-
-
+#endif
 
 	if (_Rt_) {
 		_i32(_rRt_) = (short)psxMemRead16(_oB_);
@@ -707,6 +724,7 @@ void psxLH() {
 }
 
 void psxLHU() {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -716,8 +734,7 @@ void psxLHU() {
 
 		return;
 	}
-
-
+#endif
 
 	if (_Rt_) {
 		_u32(_rRt_) = psxMemRead16(_oB_);
@@ -727,6 +744,7 @@ void psxLHU() {
 }
 
 void psxLW() {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -736,8 +754,7 @@ void psxLW() {
 
 		return;
 	}
-
-
+#endif
 
 	if (_Rt_) {
 		_u32(_rRt_) = psxMemRead32(_oB_);
@@ -754,7 +771,7 @@ void psxLWL() {
 	u32 shift = addr & 3;
 	u32 mem = psxMemRead32(addr & ~3);
 
-
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -764,7 +781,7 @@ void psxLWL() {
 
 		return;
 	}
-
+#endif
 
 	if (!_Rt_) return;
 	_u32(_rRt_) =	( _u32(_rRt_) & LWL_MASK[shift]) | 
@@ -788,8 +805,7 @@ void psxLWR() {
 	u32 shift = addr & 3;
 	u32 mem = psxMemRead32(addr & ~3);
 
-
-	
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -799,8 +815,7 @@ void psxLWR() {
 
 		return;
 	}
-
-
+#endif
 
 	if (!_Rt_) return;
 	_u32(_rRt_) =	( _u32(_rRt_) & LWR_MASK[shift]) | 
@@ -867,6 +882,7 @@ void psxSWR() {
 *********************************************************/
 void psxMFC0()
 {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -876,7 +892,7 @@ void psxMFC0()
 
 		return;
 	}
-
+#endif
 
 	if (!_Rt_) return;
 	
@@ -885,6 +901,7 @@ void psxMFC0()
 
 void psxCFC0()
 {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -894,7 +911,7 @@ void psxCFC0()
 
 		return;
 	}
-
+#endif
 
 	if (!_Rt_) return;
 	
@@ -936,6 +953,7 @@ void psxCTC0() { MTC0(_Rd_, _u32(_rRt_)); }
 
 void psxMFC2()
 {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -945,13 +963,14 @@ void psxMFC2()
 
 		return;
 	}
-
+#endif
 	gteMFC2();
 }
 
 
 void psxCFC2()
 {
+#if TEST_LOAD_DELAY
 	// load delay = 1 latency
 	if( branch == 0 )
 	{
@@ -961,7 +980,7 @@ void psxCFC2()
 
 		return;
 	}
-
+#endif
 	gteCFC2();
 }
 

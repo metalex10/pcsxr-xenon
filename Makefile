@@ -47,7 +47,7 @@ PLUGINS_SPU	:=  source/plugins/xenon_audio_repair # source/plugins/xenon_audio #
 PLUGINS_INPUT	:=  source/plugins/dfinput source/plugins/xenon_input source/plugins/Pokopom
 PLUGINS_MISC	:=      source/plugins/cdrcimg  
 PLUGINS		:=  $(PLUGINS_GPU) $(PLUGINS_SPU) $(PLUGINS_INPUT) $(PLUGINS_MISC) 
-CORE		:=  source/shaders lib/zlib source/libpcsxcore # source/ppcr source/ppcr/disasm source/httpd	 # source/libpcsxcore/ppc #source/ppcr
+CORE		:=  source/shaders lib/zlib source/libpcsxcore source/ppcr source/ppcr/disasm source/httpd	 # source/libpcsxcore/ppc #source/ppcr
 #CORE		:=  lib/zlib source/libpcsxcore_df source/ppc
 #LIB		:=  source/fakegl
 SOURCES		:=  source/main  source/main $(PLUGINS) $(CORE) $(GUI_SRC)
@@ -62,7 +62,7 @@ ASFLAGS	= -Wa,$(INCLUDE) -Wa,-a32
 
 MCHK = -Wl,-wrap,malloc  -Wl,-wrap,memalign -Wl,-wrap,realloc -Wl,-wrap,calloc -Wl,-wrap,free -DMCHK
 
-CFLAGS	= -ffunction-sections -fdata-sections -g -O4 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS) -DNOPSXREC
+CFLAGS	= -ffunction-sections -fdata-sections -g -O4 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS) # -DNOPSXREC
 #CFLAGS	=  $(MCHK) -ffunction-sections -fdata-sections -g -O0 -fno-tree-vectorize -fno-tree-slp-vectorize -ftree-vectorizer-verbose=1 -Wall -Wno-format $(MACHDEP) $(INCLUDE) -DLIBXENON -D__BIG_ENDIAN__ -D__ppc__ -D__powerpc__ -D__POWERPC__ -DELF -D__BIGENDIAN__ -D__PPC__ -D__BIGENDIAN__ $(GUI_FLAGS)
 
 CXXFLAGS	=	$(CFLAGS)

@@ -60,21 +60,17 @@ u8 **psxMemRLUT = NULL;
 int psxMemInit() {
 	int i;
 
-	psxMemRLUT = (u8 **)malloc(0x10000 * sizeof(void *));
-	psxMemWLUT = (u8 **)malloc(0x10000 * sizeof(void *));
+	psxMemRLUT = (u8 **)memalign(0x10000,0x10000 * sizeof(void *));
+	psxMemWLUT = (u8 **)memalign(0x10000,0x10000 * sizeof(void *));
 	memset(psxMemRLUT, 0, 0x10000 * sizeof(void *));
 	memset(psxMemWLUT, 0, 0x10000 * sizeof(void *));
 
-#ifndef LIBXENON
-	psxM = mmap(0, 0x00220000,
-		PROT_WRITE | PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-#else
-        psxM = malloc(0x00220000);
-#endif
-	psxP = &psxM[0x200000];
-	psxH = &psxM[0x210000];
+	psxM = memalign(0x10000,0x00230000);
 
-	psxR = (s8 *)malloc(0x00080000);
+	psxP = &psxM[0x200000];
+	psxH = &psxM[0x210000+SCRATCHPAD_OFFSET];
+
+	psxR = (s8 *)memalign(0x10000,0x00080000);
 
 	if (psxMemRLUT == NULL || psxMemWLUT == NULL || 
 		psxM == NULL || psxP == NULL || psxH == NULL) {
