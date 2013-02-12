@@ -478,29 +478,13 @@ void CALLBACK GPUcursor(int iPlayer, int x, int y) {
     ptCursorPoint[iPlayer].y = y;
 }
 
-static void ShowFPS() {
-    static unsigned long lastTick = 0;
-    static int frames = 0;
-    unsigned long nowTick;
-    frames++;
-    nowTick = mftb() / (PPC_TIMEBASE_FREQ / 1000);
-    if (lastTick + 1000 <= nowTick) {
-
-        printf("GPUupdateLace %d fps\r\n", frames);
-
-        frames = 0;
-        lastTick = nowTick;
-    }
-    systemPoll();
-}
-
 ////////////////////////////////////////////////////////////////////////
 // update lace is called evry VSync
 ////////////////////////////////////////////////////////////////////////
 
 void CALLBACK GPUupdateLace(void) // VSYNC
 {
-    ShowFPS();
+    systemPoll();
     /*
     if(!(dwActFixes&1))
         lGPUstatusRet^=0x80000000;                           // odd/even bit

@@ -74,11 +74,7 @@ typedef uint8_t boolean;
 #if defined (__LINUX__) || defined (__MACOSX__)
 #define strnicmp strncasecmp
 #endif
-#ifndef _XBOX
 #define __inline inline
-#else
-#define inline __inline
-#endif
 
 // Enables NLS/internationalization if active
 #ifdef ENABLE_NLS
@@ -96,7 +92,7 @@ typedef uint8_t boolean;
 //If running under Mac OS X, use the Localizable.strings file instead.
 #elif defined(_MACOSX)
 #ifdef PCSXRCORE
-extern char* Pcsxr_locale_text(char* toloc);
+extern const char* Pcsxr_locale_text(char* toloc);
 #define _(String) Pcsxr_locale_text(String)
 #define N_(String) String
 #else
@@ -109,7 +105,7 @@ extern char* Pcsxr_locale_text(char* toloc);
 #define PLUGLOC_x(x,y) x ## y
 #define PLUGLOC_y(x,y) PLUGLOC_x(x,y)
 #define PLUGLOC PLUGLOC_y(PCSXRPLUG,_locale_text)
-extern char* PLUGLOC(char* toloc);
+extern const char* PLUGLOC(char* toloc);
 #define _(String) PLUGLOC(String)
 #define N_(String) String
 #endif
@@ -133,13 +129,14 @@ typedef struct {
 	char Pad1[MAXPATHLEN];
 	char Pad2[MAXPATHLEN];
 	char Net[MAXPATHLEN];
-    char Sio1[MAXPATHLEN];
+	char Sio1[MAXPATHLEN];
 	char Mcd1[MAXPATHLEN];
 	char Mcd2[MAXPATHLEN];
 	char Bios[MAXPATHLEN];
 	char BiosDir[MAXPATHLEN];
 	char PluginsDir[MAXPATHLEN];
 	char PatchesDir[MAXPATHLEN];
+	char IsoImgDir[MAXPATHLEN];
 	boolean Xa;
 	boolean Sio;
 	boolean Mdec;

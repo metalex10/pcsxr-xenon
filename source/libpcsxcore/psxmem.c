@@ -14,7 +14,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.           *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02111-1307 USA.           *
  ***************************************************************************/
 
 /*
@@ -25,7 +25,6 @@
 #include "r3000a.h"
 #include "psxhw.h"
 #include <sys/mman.h>
-#include <malloc.h>
 
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
@@ -61,17 +60,21 @@ u8 **psxMemRLUT = NULL;
 int psxMemInit() {
 	int i;
 
-	psxMemRLUT = (u8 **)memalign(0x10000,0x10000 * sizeof(void *));
-	psxMemWLUT = (u8 **)memalign(0x10000,0x10000 * sizeof(void *));
+	psxMemRLUT = (u8 **)malloc(0x10000 * sizeof(void *));
+	psxMemWLUT = (u8 **)malloc(0x10000 * sizeof(void *));
 	memset(psxMemRLUT, 0, 0x10000 * sizeof(void *));
 	memset(psxMemWLUT, 0, 0x10000 * sizeof(void *));
 
-	psxM = memalign(0x10000,0x00230000);
-
+#ifndef LIBXENON
+	psxM = mmap(0, 0x00220000,
+		PROT_WRITE | PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+#else
+        psxM = malloc(0x00220000);
+#endif
 	psxP = &psxM[0x200000];
-	psxH = &psxM[0x210000+SCRATCHPAD_OFFSET];
+	psxH = &psxM[0x210000];
 
-	psxR = (s8 *)memalign(0x10000,0x00080000);
+	psxR = (s8 *)malloc(0x00080000);
 
 	if (psxMemRLUT == NULL || psxMemWLUT == NULL || 
 		psxM == NULL || psxP == NULL || psxH == NULL) {
@@ -130,8 +133,11 @@ void psxMemReset() {
 }
 
 void psxMemShutdown() {
+#ifndef LIBXENON
 	munmap(psxM, 0x00220000);
-
+#else
+        free(psxM);
+#endif
 	free(psxR);
 	free(psxMemRLUT);
 	free(psxMemWLUT);
@@ -143,7 +149,7 @@ u8 psxMemRead8(u32 mem) {
 	char *p;
 	u32 t;
 
-	//printf("%8.8lx %8.8lx: psxMemRead8 %08x\n", psxRegs.pc, psxRegs.cycle, mem);
+
 	psxRegs.cycle += 0;
 
 
@@ -156,6 +162,10 @@ u8 psxMemRead8(u32 mem) {
 	} else {
 		p = (char *)(psxMemRLUT[t]);
 		if (p != NULL) {
+#ifndef LIBXENON                    
+			if (Config.Debug)
+				DebugCheckBP((mem & 0xffffff) | 0x80000000, BR1);
+#endif
 			return *(u8 *)(p + (mem & 0xffff));
 		} else {
 #ifdef PSXMEM_LOG
@@ -170,8 +180,8 @@ u16 psxMemRead16(u32 mem) {
 	char *p;
 	u32 t;
 
-	//printf("%8.8lx %8.8lx: psxMemRead16 %08x\n", psxRegs.pc, psxRegs.cycle, mem);
-	//psxRegs.cycle += 1;
+
+	psxRegs.cycle += 1;
 
 	
 	t = mem >> 16;
@@ -183,6 +193,10 @@ u16 psxMemRead16(u32 mem) {
 	} else {
 		p = (char *)(psxMemRLUT[t]);
 		if (p != NULL) {
+#ifndef LIBXENON                    
+			if (Config.Debug)
+				DebugCheckBP((mem & 0xffffff) | 0x80000000, BR2);
+#endif
 			return SWAPu16(*(u16 *)(p + (mem & 0xffff)));
 		} else {
 #ifdef PSXMEM_LOG
@@ -197,8 +211,8 @@ u32 psxMemRead32(u32 mem) {
 	char *p;
 	u32 t;
 
-	//printf("%8.8lx %8.8lx: psxMemRead32 %08x\n", psxRegs.pc, psxRegs.cycle, mem);
-	//psxRegs.cycle += 1;
+
+	psxRegs.cycle += 1;
 
 	
 	t = mem >> 16;
@@ -210,6 +224,10 @@ u32 psxMemRead32(u32 mem) {
 	} else {
 		p = (char *)(psxMemRLUT[t]);
 		if (p != NULL) {
+#ifndef LIBXENON                    
+			if (Config.Debug)
+				DebugCheckBP((mem & 0xffffff) | 0x80000000, BR4);
+#endif
 			return SWAPu32(*(u32 *)(p + (mem & 0xffff)));
 		} else {
 #ifdef PSXMEM_LOG
@@ -224,8 +242,8 @@ void psxMemWrite8(u32 mem, u8 value) {
 	char *p;
 	u32 t;
 
-	//printf("%8.8lx %8.8lx: psxMemWrite8 %08x, %08x\n", psxRegs.pc, psxRegs.cycle, mem, value);
-	//psxRegs.cycle += 1;
+
+	psxRegs.cycle += 1;
 	
 	
 	t = mem >> 16;
@@ -237,6 +255,10 @@ void psxMemWrite8(u32 mem, u8 value) {
 	} else {
 		p = (char *)(psxMemWLUT[t]);
 		if (p != NULL) {
+#ifndef LIBXENON
+			if (Config.Debug)
+				DebugCheckBP((mem & 0xffffff) | 0x80000000, BW1);
+#endif
 			*(u8 *)(p + (mem & 0xffff)) = value;
 #ifdef PSXREC
 			psxCpu->Clear((mem & (~3)), 1);
@@ -253,8 +275,8 @@ void psxMemWrite16(u32 mem, u16 value) {
 	char *p;
 	u32 t;
 
-	//printf("%8.8lx %8.8lx: psxMemWrite16 %08x, %08x\n", psxRegs.pc, psxRegs.cycle, mem, value);
-	//psxRegs.cycle += 1;
+
+	psxRegs.cycle += 1;
 
 		
 	t = mem >> 16;
@@ -266,6 +288,10 @@ void psxMemWrite16(u32 mem, u16 value) {
 	} else {
 		p = (char *)(psxMemWLUT[t]);
 		if (p != NULL) {
+#ifndef LIBXENON                    
+			if (Config.Debug)
+				DebugCheckBP((mem & 0xffffff) | 0x80000000, BW2);
+#endif
 			*(u16 *)(p + (mem & 0xffff)) = SWAPu16(value);
 #ifdef PSXREC
 			psxCpu->Clear((mem & (~3)), 1);
@@ -282,8 +308,8 @@ void psxMemWrite32(u32 mem, u32 value) {
 	char *p;
 	u32 t;
 
-	//printf("%8.8lx %8.8lx: psxMemWrite32 %08x, %08x\n", psxRegs.pc, psxRegs.cycle, mem, value);
-	//psxRegs.cycle += 1;
+	
+	psxRegs.cycle += 1;
 
 
 	//	if ((mem&0x1fffff) == 0x71E18 || value == 0x48088800) SysPrintf("t2fix!!\n");
@@ -296,6 +322,10 @@ void psxMemWrite32(u32 mem, u32 value) {
 	} else {
 		p = (char *)(psxMemWLUT[t]);
 		if (p != NULL) {
+#ifndef LIBXENON
+			if (Config.Debug)
+				DebugCheckBP((mem & 0xffffff) | 0x80000000, BW4);
+#endif
 			*(u32 *)(p + (mem & 0xffff)) = SWAPu32(value);
 #ifdef PSXREC
 			psxCpu->Clear(mem, 1);
@@ -330,9 +360,6 @@ void psxMemWrite32(u32 mem, u32 value) {
 						for (i = 0; i < 0x80; i++) psxMemWLUT[i + 0x0000] = (void *)&psxM[(i & 0x1f) << 16];
 						memcpy(psxMemWLUT + 0x8000, psxMemWLUT, 0x80 * sizeof(void *));
 						memcpy(psxMemWLUT + 0xa000, psxMemWLUT, 0x80 * sizeof(void *));
-#ifdef PSXMEM_LOG
-						PSXMEM_LOG("psxMemWrite32 %8.8lx = %x\n", mem, value);
-#endif
 						break;
 					default:
 #ifdef PSXMEM_LOG

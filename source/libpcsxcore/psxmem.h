@@ -14,7 +14,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02111-1307 USA.           *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.           *
  ***************************************************************************/
 
 #ifndef __PSXMEMORY_H__
@@ -23,19 +23,16 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include <byteswap.h>
+
 #include "psxcommon.h"
 
 #if defined(__BIGENDIAN__)
-static __inline__ uint32_t __loadwordbytereverse(void *ptr) {
-    uint32_t ret;
-    __asm__ ("lwbrx %0, 0, %1" : "=r" (ret) : "r" (ptr));
-    return ret;
-}
-	
-#define SWAP16(x) bswap_16(x)
-#define SWAP32(x) __builtin_bswap32(x)
 
+#define _SWAP16(b) ((((unsigned char *)&(b))[0] & 0xff) | (((unsigned char *)&(b))[1] & 0xff) << 8)
+#define _SWAP32(b) ((((unsigned char *)&(b))[0] & 0xff) | ((((unsigned char *)&(b))[1] & 0xff) << 8) | ((((unsigned char *)&(b))[2] & 0xff) << 16) | (((unsigned char *)&(b))[3] << 24))
+
+#define SWAP16(v) ((((v) & 0xff00) >> 8) +(((v) & 0xff) << 8))
+#define SWAP32(v) ((((v) & 0xff000000ul) >> 24) + (((v) & 0xff0000ul) >> 8) + (((v) & 0xff00ul)<<8) +(((v) & 0xfful) << 24))
 #define SWAPu32(v) SWAP32((u32)(v))
 #define SWAPs32(v) SWAP32((s32)(v))
 
@@ -51,8 +48,6 @@ static __inline__ uint32_t __loadwordbytereverse(void *ptr) {
 #define SWAPu32(b) (b)
 
 #endif
-
-#define SCRATCHPAD_OFFSET 0xffc
 
 extern s8 *psxM;
 #define psxMs8(mem)		psxM[(mem) & 0x1fffff]

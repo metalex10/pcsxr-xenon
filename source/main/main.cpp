@@ -47,7 +47,7 @@ extern PluginTable plugins[];
 #define cdfile "sda0:/psxisos/tekken3.bin"
 #define cdfile "sda0:/psxisos/gt.bin"
 #define cdfile "sda0:/psxisos/cb3.bin"
-#define cdfile "sda0:/psxisos/souledge.img"
+#define cdfile "uda0:/Crash Bandicoot - Warped (USA).bin"
 
 void printConfigInfo() {
 
@@ -119,11 +119,11 @@ int main() {
 	xenon_ata_init();
 	xenon_atapi_init();
 
-	fatInitDefault();
+	//fatInitDefault();
 	
-	//char mount[10];
-	//sprintf(mount, "uda0");
-	//fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
+	char mount[10];
+	sprintf(mount, "uda0");
+	fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
 	
 	ntfs_md *mounts;
 	//ntfsMountAll (&mounts, NTFS_READ_ONLY);
@@ -170,16 +170,16 @@ int main() {
 	strcpy(Config.Bios, "SCPH1001.BIN"); // Use actual BIOS
 	//strcpy(Config.Bios, "scph7502.bin"); // Use actual BIOS
 	//strcpy(Config.Bios, "HLE"); // Use HLE
-	strcpy(Config.BiosDir, "sda0:/pcsxr/bios");
-	strcpy(Config.PatchesDir, "sda0:/pcsxr/patches_/");
+	strcpy(Config.BiosDir, "sda0:/devkit/pcsxr/bios");
+	strcpy(Config.PatchesDir, "sda0:/devkit/pcsxr/patches_/");
 
 	Config.PsxAuto = 1; // autodetect system
 	
 	Config.Cpu = CPU_DYNAREC;
 	//Config.Cpu =  CPU_INTERPRETER;
 
-	strcpy(Config.Mcd1, "sda0:/pcsxr/memcards/card1.mcd");
-	strcpy(Config.Mcd2, "sda0:/pcsxr/memcards/card2.mcd");
+	strcpy(Config.Mcd1, "sda0:/devkit/pcsxr/memcards/card1.mcd");
+	strcpy(Config.Mcd2, "sda0:/devkit/pcsxr/memcards/card2.mcd");
 
 	// useSoftGpu();
 	/*

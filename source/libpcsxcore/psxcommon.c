@@ -59,13 +59,8 @@ void EmuUpdate() {
 	ApplyCheats();
 }
 
-//#define LOG_STDOUT
-#undef LOG_STDOUT
-
 void __Log(char *fmt, ...) {
 	va_list list;
-	return;
-
 #ifdef LOG_STDOUT
 	char tmp[1024];
 #endif

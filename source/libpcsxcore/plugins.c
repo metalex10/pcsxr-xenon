@@ -730,20 +730,20 @@ int LoadPlugins() {
 	if (UsingIso()) {
 		LoadCDRplugin(NULL);
 	} else {
-		sprintf(Plugin, "/%s", Config.Cdr);
+		sprintf(Plugin, "%s/%s", Config.PluginsDir, Config.Cdr);
 		if (LoadCDRplugin(Plugin) == -1) return -1;
 	}
 
-	sprintf(Plugin, "/%s", Config.Gpu);
+	sprintf(Plugin, "%s/%s", Config.PluginsDir, Config.Gpu);
 	if (LoadGPUplugin(Plugin) == -1) return -1;
 
-	sprintf(Plugin, "/%s", Config.Spu);
+	sprintf(Plugin, "%s/%s", Config.PluginsDir, Config.Spu);
 	if (LoadSPUplugin(Plugin) == -1) return -1;
 
-	sprintf(Plugin, "/%s", Config.Pad1);
+	sprintf(Plugin, "%s/%s", Config.PluginsDir, Config.Pad1);
 	if (LoadPAD1plugin(Plugin) == -1) return -1;
 
-	sprintf(Plugin, "/%s", Config.Pad2);
+	sprintf(Plugin, "%s/%s", Config.PluginsDir, Config.Pad2);
 	if (LoadPAD2plugin(Plugin) == -1) return -1;
 
 	if (strcmp("Disabled", Config.Net) == 0 || strcmp("", Config.Net) == 0)
