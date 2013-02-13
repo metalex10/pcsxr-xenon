@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <debug.h>
 #include <libfat/fat.h>
 #if 0 // not yet
 #include <libext2/ext2.h>
@@ -38,7 +37,7 @@ typedef struct _MASTER_BOOT_RECORD {
 
 extern DISC_INTERFACE xenon_atapi_ops;
 extern DISC_INTERFACE xenon_ata_ops;
-extern DISC_INTERFACE usb2mass_ops;
+extern DISC_INTERFACE usb2mass_ops_0;
 
 int mount_dvd(DISC_INTERFACE *interface, const char * mountprefix) {
 	return -1;
@@ -102,7 +101,7 @@ void mount_all() {
 	
 	mount_interface(&xenon_atapi_ops, "dvd");
 	mount_interface(&xenon_ata_ops, "sda");
-	mount_interface(&usb2mass_ops, "uda");
+	mount_interface(&usb2mass_ops_0, "uda");
 	
 	already_mounted = 1;
 }

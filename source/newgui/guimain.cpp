@@ -28,7 +28,7 @@
 #include <usb/usbmain.h>
 #include <xenon_soc/xenon_power.h>
 #include <xenon_smc/xenon_smc.h>
-#include <debug.h>
+#include <xenon_sound/sound.h>
 
 #include "cmount.h"
 

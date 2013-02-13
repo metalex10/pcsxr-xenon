@@ -17,15 +17,12 @@ MACHDEP =  -DXENON -m32 -mno-altivec -fno-pic  -fno-pic -mpowerpc64 -mhard-float
 #---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
 
-#GUI_SRC		:=  source/gui source/gui/fonts source/gui/images source/gui/lang source/gui/libwiigui source/gui/sounds
-#GUI_INC         :=  source/gui
+GUI_SRC			:=  source/newgui/fonts source/newgui/gui source/newgui/images source/newgui/lang source/newgui/sounds source/newgui/utils source/newgui 
+GUI_INC         :=  source/newgui
 
-#GUI_SRC			:=  source/newgui/fonts source/newgui/gui source/newgui/images source/newgui/lang source/newgui/sounds source/newgui/utils source/newgui 
-#GUI_INC         :=  source/newgui
-
-#GUI_INCLUDE	:=  -I$(LIBXENON_INC)/freetype2
-#GUI_LIBS	:=  -lfreetype
-#GUI_FLAGS	:=  -DUSE_GUI
+GUI_INCLUDE	:=  -I$(LIBXENON_INC)/freetype2
+GUI_LIBS	:=  -lfreetype
+GUI_FLAGS	:=  -DUSE_GUI
 
 #---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------

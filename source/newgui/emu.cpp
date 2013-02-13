@@ -13,28 +13,6 @@
  *
  * This file controls overall program flow. Most things start and end here!
  ***************************************************************************/
-#include <unistd.h>
-#include <libgen.h>
-#include <xenos/xenos.h>
-#include <xenos/xe.h>
-#include <xenon_sound/sound.h>
-#include <diskio/ata.h>
-#include <ppc/cache.h>
-#include <ppc/timebase.h>
-#include <pci/io.h>
-#include <input/input.h>
-#include <xenon_smc/xenon_smc.h>
-#include <console/console.h>
-#include <xenon_soc/xenon_power.h>
-#include <usb/usbmain.h>
-#include <ppc/timebase.h>
-#include <sys/iosupport.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <string>
-#include <vector>
-#include "emu.h"
-
 #include "config.h"
 #include "r3000a.h"
 #include "psxcommon.h"
@@ -42,7 +20,13 @@
 #include "sio.h"
 #include "misc.h"
 
-extern struct XenosDevice * g_pVideoDevice;
+#include <unistd.h>
+#include <libgen.h>
+#include <dirent.h>
+#include <string>
+#include <vector>
+#include "emu.h"
+
 extern "C" int cpuRunning;
 extern "C" int pcsx_run_gui;
 
@@ -205,22 +189,6 @@ int SEMUInterface::SaveMCD(const char * filename) {
 	//strcpy(Config.Mcd1, filename);
 	//LoadMcd(1, filename)
 	return -1;
-}
-
-extern struct XenosDevice * g_pVideoDevice;
-static XenosSurface * surf = NULL;
-
-XenosSurface * SEMUInterface::GetSurface() {
-	if (surf == NULL) {
-		surf = Xe_CreateTexture(g_pVideoDevice, 1280, 720, 0, XE_FMT_8888 | XE_FMT_ARGB, 1);
-		
-		u8 * surfbuf;
-		surfbuf = (u8*) Xe_Surface_LockRect(g_pVideoDevice, surf, 0, 0, 0, 0, XE_LOCK_WRITE);
-		memset(surfbuf, 0xFF, 1280 * 720 * 4);
-		Xe_Surface_Unlock(g_pVideoDevice, surf);
-		
-	}
-	return surf;
 }
 
 void SEMUInterface::SetRootdir(const char * dirname) {

@@ -192,7 +192,6 @@ char * StripDevice(char * path) {
  * Attempts to mount/configure the device specified
  ***************************************************************************/
 bool ChangeInterface(int device, bool silent) {
-	TR
 	return true;
 }
 
