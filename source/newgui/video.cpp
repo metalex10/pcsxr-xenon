@@ -350,7 +350,7 @@ void Menu_Render() {
 
         Xe_Sync(g_pVideoDevice);
 
-        nb_vertices = 4096;
+        nb_vertices = 0;
 }
 
 void SetRS() {

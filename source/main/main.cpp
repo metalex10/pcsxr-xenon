@@ -1,5 +1,17 @@
 #ifndef USE_GUI
 
+#define BP {printf("[Breakpoint] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);getch();}
+#define TR {printf("[Trace] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);}
+
+#include "config.h"
+#include "r3000a.h"
+#include "psxcommon.h"
+#include "debug.h"
+#include "sio.h"
+#include "misc.h"
+#include "gamecube_plugins.h"
+
+
 #include <xenos/xenos.h>
 #include <xenos/xe.h>
 #include <xenon_sound/sound.h>
@@ -14,30 +26,13 @@
 #include <usb/usbmain.h>
 #include <ppc/timebase.h>
 #include <sys/iosupport.h>
-
-
-#define BP {printf("[Breakpoint] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);getch();}
-#define TR {printf("[Trace] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);}
-
-#include "config.h"
-#include "r3000a.h"
-#include "psxcommon.h"
-#include "debug.h"
-#include "sio.h"
-#include "misc.h"
-//#include "cheat.h"
-#include <stdio.h>
 #include <console/console.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-//#include "libwiigui/gui.h"
 #include <libfat/fat.h>
-
 #include <libntfs/ntfs.h>
 #include <libxtaf/xtaf.h>
-
-#include "gamecube_plugins.h"
 
 extern "C" void httpd_start(void);
 
@@ -49,6 +44,7 @@ extern PluginTable plugins[];
 #define cdfile "uda0:/Final Fantasy IX (USA) (Disc 1) (v1.1).bin"
 //#define cdfile "uda0:/Crash Bandicoot - Warped (USA).bin"
 #define cdfile "uda0:/Soul Blade (USA) (v1.0).bin"
+#define cdfile "sda0:/DEVKIT/pcsxr/Crash Bandicoot - Warped (USA)/Crash Bandicoot - Warped (USA).bin"
 
 void printConfigInfo() {
 
@@ -129,6 +125,9 @@ int main() {
 	ntfs_md *mounts;
 	//ntfsMountAll (&mounts, NTFS_READ_ONLY);
 	
+	
+	printf("sizeof (PcsxConfig) : %d\n", sizeof(PcsxConfig));
+	printf("MAXPATHLEN : %d\n", MAXPATHLEN);
 	
 	XTAFMount();
 	

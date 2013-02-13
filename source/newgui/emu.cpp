@@ -106,6 +106,9 @@ void SEMUInterface::Step() {
 int SEMUInterface::Start(const char * filename) {
 	memset(&Config, 0, sizeof (PcsxConfig));
 	
+	printf("sizeof (PcsxConfig) : %d\n", sizeof(PcsxConfig));
+	printf("MAXPATHLEN : %d\n", MAXPATHLEN);
+	
 	strcpy(Config.Net, "Disabled");
 	strcpy(Config.Cdr, "CDR");
 	strcpy(Config.Gpu, "GPU");
