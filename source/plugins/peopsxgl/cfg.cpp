@@ -85,7 +85,7 @@ namespace xegpu {
 		peops_cfg.bKeepRatio = FALSE;
 		peops_cfg.iVRamSize = 256;
 		peops_cfg.iTexGarbageCollection = 1;
-		peops_cfg.iHiResTextures = 0; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
+		peops_cfg.iHiResTextures = 1; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
 
 		if (peops_cfg.iUseMask) peops_cfg.iZBufferDepth = 16; // set zbuffer depth
 		else peops_cfg.iZBufferDepth = 0;
