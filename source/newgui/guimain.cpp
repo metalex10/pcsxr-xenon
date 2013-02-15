@@ -46,15 +46,6 @@
 #include "FreeTypeGX.h"
 #include "utils/gettext.h"
 
-extern "C" {
-	#include "config.h"
-	#include "r3000a.h"
-	#include "psxcommon.h"
-	#include "debug.h"
-	#include "sio.h"
-	#include "misc.h"
-}
-
 int ScreenshotRequested = 0;
 int ConfigRequested = 0;
 int ShutdownRequested = 0;
@@ -93,6 +84,9 @@ void ExitApp()
 		xenon_smc_power_shutdown();
 }
 
+int cmain_loop();
+int cmain();
+
 int main(int argc, char *argv[])
 {
 	xenon_make_it_faster(XENON_SPEED_FULL);
@@ -129,7 +123,6 @@ int main(int argc, char *argv[])
 	while (1) // main loop
 	{
 		ResumeDeviceThread();
-
 		if(EMUInterface.Running() == 0)
 			MainMenu(MENU_GAMESELECTION);
 		else
@@ -151,6 +144,53 @@ int main(int argc, char *argv[])
 			}
 			
 		} // emulation loop
+	} // main loop
+}
+
+
+
+int _main(int argc, char *argv[])
+{
+	xenon_make_it_faster(XENON_SPEED_FULL);
+	usb_init();
+	usb_do_poll();
+	xenon_ata_init();
+	xenon_atapi_init();
+	xenon_sound_init();
+
+	//InitDeviceThread();
+	//InitGCVideo(); // Initialise video
+	InitVideo();
+	ResetVideo_Menu (); // change to menu video mode
+	//SetupPads();
+	// XTAFMount();
+	
+	//fatInitDefault(); // Initialize libFAT for SD and USB
+	mount_all();
+#if 0
+	DefaultSettings (); // Set defaults
+#endif
+
+	InitFreeType((u8*)font_ttf, font_ttf_size); // Initialize font system
+	
+	savebuffer = (unsigned char *)malloc(SAVEBUFFERSIZE);
+	browserList = (BROWSERENTRY *)malloc(sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
+	
+	InitGUIThreads();
+	LoadLanguage();
+	
+	EMUInterface.ScanRootdir();
+	// EMUInterface.PowerOff();
+	/**/
+	while (1) // main loop
+	{
+		// ResumeDeviceThread();
+		MainMenu(MENU_GAMESELECTION);
+		
+		ConfigRequested = 0;
+		ScreenshotRequested = 0;
+	
+		cmain_loop();
 	} // main loop
 }
 #endif

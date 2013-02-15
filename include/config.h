@@ -1,4 +1,4 @@
-#define MAXPATHLEN 4096
+#include <unistd.h>
 
 #define TR {printf("[Trace] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);}
 

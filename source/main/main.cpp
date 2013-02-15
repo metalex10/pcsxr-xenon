@@ -1,4 +1,6 @@
-#ifndef USE_GUI
+#ifdef USE_GUI
+#define main cmain
+#endif
 
 #define BP {printf("[Breakpoint] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);getch();}
 #define TR {printf("[Trace] in function %s, line %d, file %s\n",__FUNCTION__,__LINE__,__FILE__);}
@@ -44,9 +46,9 @@ extern PluginTable plugins[];
 #define cdfile "uda0:/Final Fantasy IX (USA) (Disc 1) (v1.1).bin"
 //#define cdfile "uda0:/Crash Bandicoot - Warped (USA).bin"
 #define cdfile "uda0:/Soul Blade (USA) (v1.0).bin"
-#define cdfile "sda0:/DEVKIT/pcsxr/Crash Bandicoot - Warped (USA)/Crash Bandicoot - Warped (USA).bin"
+#define cdfile "sda0:/DEVKIT/pcsxr/Bloody Roar II (USA)/Bloody Roar II (USA).bin"
 
-void printConfigInfo() {
+static void printConfigInfo() {
 
 }
 
@@ -58,7 +60,7 @@ static void findDevices() {
 	}
 }
 
-void buffer_dump(uint8_t * buf, int size) {
+static void buffer_dump(uint8_t * buf, int size) {
 	int i = 0;
 	TR;
 	for (i = 0; i < size; i++) {
@@ -70,7 +72,7 @@ void buffer_dump(uint8_t * buf, int size) {
 
 uint8_t * xtaf_buff();
 
-void SetIso(const char * fname) {
+static void SetIso(const char * fname) {
 	FILE *fd = fopen(fname, "rb");
 	if (fd == NULL) {
 		printf("Error loading %s\r\n", fname);
@@ -92,45 +94,17 @@ void SetIso(const char * fname) {
 
 	fclose(fd);
 }
+
 extern "C" {
 	void useSoftGpu();
 	void useHwGpu();
 }
 
-
 extern "C" DISC_INTERFACE usb2mass_ops_0;
-
+extern void InitVideo();
 extern "C" void init_miss();
-int main() {
 
-	printf("main\n");
-
-	xenos_init(VIDEO_MODE_AUTO);
-	xenon_make_it_faster(XENON_SPEED_FULL);
-
-	xenon_sound_init();
-	//xenos_init(VIDEO_MODE_YUV_720P);
-	//console_init();
-	usb_init();
-	usb_do_poll();
-	xenon_ata_init();
-	xenon_atapi_init();
-
-	//fatInitDefault();
-	
-	char mount[10];
-	sprintf(mount, "uda0");
-	fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
-	
-	ntfs_md *mounts;
-	//ntfsMountAll (&mounts, NTFS_READ_ONLY);
-	
-	
-	printf("sizeof (PcsxConfig) : %d\n", sizeof(PcsxConfig));
-	printf("MAXPATHLEN : %d\n", MAXPATHLEN);
-	
-	XTAFMount();
-	
+int cmain_loop() {
 	findDevices();
 	
 	init_miss();
@@ -186,8 +160,9 @@ int main() {
 		strcpy(Config.Mcd1, "sda:/hdd1/xenon/memcards/card1.mcd");
 		strcpy(Config.Mcd2, "sda:/hdd1/xenon/memcards/card2.mcd");
 	 */
-
-	//InitVideo();
+#ifdef USE_GUI
+	InitVideo();
+#endif
 
 	SetIso(cdfile);
 	if (LoadPlugins() == 0) {
@@ -212,19 +187,50 @@ int main() {
 	}
 
 	printf("Pcsx exit ...\r\n");
+	
 	return 0;
 }
 
-void cpuReset() {
+int main() {
+
+	printf("main\n");
+
+	xenos_init(VIDEO_MODE_AUTO);
+	xenon_make_it_faster(XENON_SPEED_FULL);
+
+	xenon_sound_init();
+	//xenos_init(VIDEO_MODE_YUV_720P);
+	//console_init();
+	usb_init();
+	usb_do_poll();
+	xenon_ata_init();
+	xenon_atapi_init();
+
+	//fatInitDefault();
+	
+	char mount[10];
+	sprintf(mount, "uda0");
+	fatMount(mount, &usb2mass_ops_0, 0, 2, 64);
+	
+	ntfs_md *mounts;
+	//ntfsMountAll (&mounts, NTFS_READ_ONLY);
+	
+	
+	printf("sizeof (PcsxConfig) : %d\n", sizeof(PcsxConfig));
+	printf("MAXPATHLEN : %d\n", MAXPATHLEN);
+	
+	XTAFMount();
+	
+	cmain_loop();
+	return 0;
+}
+
+static void cpuReset() {
 	EmuReset();
 }
 
-#include "gui.h"
-SPU_Config SpuConfig;
-HW_GPU_Config HwGpuConfig;
-
+#ifndef USE_GUI
 extern "C" void systemPoll() {
 	// network_poll();
 }
-
 #endif

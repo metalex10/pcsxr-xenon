@@ -122,7 +122,7 @@ int SEMUInterface::Start(const char * filename) {
 	sprintf(Config.Mcd1, "%s/memcards/card1.mcd", rootdir);
 	sprintf(Config.Mcd2, "%s/memcards/card2.mcd", rootdir);
 
-	Config.SlowBoot = 1;
+	// Config.SlowBoot = 1;
 	Config.PsxAuto = 1; // autodetect system
 	
 	Config.Cpu = CPU_DYNAREC;
@@ -130,8 +130,8 @@ int SEMUInterface::Start(const char * filename) {
 
 	cpuRunning = 1;
 	
-	strcpy(ROMInfo.filename, filename);
-	strcpy(ROMInfo.diplayname, basename((char*) filename));
+	// strcpy(ROMInfo.filename, filename);
+	// strcpy(ROMInfo.diplayname, basename((char*) filename));
 	
 	printf("Loading %s!\n", filename);
 	
@@ -153,8 +153,8 @@ int SEMUInterface::Start(const char * filename) {
 			CheckCdrom();
 			LoadCdrom();
 
-			//psxCpu->Execute();
-			SysReset();
+			psxCpu->Execute();
+			//SysReset();
 			return 1;
 		}
 	}

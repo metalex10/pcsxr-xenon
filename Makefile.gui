@@ -17,12 +17,12 @@ MACHDEP =  -DXENON -m32 -mno-altivec -fno-pic  -fno-pic -mpowerpc64 -mhard-float
 #---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
 
-#GUI_SRC			:=  source/newgui/fonts source/newgui/gui source/newgui/images source/newgui/lang source/newgui/sounds source/newgui/utils source/newgui 
-#GUI_INC         :=  source/newgui
-#
-#GUI_INCLUDE	:=  -I$(LIBXENON_INC)/freetype2
-#GUI_LIBS	:=  -lfreetype
-#GUI_FLAGS	:=  -DUSE_GUI
+GUI_SRC			:=  source/newgui/fonts source/newgui/gui source/newgui/images source/newgui/lang source/newgui/sounds source/newgui/utils source/newgui 
+GUI_INC         :=  source/newgui
+
+GUI_INCLUDE	:=  -I$(LIBXENON_INC)/freetype2
+GUI_LIBS	:=  -lfreetype
+GUI_FLAGS	:=  -DUSE_GUI
 
 #---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ MACHDEP =  -DXENON -m32 -mno-altivec -fno-pic  -fno-pic -mpowerpc64 -mhard-float
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
 TARGET		:=  $(notdir $(CURDIR))
-BUILD		:=  build
+BUILD		:=  build_gui
 
 
 #SOURCES		:=  source/shaders lib/zlib source/libpcsxcore_df source/main  source/main/usb source/plugins/xenon_input source/plugins/xenon_audio_repair source/fakegl   source/plugins/cdr   source/plugins/xenon_gfx source/ppc #  source/plugins/gxvideo # source/dynarec
@@ -151,7 +151,7 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile -j4
+	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile.gui -j4
 
 #---------------------------------------------------------------------------------
 clean:

@@ -127,8 +127,6 @@ WindowPrompt(const char *title, const char *msg, const char *btn1Label, const ch
 	GuiWindow promptWindow(448, 288);
 	promptWindow.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	promptWindow.SetPosition(0, -10);
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_prompt_png);
 	GuiImageData btnOutlineOver(button_prompt_over_png);
 
@@ -166,8 +164,6 @@ WindowPrompt(const char *title, const char *msg, const char *btn1Label, const ch
 	btn1.SetLabel(&btn1Txt);
 	btn1.SetImage(&btn1Img);
 	btn1.SetImageOver(&btn1ImgOver);
-	btn1.SetSoundOver(&btnSoundOver);
-	btn1.SetSoundClick(&btnSoundClick);
 	btn1.SetTrigger(trigA);
 	btn1.SetTrigger(trig2);
 	btn1.SetState(STATE_SELECTED);
@@ -184,8 +180,6 @@ WindowPrompt(const char *title, const char *msg, const char *btn1Label, const ch
 	btn2.SetLabel(&btn2Txt);
 	btn2.SetImage(&btn2Img);
 	btn2.SetImageOver(&btn2ImgOver);
-	btn2.SetSoundOver(&btnSoundOver);
-	btn2.SetSoundClick(&btnSoundClick);
 	btn2.SetTrigger(trigA);
 	btn2.SetTrigger(trig2);
 	btn2.SetEffectGrow();
@@ -324,8 +318,6 @@ ProgressWindow(char *title, char *msg) {
 	GuiWindow promptWindow(448, 288);
 	promptWindow.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	promptWindow.SetPosition(0, -10);
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
@@ -577,8 +569,6 @@ static void OnScreenKeyboard(char * var, u32 maxlen) {
 
 	GuiKeyboard keyboard(var, maxlen);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
@@ -595,8 +585,6 @@ static void OnScreenKeyboard(char * var, u32 maxlen) {
 	okBtn.SetLabel(&okBtnTxt);
 	okBtn.SetImage(&okBtnImg);
 	okBtn.SetImageOver(&okBtnImgOver);
-	okBtn.SetSoundOver(&btnSoundOver);
-	okBtn.SetSoundClick(&btnSoundClick);
 	okBtn.SetTrigger(trigA);
 	okBtn.SetTrigger(trig2);
 	okBtn.SetEffectGrow();
@@ -612,8 +600,6 @@ static void OnScreenKeyboard(char * var, u32 maxlen) {
 	cancelBtn.SetLabel(&cancelBtnTxt);
 	cancelBtn.SetImage(&cancelBtnImg);
 	cancelBtn.SetImageOver(&cancelBtnImgOver);
-	cancelBtn.SetSoundOver(&btnSoundOver);
-	cancelBtn.SetSoundClick(&btnSoundClick);
 	cancelBtn.SetTrigger(trigA);
 	cancelBtn.SetTrigger(trig2);
 	cancelBtn.SetEffectGrow();
@@ -659,8 +645,6 @@ SettingWindow(const char * title, GuiWindow * w) {
 
 	GuiWindow promptWindow(448, 288);
 	promptWindow.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
@@ -686,8 +670,6 @@ SettingWindow(const char * title, GuiWindow * w) {
 	okBtn.SetLabel(&okBtnTxt);
 	okBtn.SetImage(&okBtnImg);
 	okBtn.SetImageOver(&okBtnImgOver);
-	okBtn.SetSoundOver(&btnSoundOver);
-	okBtn.SetSoundClick(&btnSoundClick);
 	okBtn.SetTrigger(trigA);
 	okBtn.SetTrigger(trig2);
 	okBtn.SetEffectGrow();
@@ -703,8 +685,6 @@ SettingWindow(const char * title, GuiWindow * w) {
 	cancelBtn.SetLabel(&cancelBtnTxt);
 	cancelBtn.SetImage(&cancelBtnImg);
 	cancelBtn.SetImageOver(&cancelBtnImgOver);
-	cancelBtn.SetSoundOver(&btnSoundOver);
-	cancelBtn.SetSoundClick(&btnSoundClick);
 	cancelBtn.SetTrigger(trigA);
 	cancelBtn.SetTrigger(trig2);
 	cancelBtn.SetEffectGrow();
@@ -946,8 +926,6 @@ static int MenuGameSelection() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData iconHome(icon_home_png);
 	GuiImageData iconSettings(icon_settings_png);
 	GuiImageData btnOutline(button_long_png);
@@ -971,8 +949,6 @@ static int MenuGameSelection() {
 	settingsBtn.SetIcon(&settingsBtnIcon);
 	settingsBtn.SetImage(&settingsBtnImg);
 	settingsBtn.SetImageOver(&settingsBtnImgOver);
-	settingsBtn.SetSoundOver(&btnSoundOver);
-	settingsBtn.SetSoundClick(&btnSoundClick);
 	settingsBtn.SetTrigger(trigA);
 	settingsBtn.SetTrigger(trig2);
 	settingsBtn.SetEffectGrow();
@@ -992,8 +968,6 @@ static int MenuGameSelection() {
 	exitBtn.SetIcon(&exitBtnIcon);
 	exitBtn.SetImage(&exitBtnImg);
 	exitBtn.SetImageOver(&exitBtnImgOver);
-	exitBtn.SetSoundOver(&btnSoundOver);
-	exitBtn.SetSoundClick(&btnSoundClick);
 	exitBtn.SetTrigger(trigA);
 	exitBtn.SetTrigger(trig2);
 	exitBtn.SetTrigger(&trigHome);
@@ -1025,7 +999,7 @@ static int MenuGameSelection() {
 	gameBrowser.ResetState();
 	gameBrowser.fileList[0]->SetState(STATE_SELECTED);
 	gameBrowser.TriggerUpdate();
-
+#if 1
 	while (menu == MENU_NONE) {
 		UGUI();
 		usleep(THREAD_SLEEP);
@@ -1068,7 +1042,10 @@ static int MenuGameSelection() {
 		else if (exitBtn.GetState() == STATE_CLICKED)
 			ExitRequested = 1;
 	}
-
+#else
+	if (BrowserLoadFile())
+		menu = MENU_EXIT;
+#endif
 	HaltParseThread(); // halt parsing
 	HaltGui();
 	ResetBrowser();
@@ -1185,8 +1162,6 @@ static int MenuGame() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 	GuiImageData btnCloseOutline(button_small_png);
@@ -1218,8 +1193,6 @@ static int MenuGame() {
 	saveBtn.SetImage(&saveBtnImg);
 	saveBtn.SetImageOver(&saveBtnImgOver);
 	saveBtn.SetIcon(&saveBtnIcon);
-	saveBtn.SetSoundOver(&btnSoundOver);
-	saveBtn.SetSoundClick(&btnSoundClick);
 	saveBtn.SetTrigger(trigA);
 	saveBtn.SetTrigger(trig2);
 	saveBtn.SetEffectGrow();
@@ -1237,8 +1210,6 @@ static int MenuGame() {
 	loadBtn.SetImage(&loadBtnImg);
 	loadBtn.SetImageOver(&loadBtnImgOver);
 	loadBtn.SetIcon(&loadBtnIcon);
-	loadBtn.SetSoundOver(&btnSoundOver);
-	loadBtn.SetSoundClick(&btnSoundClick);
 	loadBtn.SetTrigger(trigA);
 	loadBtn.SetTrigger(trig2);
 	loadBtn.SetEffectGrow();
@@ -1256,8 +1227,6 @@ static int MenuGame() {
 	resetBtn.SetImage(&resetBtnImg);
 	resetBtn.SetImageOver(&resetBtnImgOver);
 	resetBtn.SetIcon(&resetBtnIcon);
-	resetBtn.SetSoundOver(&btnSoundOver);
-	resetBtn.SetSoundClick(&btnSoundClick);
 	resetBtn.SetTrigger(trigA);
 	resetBtn.SetTrigger(trig2);
 	resetBtn.SetEffectGrow();
@@ -1276,8 +1245,6 @@ static int MenuGame() {
 	gameSettingsBtn.SetImage(&gameSettingsBtnImg);
 	gameSettingsBtn.SetImageOver(&gameSettingsBtnImgOver);
 	gameSettingsBtn.SetIcon(&gameSettingsBtnIcon);
-	gameSettingsBtn.SetSoundOver(&btnSoundOver);
-	gameSettingsBtn.SetSoundClick(&btnSoundClick);
 	gameSettingsBtn.SetTrigger(trigA);
 	gameSettingsBtn.SetTrigger(trig2);
 	gameSettingsBtn.SetEffectGrow();
@@ -1293,8 +1260,6 @@ static int MenuGame() {
 	mainmenuBtn.SetLabel(&mainmenuBtnTxt);
 	mainmenuBtn.SetImage(&mainmenuBtnImg);
 	mainmenuBtn.SetImageOver(&mainmenuBtnImgOver);
-	mainmenuBtn.SetSoundOver(&btnSoundOver);
-	mainmenuBtn.SetSoundClick(&btnSoundClick);
 	mainmenuBtn.SetTrigger(trigA);
 	mainmenuBtn.SetTrigger(trig2);
 	mainmenuBtn.SetEffectGrow();
@@ -1310,8 +1275,6 @@ static int MenuGame() {
 	closeBtn.SetLabel(&closeBtnTxt);
 	closeBtn.SetImage(&closeBtnImg);
 	closeBtn.SetImageOver(&closeBtnImgOver);
-	closeBtn.SetSoundOver(&btnSoundOver);
-	closeBtn.SetSoundClick(&btnSoundClick);
 	closeBtn.SetTrigger(trigA);
 	closeBtn.SetTrigger(trig2);
 	closeBtn.SetTrigger(&trigHome);
@@ -1476,8 +1439,6 @@ static int MenuGameSaves(int action) {
 	else
 		titleTxt.SetText("Save Game");
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 	GuiImageData btnCloseOutline(button_small_png);
@@ -1497,8 +1458,6 @@ static int MenuGameSaves(int action) {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -1514,8 +1473,6 @@ static int MenuGameSaves(int action) {
 	closeBtn.SetLabel(&closeBtnTxt);
 	closeBtn.SetImage(&closeBtnImg);
 	closeBtn.SetImageOver(&closeBtnImgOver);
-	closeBtn.SetSoundOver(&btnSoundOver);
-	closeBtn.SetSoundClick(&btnSoundClick);
 	closeBtn.SetTrigger(trigA);
 	closeBtn.SetTrigger(trig2);
 	closeBtn.SetTrigger(&trigHome);
@@ -1706,8 +1663,6 @@ static int MenuGameSettings() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 	GuiImageData btnLargeOutline(button_large_png);
@@ -1736,8 +1691,6 @@ static int MenuGameSettings() {
 	mappingBtn.SetImage(&mappingBtnImg);
 	mappingBtn.SetImageOver(&mappingBtnImgOver);
 	mappingBtn.SetIcon(&mappingBtnIcon);
-	mappingBtn.SetSoundOver(&btnSoundOver);
-	mappingBtn.SetSoundClick(&btnSoundClick);
 	mappingBtn.SetTrigger(trigA);
 	mappingBtn.SetTrigger(trig2);
 	mappingBtn.SetEffectGrow();
@@ -1756,8 +1709,6 @@ static int MenuGameSettings() {
 	videoBtn.SetImage(&videoBtnImg);
 	videoBtn.SetImageOver(&videoBtnImgOver);
 	videoBtn.SetIcon(&videoBtnIcon);
-	videoBtn.SetSoundOver(&btnSoundOver);
-	videoBtn.SetSoundClick(&btnSoundClick);
 	videoBtn.SetTrigger(trigA);
 	videoBtn.SetTrigger(trig2);
 	videoBtn.SetEffectGrow();
@@ -1776,8 +1727,6 @@ static int MenuGameSettings() {
 	controllerBtn.SetImage(&controllerBtnImg);
 	controllerBtn.SetImageOver(&controllerBtnImgOver);
 	controllerBtn.SetIcon(&controllerBtnIcon);
-	controllerBtn.SetSoundOver(&btnSoundOver);
-	controllerBtn.SetSoundClick(&btnSoundClick);
 	controllerBtn.SetTrigger(trigA);
 	controllerBtn.SetTrigger(trig2);
 	controllerBtn.SetEffectGrow();
@@ -1797,8 +1746,6 @@ static int MenuGameSettings() {
 	cheatsBtn.SetImage(&cheatsBtnImg);
 	cheatsBtn.SetImageOver(&cheatsBtnImgOver);
 	cheatsBtn.SetIcon(&cheatsBtnIcon);
-	cheatsBtn.SetSoundOver(&btnSoundOver);
-	cheatsBtn.SetSoundClick(&btnSoundClick);
 	cheatsBtn.SetTrigger(trigA);
 	cheatsBtn.SetTrigger(trig2);
 	cheatsBtn.SetEffectGrow();
@@ -1815,8 +1762,6 @@ static int MenuGameSettings() {
 	closeBtn.SetLabel(&closeBtnTxt);
 	closeBtn.SetImage(&closeBtnImg);
 	closeBtn.SetImageOver(&closeBtnImgOver);
-	closeBtn.SetSoundOver(&btnSoundOver);
-	closeBtn.SetSoundClick(&btnSoundClick);
 	closeBtn.SetTrigger(trigA);
 	closeBtn.SetTrigger(trig2);
 	closeBtn.SetTrigger(&trigHome);
@@ -1833,8 +1778,6 @@ static int MenuGameSettings() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -1927,8 +1870,6 @@ static int MenuGameCheats() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
@@ -1943,8 +1884,6 @@ static int MenuGameCheats() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -2000,8 +1939,6 @@ static int MenuSettingsMappings() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 	GuiImageData btnLargeOutline(button_large_png);
@@ -2025,8 +1962,6 @@ static int MenuSettingsMappings() {
 	snesBtn.SetImage(&snesBtnImg);
 	snesBtn.SetImageOver(&snesBtnImgOver);
 	snesBtn.SetIcon(&snesBtnIcon);
-	snesBtn.SetSoundOver(&btnSoundOver);
-	snesBtn.SetSoundClick(&btnSoundClick);
 	snesBtn.SetTrigger(trigA);
 	snesBtn.SetTrigger(trig2);
 	snesBtn.SetEffectGrow();
@@ -2045,8 +1980,6 @@ static int MenuSettingsMappings() {
 	superscopeBtn.SetImage(&superscopeBtnImg);
 	superscopeBtn.SetImageOver(&superscopeBtnImgOver);
 	superscopeBtn.SetIcon(&superscopeBtnIcon);
-	superscopeBtn.SetSoundOver(&btnSoundOver);
-	superscopeBtn.SetSoundClick(&btnSoundClick);
 	superscopeBtn.SetTrigger(trigA);
 	superscopeBtn.SetTrigger(trig2);
 	superscopeBtn.SetEffectGrow();
@@ -2065,8 +1998,6 @@ static int MenuSettingsMappings() {
 	mouseBtn.SetImage(&mouseBtnImg);
 	mouseBtn.SetImageOver(&mouseBtnImgOver);
 	mouseBtn.SetIcon(&mouseBtnIcon);
-	mouseBtn.SetSoundOver(&btnSoundOver);
-	mouseBtn.SetSoundClick(&btnSoundClick);
 	mouseBtn.SetTrigger(trigA);
 	mouseBtn.SetTrigger(trig2);
 	mouseBtn.SetEffectGrow();
@@ -2084,8 +2015,6 @@ static int MenuSettingsMappings() {
 	justifierBtn.SetImage(&justifierBtnImg);
 	justifierBtn.SetImageOver(&justifierBtnImgOver);
 	justifierBtn.SetIcon(&justifierBtnIcon);
-	justifierBtn.SetSoundOver(&btnSoundOver);
-	justifierBtn.SetSoundClick(&btnSoundClick);
 	justifierBtn.SetTrigger(trigA);
 	justifierBtn.SetTrigger(trig2);
 	justifierBtn.SetEffectGrow();
@@ -2101,8 +2030,6 @@ static int MenuSettingsMappings() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -2167,8 +2094,6 @@ static int MenuSettingsMappingsController() {
 	subtitleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	subtitleTxt.SetPosition(50, 60);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 	GuiImageData btnLargeOutline(button_large_png);
@@ -2192,8 +2117,6 @@ static int MenuSettingsMappingsController() {
 	xboxBtn.SetImage(&xboxBtnImg);
 	xboxBtn.SetImageOver(&xboxBtnImgOver);
 	xboxBtn.SetIcon(&xboxBtnIcon);
-	xboxBtn.SetSoundOver(&btnSoundOver);
-	xboxBtn.SetSoundClick(&btnSoundClick);
 	xboxBtn.SetTrigger(trigA);
 	xboxBtn.SetTrigger(trig2);
 	xboxBtn.SetEffectGrow();
@@ -2211,8 +2134,6 @@ static int MenuSettingsMappingsController() {
 	wiimoteBtn.SetImage(&wiimoteBtnImg);
 	wiimoteBtn.SetImageOver(&wiimoteBtnImgOver);
 	wiimoteBtn.SetIcon(&wiimoteBtnIcon);
-	wiimoteBtn.SetSoundOver(&btnSoundOver);
-	wiimoteBtn.SetSoundClick(&btnSoundClick);
 	wiimoteBtn.SetTrigger(trigA);
 	wiimoteBtn.SetTrigger(trig2);
 	wiimoteBtn.SetEffectGrow();
@@ -2231,8 +2152,6 @@ static int MenuSettingsMappingsController() {
 	classicBtn.SetImage(&classicBtnImg);
 	classicBtn.SetImageOver(&classicBtnImgOver);
 	classicBtn.SetIcon(&classicBtnIcon);
-	classicBtn.SetSoundOver(&btnSoundOver);
-	classicBtn.SetSoundClick(&btnSoundClick);
 	classicBtn.SetTrigger(trigA);
 	classicBtn.SetTrigger(trig2);
 	classicBtn.SetEffectGrow();
@@ -2262,8 +2181,6 @@ static int MenuSettingsMappingsController() {
 	nunchukBtn.SetImage(&nunchukBtnImg);
 	nunchukBtn.SetImageOver(&nunchukBtnImgOver);
 	nunchukBtn.SetIcon(&nunchukBtnIcon);
-	nunchukBtn.SetSoundOver(&btnSoundOver);
-	nunchukBtn.SetSoundClick(&btnSoundClick);
 	nunchukBtn.SetTrigger(trigA);
 	nunchukBtn.SetTrigger(trig2);
 	nunchukBtn.SetEffectGrow();
@@ -2279,8 +2196,6 @@ static int MenuSettingsMappingsController() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -2339,8 +2254,6 @@ ButtonMappingWindow() {
 	GuiWindow promptWindow(448, 288);
 	promptWindow.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	promptWindow.SetPosition(0, -10);
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
@@ -2472,8 +2385,6 @@ static int MenuSettingsMappingsMap() {
 	subtitleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	subtitleTxt.SetPosition(50, 60);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 	GuiImageData btnShortOutline(button_short_png);
@@ -2490,8 +2401,6 @@ static int MenuSettingsMappingsMap() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -2507,8 +2416,6 @@ static int MenuSettingsMappingsMap() {
 	resetBtn.SetLabel(&resetBtnTxt);
 	resetBtn.SetImage(&resetBtnImg);
 	resetBtn.SetImageOver(&resetBtnImgOver);
-	resetBtn.SetSoundOver(&btnSoundOver);
-	resetBtn.SetSoundClick(&btnSoundClick);
 	resetBtn.SetTrigger(trigA);
 	resetBtn.SetTrigger(trig2);
 	resetBtn.SetEffectGrow();
@@ -2940,8 +2847,6 @@ static int MenuSettingsVideo() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
@@ -2956,8 +2861,6 @@ static int MenuSettingsVideo() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -3085,8 +2988,6 @@ static int MenuSettings() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_long_png);
 	GuiImageData btnOutlineOver(button_long_over_png);
 	GuiImageData btnLargeOutline(button_large_png);
@@ -3120,8 +3021,6 @@ static int MenuSettings() {
 	savingBtn.SetImage(&savingBtnImg);
 	savingBtn.SetImageOver(&savingBtnImgOver);
 	savingBtn.SetIcon(&fileBtnIcon);
-	savingBtn.SetSoundOver(&btnSoundOver);
-	savingBtn.SetSoundClick(&btnSoundClick);
 	savingBtn.SetTrigger(trigA);
 	savingBtn.SetTrigger(trig2);
 	savingBtn.SetEffectGrow();
@@ -3140,8 +3039,6 @@ static int MenuSettings() {
 	menuBtn.SetImage(&menuBtnImg);
 	menuBtn.SetImageOver(&menuBtnImgOver);
 	menuBtn.SetIcon(&menuBtnIcon);
-	menuBtn.SetSoundOver(&btnSoundOver);
-	menuBtn.SetSoundClick(&btnSoundClick);
 	menuBtn.SetTrigger(trigA);
 	menuBtn.SetTrigger(trig2);
 	menuBtn.SetEffectGrow();
@@ -3177,8 +3074,6 @@ static int MenuSettings() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -3194,8 +3089,6 @@ static int MenuSettings() {
 	resetBtn.SetLabel(&resetBtnTxt);
 	resetBtn.SetImage(&resetBtnImg);
 	resetBtn.SetImageOver(&resetBtnImgOver);
-	resetBtn.SetSoundOver(&btnSoundOver);
-	resetBtn.SetSoundClick(&btnSoundClick);
 	resetBtn.SetTrigger(trigA);
 	resetBtn.SetTrigger(trig2);
 	resetBtn.SetEffectGrow();
@@ -3275,8 +3168,6 @@ static int MenuSettingsFile() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_long_png);
 	GuiImageData btnOutlineOver(button_long_over_png);
 
@@ -3291,8 +3182,6 @@ static int MenuSettingsFile() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -3402,8 +3291,6 @@ static int MenuSettingsMenu() {
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50, 50);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_long_png);
 	GuiImageData btnOutlineOver(button_long_over_png);
 
@@ -3418,8 +3305,6 @@ static int MenuSettingsMenu() {
 	backBtn.SetLabel(&backBtnTxt);
 	backBtn.SetImage(&backBtnImg);
 	backBtn.SetImageOver(&backBtnImgOver);
-	backBtn.SetSoundOver(&btnSoundOver);
-	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
 	backBtn.SetEffectGrow();
@@ -3585,8 +3470,6 @@ MainMenu(int menu) {
 
 	mainWindow->Append(gameScreenImg);
 
-	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
-	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData bgTop(bg_top_png);
 	bgTopImg = new GuiImage(&bgTop);
 	GuiImageData bgBottom(bg_bottom_png);
@@ -3608,8 +3491,6 @@ MainMenu(int menu) {
 	btnLogo->SetImage(&logoImg);
 	btnLogo->SetImageOver(&logoImgOver);
 	btnLogo->SetLabel(&logoTxt);
-	btnLogo->SetSoundOver(&btnSoundOver);
-	btnLogo->SetSoundClick(&btnSoundClick);
 	btnLogo->SetTrigger(trigA);
 	btnLogo->SetTrigger(trig2);
 	btnLogo->SetUpdateCallback(WindowCredits);
@@ -3624,17 +3505,6 @@ MainMenu(int menu) {
 	// Load preferences
 	if (!LoadPrefs())
 		SavePrefs(SILENT);
-
-#ifndef NO_SOUND
-	bgMusic = new GuiSound(bg_music_ogg, bg_music_ogg_size, SOUND_OGG);
-	bgMusic->SetVolume(EMUSettings.MusicVolume);
-	bgMusic->SetLoop(true);
-	enterSound = new GuiSound(enter_ogg, enter_ogg_size, SOUND_OGG);
-	enterSound->SetVolume(EMUSettings.SFXVolume);
-	exitSound = new GuiSound(exit_ogg, exit_ogg_size, SOUND_OGG);
-	exitSound->SetVolume(EMUSettings.SFXVolume);
-	if (currentMenu == MENU_GAMESELECTION) bgMusic->Play(); // startup music
-#endif
 
 	while (currentMenu != MENU_EXIT || EMUInterface.Running() <= 0) {
 		switch (currentMenu) {

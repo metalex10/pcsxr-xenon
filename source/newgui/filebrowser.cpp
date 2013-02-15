@@ -346,6 +346,7 @@ void StripExt(char* returnstring, char * inputstring)
  ***************************************************************************/
 int BrowserLoadFile()
 {
+#if 1
 	char loadingfile[2048];
 
 	int loaded = 0;
@@ -379,6 +380,10 @@ int BrowserLoadFile()
 done:
 	CancelAction();
 	return loaded;
+#else
+	EMUInterface.Start("sda0:/DEVKIT/pcsxr/Bloody Roar II (USA)/Bloody Roar II (USA).bin");
+	return 1;
+#endif
 }
 
 /****************************************************************************
