@@ -87,6 +87,12 @@ void ExitApp()
 int cmain_loop();
 int cmain();
 
+#ifdef USE_HTTP
+extern "C" void httpd_start(void);
+extern "C" void network_init();
+extern "C" void network_print_config();
+#endif
+
 int main(int argc, char *argv[])
 {
 	xenon_make_it_faster(XENON_SPEED_FULL);
@@ -119,6 +125,12 @@ int main(int argc, char *argv[])
 	
 	EMUInterface.ScanRootdir();
 	EMUInterface.PowerOff();
+	
+#ifdef USE_HTTP
+	network_init();
+	network_print_config();
+	httpd_start();
+#endif
 	
 	while (1) // main loop
 	{

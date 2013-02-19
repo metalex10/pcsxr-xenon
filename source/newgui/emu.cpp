@@ -231,9 +231,13 @@ int SEMUInterface::ScanRootdir() {
 	}
 	return found;
 }
-
+#ifdef USE_HTTP
+extern "C" void network_poll(void);
+#endif
 extern "C" void systemPoll() {
-	// network_poll();
+#ifdef USE_HTTP
+	network_poll();
+#endif
 }
 
 class SEMUInterface EMUInterface;

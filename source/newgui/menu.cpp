@@ -231,7 +231,9 @@ WindowPrompt(const char *title, const char *msg, const char *btn1Label, const ch
  *
  * Primary thread to allow GUI to respond to state changes, and draws GUI
  ***************************************************************************/
-
+#ifdef USE_HTTP
+extern "C" void network_poll(void);
+#endif
 static void * UGUI() {
 	UpdatePads();
 	mainWindow->Draw();
@@ -257,6 +259,9 @@ static void * UGUI() {
 		}
 		ExitApp();
 	}
+#ifdef USE_HTTP
+	network_poll();
+#endif	
 	return NULL;
 }
 
@@ -978,7 +983,7 @@ static int MenuGameSelection() {
 	buttonWindow.Append(&exitBtn);
 
 	//GuiFileBrowser gameBrowser(424, 268);
-	GuiFileBrowser gameBrowser(720, 426);
+	GuiFileBrowser gameBrowser(1200, 426);
 	//gameBrowser.SetPosition(50, 98);
 	gameBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	ResetBrowser();
@@ -999,7 +1004,7 @@ static int MenuGameSelection() {
 	gameBrowser.ResetState();
 	gameBrowser.fileList[0]->SetState(STATE_SELECTED);
 	gameBrowser.TriggerUpdate();
-#if 1
+
 	while (menu == MENU_NONE) {
 		UGUI();
 		usleep(THREAD_SLEEP);
@@ -1042,10 +1047,7 @@ static int MenuGameSelection() {
 		else if (exitBtn.GetState() == STATE_CLICKED)
 			ExitRequested = 1;
 	}
-#else
-	if (BrowserLoadFile())
-		menu = MENU_EXIT;
-#endif
+	
 	HaltParseThread(); // halt parsing
 	HaltGui();
 	ResetBrowser();
