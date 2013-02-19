@@ -35,6 +35,8 @@
 
 #include "libxenon_vm.h"
 
+#define FAST_MEM
+
 int do_disasm = 0;
 static int force_disasm = 0;
 
@@ -1378,6 +1380,8 @@ static u16 sioRead16() {
 	return hard;
 }
 
+#ifdef FAST_MEM
+
 static void recLB() {
 	
     // Rt = mem[Rs + Im] (signed)
@@ -2106,10 +2110,66 @@ static void recLW() {
 	recCallDynaMemVM(_Rs_,_Rt_,MEM_LW,_Imm_);
 }
 
+#else
+static void preMemRead() {
+    if (_Rs_ != _Rt_) {
+        DisposeHWReg(iRegs[_Rt_].reg);
+    }
+    ADDI(3, GetHWReg32(_Rs_), _Imm_);
+    if (_Rs_ == _Rt_) {
+        DisposeHWReg(iRegs[_Rt_].reg);
+    }
+    InvalidateCPURegs();
+}
+
+static void recLB() {
+    preMemRead();
+    CALLFunc((u32) psxMemRead8);
+    if (_Rt_) {
+        EXTSB(PutHWReg32(_Rt_), 3);
+    }
+}
+
+static void recLBU() {
+    preMemRead();
+    CALLFunc((u32) psxMemRead8);
+
+    if (_Rt_) {
+        MR(PutHWReg32(_Rt_),3);
+    }
+}
+
+static void recLH() {
+    preMemRead();
+    CALLFunc((u32) psxMemRead16);
+    if (_Rt_) {
+        EXTSH(PutHWReg32(_Rt_), 3);
+    }
+}
+
+static void recLHU() {
+    preMemRead();
+    CALLFunc((u32) psxMemRead16);
+    if (_Rt_) {
+	    MR(PutHWReg32(_Rt_),3);
+    }
+}
+static void recLW() {
+
+    preMemRead();
+    CALLFunc((u32) psxMemRead32);
+    if (_Rt_) {
+	    MR(PutHWReg32(_Rt_),3);
+    }
+}
+#endif
+
 REC_FUNC(LWL);
 REC_FUNC(LWR);
 REC_FUNC(SWL);
 REC_FUNC(SWR);
+
+#ifdef FAST_MEM
 
 static void recSB() {
 
@@ -2310,6 +2370,42 @@ static void recSW() {
 
 	recCallDynaMemVM(_Rs_,_Rt_,MEM_SW,_Imm_);
 }
+
+#else 
+static void preMemWrite(int size) {
+    //ReserveArgs(2);
+    ADDI(3, GetHWReg32(_Rs_), _Imm_);
+
+    switch(size)
+    {
+        case 1:
+            RLWINM(4, GetHWReg32(_Rt_), 0, 24, 31);
+            break;
+        case 2:
+            RLWINM(4, GetHWReg32(_Rt_), 0, 16, 31);
+            break;
+        default:
+            MR(4, GetHWReg32(_Rt_));
+    }
+
+    InvalidateCPURegs();
+}
+static void recSB() {
+    preMemWrite(1);
+    CALLFunc((u32) psxMemWrite8);
+}
+
+static void recSH() {
+    preMemWrite(2);
+    CALLFunc((u32) psxMemWrite16);
+}
+
+static void recSW() {
+	// mem[Rs + Im] = Rt
+    preMemWrite(4);
+    CALLFunc((u32) psxMemWrite32);
+}
+#endif
 
 static void recSLL() {
     // Rd = Rt << Sa
