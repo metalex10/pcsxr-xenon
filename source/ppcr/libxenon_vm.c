@@ -49,24 +49,29 @@ void recCallDynaMem(int addr, int data, int type)
 		{
 			case MEM_LB:
 				CALLFunc((u32) psxMemRead8);
-				EXTSB(data, 3);
-				break;
+				if (data != -1)
+					EXTSB(data, 3);
+				return;
 			case MEM_LBU:
 				CALLFunc((u32) psxMemRead8);
-				MR(data,3);
-				break;
+				if (data != -1)
+					MR(data,3);
+				return;
 			case MEM_LH:
 				CALLFunc((u32) psxMemRead16);
-				EXTSH(data, 3);
-				break;
+				if (data != -1)
+					EXTSH(data, 3);
+				return;
 			case MEM_LHU:
 				CALLFunc((u32) psxMemRead16);
-				MR(data,3);
-				break;
+				if (data != -1)
+					MR(data,3);
+				return;
 			case MEM_LW:
 				CALLFunc((u32) psxMemRead32);
-				MR(data,3);
-				break;
+				if (data != -1)
+					MR(data,3);
+				return;
 		}
 	}
 	else
@@ -76,15 +81,15 @@ void recCallDynaMem(int addr, int data, int type)
 			case MEM_SB:
 	            RLWINM(4, data, 0, 24, 31);
 				CALLFunc((u32) psxMemWrite8);
-				break;
+				return;
 			case MEM_SH:
 	            RLWINM(4, data, 0, 16, 31);
 				CALLFunc((u32) psxMemWrite16);
-				break;
+				return;
 			case MEM_SW:
 				MR(4, data);
 				CALLFunc((u32) psxMemWrite32);
-				break;
+				return;
 		}
 	}
 }
@@ -101,14 +106,16 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 	int data = -1;
 	int addr_emu = 3;
 	
-	if (type<MEM_SW)
-		data = PutHWReg32( rt_reg );
+	if (type<MEM_SW) {
+		if (rt_reg) 
+			data = PutHWReg32( rt_reg );
+	}
 	else
 		data = GetHWReg32( rt_reg );
 	
 	ADDI(addr_emu, base, immed);
 	
-	if(!(failsafeRec&FAILSAFE_REC_NO_VM))
+	if((!(failsafeRec&FAILSAFE_REC_NO_VM)))
 	{
 		RLWINM(REG_ADDR_HOST,addr_emu,0,3,31);
 		ADDIS(REG_ADDR_HOST,REG_ADDR_HOST,MEMORY_VM_BASE>>16);

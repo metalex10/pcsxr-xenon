@@ -35,8 +35,6 @@
 
 #include "libxenon_vm.h"
 
-#define FAST_MEM
-
 int do_disasm = 0;
 static int force_disasm = 0;
 
@@ -1380,737 +1378,12 @@ static u16 sioRead16() {
 	return hard;
 }
 
-#ifdef FAST_MEM
+REC_FUNC(LWL);
+REC_FUNC(LWR);
+REC_FUNC(SWL);
+REC_FUNC(SWR);
 
-static void recLB() {
-	
-    // Rt = mem[Rs + Im] (signed)
-#ifdef CONSTIFY_READS
-    if (IsConst(_Rs_)) {
-        u32 addr = iRegs[_Rs_].k + _Imm_;
-        int t = addr >> 16;
 
-        if ((t & 0xfff0) == 0xbfc0) {
-            if (!_Rt_) return;
-            // since bios is readonly it won't change
-            MapConst(_Rt_, psxRs8(addr));
-            return;
-        }
-        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
-            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80 && addr < 0x1f801000) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-            return;
-        }
-		if (t == 0x1f80) {
-            
-            switch (addr) {
-				case 0x1f801040:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioRead8);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-					
-				// sioReadStat16
-				case 0x1f801800:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) cdrRead0);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;	
-					
-				// sioReadMode16
-				case 0x1f801801:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) cdrRead1);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;	
-					
-				// sioReadCtrl16
-				case 0x1f801802:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) cdrRead2);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-					
-				// sioReadBaud16
-				case 0x1f801803:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) cdrRead3);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-				default:
-					 if (!_Rt_) return;
-
-					LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-					LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-					return;
-			}
-		}
-        //	SysPrintf("unhandled r8 %x\n", addr);
-    }
-#endif
-
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_LB,_Imm_);
-}
-
-static void recLBU() {
-	
-    // Rt = mem[Rs + Im] (unsigned)
-#ifdef CONSTIFY_READS
-    if (IsConst(_Rs_)) {
-        u32 addr = iRegs[_Rs_].k + _Imm_;
-        int t = addr >> 16;
-
-        if ((t & 0xfff0) == 0xbfc0) {
-            if (!_Rt_) return;
-            // since bios is readonly it won't change
-            MapConst(_Rt_, psxRu8(addr));
-            return;
-        }
-        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
-            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80 && addr < 0x1f801000) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            return;
-        }
-		if (t == 0x1f80) {
-
-			switch (addr) {
-				case 0x1f801040:
-					if (!_Rt_) return;
-
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) sioRead8);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-
-				// sioReadStat16
-				case 0x1f801800:
-					if (!_Rt_) return;
-
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) cdrRead0);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;	
-
-				// sioReadMode16
-				case 0x1f801801:
-					if (!_Rt_) return;
-
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) cdrRead1);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;	
-
-				// sioReadCtrl16
-				case 0x1f801802:
-					if (!_Rt_) return;
-
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) cdrRead2);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-
-				// sioReadBaud16
-				case 0x1f801803:
-					if (!_Rt_) return;
-
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) cdrRead3);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-				default:
-					if (!_Rt_) return;
-
-					LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-					LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-					return;
-			}
-		}
-        //	SysPrintf("unhandled r8 %x\n", addr);
-    }
-#endif
-
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_LBU,_Imm_);
-}
-
-
-
-static void recLH() {
-
-    // Rt = mem[Rs + Im] (signed)
-#ifdef CONSTIFY_READS
-    if (IsConst(_Rs_)) {
-        u32 addr = iRegs[_Rs_].k + _Imm_;
-        int t = addr >> 16;
-
-        if ((t & 0xfff0) == 0xbfc0) {
-            if (!_Rt_) return;
-            // since bios is readonly it won't change
-            MapConst(_Rt_, psxRs16(addr));
-            return;
-        }
-        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
-            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80 && addr < 0x1f801000) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-            return;
-        }
-		if (t == 0x1f80) {
-            
-            switch (addr) {		
-				
-				// sioWrite16
-				case 0x1f801040:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioRead16);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-					
-				// sioReadStat16
-				case 0x1f801044:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadStat16);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;	
-					
-				// sioReadMode16
-				case 0x1f801048:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadMode16);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;	
-					
-				// sioReadCtrl16
-				case 0x1f80104a:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadCtrl16);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-					
-				// sioReadBaud16
-				case 0x1f80104e:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadBaud16);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-				
-                case 0x1f801100: case 0x1f801110: case 0x1f801120:
-                    if (!_Rt_) return;
-
-                    LIW(3, (addr >> 4) & 0x3);
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) psxRcntRcount);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    
-                    return;
-
-                case 0x1f801104: case 0x1f801114: case 0x1f801124:
-                    if (!_Rt_) return;
-
-                    LIW(3, (addr >> 4) & 0x3);
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) psxRcntRmode);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    
-                    return;
-
-                case 0x1f801108: case 0x1f801118: case 0x1f801128:
-                    if (!_Rt_) return;
-
-                    LIW(3, (addr >> 4) & 0x3);
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) psxRcntRtarget);
-
-                    MR(PutHWReg32(_Rt_),3);
-					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-                    return;
-					
-				default:
-					if (addr >= 0x1f801c00 && addr < 0x1f801e00) {
-						if (!_Rt_) return;
-
-						LIW(3, addr);
-						DisposeHWReg(iRegs[_Rt_].reg);
-						InvalidateCPURegs();
-						CALLFunc((u32) SPU_readRegister);
-
-	                    MR(PutHWReg32(_Rt_),3);
-						EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-						return;
-					}
-					else{
-						LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-						LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-						EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
-						return;
-					}
-					
-            }
-		}
-        //	SysPrintf("unhandled r16 %x\n", addr);
-    }
-#endif
-    
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_LH,_Imm_);
-}
-
-static void recLHU() {
-
-    // Rt = mem[Rs + Im] (unsigned)
-#ifdef CONSTIFY_READS
-    if (IsConst(_Rs_)) {
-        u32 addr = iRegs[_Rs_].k + _Imm_;
-        int t = addr >> 16;
-
-        if ((t & 0xfff0) == 0xbfc0) {
-            if (!_Rt_) return;
-            // since bios is readonly it won't change
-            MapConst(_Rt_, psxRu16(addr));
-            return;
-        }
-        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
-            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80 && addr < 0x1f801000) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80) {
-            
-            switch (addr) {		
-				
-				// sioWrite16
-				case 0x1f801040:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioRead16);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;
-					
-				// sioReadStat16
-				case 0x1f801044:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadStat16);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;	
-					
-				// sioReadMode16
-				case 0x1f801048:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadMode16);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;	
-					
-				// sioReadCtrl16
-				case 0x1f80104a:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadCtrl16);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;
-					
-				// sioReadBaud16
-				case 0x1f80104e:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioReadBaud16);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;
-				
-                case 0x1f801100: case 0x1f801110: case 0x1f801120:
-                    if (!_Rt_) return;
-
-                    LIW(3, (addr >> 4) & 0x3);
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) psxRcntRcount);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    
-                    return;
-
-                case 0x1f801104: case 0x1f801114: case 0x1f801124:
-                    if (!_Rt_) return;
-
-                    LIW(3, (addr >> 4) & 0x3);
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) psxRcntRmode);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    
-                    return;
-
-                case 0x1f801108: case 0x1f801118: case 0x1f801128:
-                    if (!_Rt_) return;
-
-                    LIW(3, (addr >> 4) & 0x3);
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) psxRcntRtarget);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    
-                    return;
-					
-				default:
-					if (addr >= 0x1f801c00 && addr < 0x1f801e00) {
-						if (!_Rt_) return;
-
-						LIW(3, addr);
-						DisposeHWReg(iRegs[_Rt_].reg);
-						InvalidateCPURegs();
-						CALLFunc((u32) SPU_readRegister);
-
-	                    MR(PutHWReg32(_Rt_),3);
-
-						return;
-					}
-					else{
-						LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-						LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-						return;
-					}
-					
-            }
-        }
-        //	SysPrintf("unhandled r16u %x\n", addr);
-    }
-#endif
-    
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_LHU,_Imm_);
-}
-
-static void recLW() {
-	
-    // Rt = mem[Rs + Im] (unsigned)
-#ifdef CONSTIFY_READS
-    if (IsConst(_Rs_)) {
-        u32 addr = iRegs[_Rs_].k + _Imm_;
-        int t = addr >> 16;
-
-        if ((t & 0xfff0) == 0xbfc0) {
-            if (!_Rt_) return;
-            // since bios is readonly it won't change
-            MapConst(_Rt_, psxRu32(addr));
-            return;
-        }
-        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
-            LWBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80 && addr < 0x1f801000) {
-            if (!_Rt_) return;
-
-            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xfff]);
-            LWBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-            return;
-        }
-        if (t == 0x1f80) {
-            switch (addr) {
-				// sioWrite32
-				case 0x1f801040:
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) sioRead32);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;
-				
-				// GPU_readData
-                case 0x1f801810:
-                    if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) GPU_readData);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;
-
-				// GPU_readStatus
-                case 0x1f801814:
-                    if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) GPU_readStatus);
-
-                    MR(PutHWReg32(_Rt_),3);
-                    return;
-					
-					
-				// mdecRead0()
-				case 0x1f801820: 
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) mdecRead0);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-				// mdecRead1()
-				case 0x1f801824: 
-					if (!_Rt_) return;
-
-                    DisposeHWReg(iRegs[_Rt_].reg);
-                    InvalidateCPURegs();
-                    CALLFunc((u32) mdecRead1);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-				
-				// psxRcntRcount 0
-				case 0x1f801100:
-					if (!_Rt_) return;
-
-					LIW(3, 0);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRcount);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRmode 0
-				case 0x1f801104:
-					if (!_Rt_) return;
-
-					LIW(3, 0);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRmode);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRtarget 0
-				case 0x1f801108:
-					if (!_Rt_) return;
-
-					LIW(3, 0);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRtarget);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRcount 1
-				case 0x1f801110:
-					if (!_Rt_) return;
-
-					LIW(3, 1);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRcount);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRmode 1
-				case 0x1f801114:
-					if (!_Rt_) return;
-
-					LIW(3, 1);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRmode);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRtarget 1
-				case 0x1f801118:
-					if (!_Rt_) return;
-
-					LIW(3, 1);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRtarget);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRcount 2
-				case 0x1f801120:
-					if (!_Rt_) return;
-
-					LIW(3, 2);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRcount);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRmode 2
-				case 0x1f801124:
-					if (!_Rt_) return;
-
-					LIW(3, 2);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRmode);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;
-					
-				// psxRcntRtarget 2
-				case 0x1f801128:
-					if (!_Rt_) return;
-
-					LIW(3, 2);
-					DisposeHWReg(iRegs[_Rt_].reg);
-					InvalidateCPURegs();
-					CALLFunc((u32) psxRcntRtarget);
-
-                    MR(PutHWReg32(_Rt_),3);
-					return;					
-					
-                default:
-                    if (!_Rt_) return;
-
-                    LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
-                    LWBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
-                    return;
-            }
-        }
-        //		SysPrintf("unhandled r32 %x\n", addr);
-    }
-#endif
-
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_LW,_Imm_);
-}
-
-#else
 static void preMemRead() {
     if (_Rs_ != _Rt_) {
         DisposeHWReg(iRegs[_Rt_].reg);
@@ -2122,6 +1395,76 @@ static void preMemRead() {
     InvalidateCPURegs();
 }
 
+static void preMemWrite(int size) {
+    //ReserveArgs(2);
+    ADDI(3, GetHWReg32(_Rs_), _Imm_);
+
+    switch(size)
+    {
+        case 1:
+            RLWINM(4, GetHWReg32(_Rt_), 0, 24, 31);
+            break;
+        case 2:
+            RLWINM(4, GetHWReg32(_Rt_), 0, 16, 31);
+            break;
+        default:
+            MR(4, GetHWReg32(_Rt_));
+    }
+
+    InvalidateCPURegs();
+}
+
+#if 0
+
+static void recLB() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_LB,_Imm_);
+}
+
+static void recLBU() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_LBU,_Imm_);
+}
+
+static void recLH() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_LH,_Imm_);
+}
+
+static void recLHU() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_LHU,_Imm_);
+}
+
+static void recLW() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_LW,_Imm_);
+}
+static void recSB() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_SB,_Imm_);
+}
+
+static void recSH() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_SH,_Imm_);
+}
+
+static void recSW() {
+	recCallDynaMemVM(_Rs_,_Rt_,MEM_SW,_Imm_);
+}
+#else // Call interpreted function
+
+static void recSB() {
+    preMemWrite(1);
+    CALLFunc((u32) psxMemWrite8);
+}
+
+static void recSH() {
+    preMemWrite(2);
+    CALLFunc((u32) psxMemWrite16);
+}
+
+static void recSW() {
+	// mem[Rs + Im] = Rt
+    preMemWrite(4);
+    CALLFunc((u32) psxMemWrite32);
+}
+
+#if 0
 static void recLB() {
     preMemRead();
     CALLFunc((u32) psxMemRead8);
@@ -2162,249 +1505,743 @@ static void recLW() {
 	    MR(PutHWReg32(_Rt_),3);
     }
 }
-#endif
+#else // rewrote func
+static void recLB() {
+    // Rt = mem[Rs + Im] (signed)
+#if 1
+    if (IsConst(_Rs_)) {
+        u32 addr = iRegs[_Rs_].k + _Imm_;
+        int t = addr >> 16;
 
-REC_FUNC(LWL);
-REC_FUNC(LWR);
-REC_FUNC(SWL);
-REC_FUNC(SWR);
+        if ((t & 0xfff0) == 0xbfc0) {
+            if (!_Rt_) return;
+            // since bios is readonly it won't change
+            MapConst(_Rt_, psxRs8(addr));
+            return;
+        }
+        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+            if (!_Rt_) return;
 
-#ifdef FAST_MEM
+            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
+            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80 && addr < 0x1f801000) {
+            if (!_Rt_) return;
 
-static void recSB() {
-
-#if 0
-	if (IsConst(_Rs_)) {
-		u32 addr = iRegs[_Rs_].k + _Imm_;
-		int t = addr >> 16;
-
-		if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-			if (IsConst(_Rt_)) {
-				STB((uptr)&psxM[addr & 0x1fffff],0,GetHWReg32(_Rt_));
-				return;
-			} else {
-				//LWPRtoR(r3, &_rRtU_);
-				//RLWINM(PPCARG2, PPCARG2, 0, 24, 31);
-				//STBRtoM((uptr)&psxM[addr & 0x1fffff], r3);
-			}
-			return;
-		}
-		if (t == 0x1f80 && addr < 0x1f801000) {
-			if (IsConst(_Rt_)) {
-				STB((uptr)&psxH[addr & 0xFFFF],0,GetHWReg32(_Rt_));
-				return;
-			} else {
-				//LWPRtoR(r3, &_rRtU_);
-				//RLWINM(PPCARG2, PPCARG2, 0, 24, 31);
-				//STBRtoM((uptr)&psxH[addr & 0xfff], r3);
-			}
-			
-		}
-	}
-#endif
-
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_SB,_Imm_);
-}
-
-static void recSH() {
-
-#if 0
-	if (IsConst(_Rs_)) {
-		u32 addr = iRegs[_Rs_].k + _Imm_;
-		int t = addr >> 16;
-
-		if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-			if (IsConst(_Rt_)) {
-				LIW(r3, (u16)iRegs[_Rt_].k);
-			} else {
-				LWPRtoR(r3, &_rRtU_);
-			}
-			STHRtoM((uptr)&psxM[addr & 0x1fffff], r3);
-			return;
-		}
-		if (t == 0x1f80 && addr < 0x1f801000) {
-			if (IsConst(_Rt_)) {
-				LIW(r3, (u16)iRegs[_Rt_].k);
-			} else {
-				LWPRtoR(r3, &_rRtU_);
-			}
-			STHRtoM((uptr)&psxH[addr & 0xfff], r3);
-			return;
-		}
+            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+            return;
+        }
 		if (t == 0x1f80) {
-			/*if (addr >= 0x1f801c00 && addr < 0x1f801e00) {
-				LIW(PPCARG1, addr);
-				if (IsConst(_Rt_)) {
-					LIW(PPCARG2, (u16)iRegs[_Rt_].k);
-				} else {
-					LWPRtoR(PPCARG2, &_rRtU_);
-					RLWINM(PPCARG2, PPCARG2, 0, 16, 31);
-				}
-				CALLFunc((uptr)&SPU_writeRegister);
-				return;
-			}*/
-			switch (addr) {
-				case 0x1f801100: case 0x1f801110: case 0x1f801120:
-					LIW(PPCARG1, (addr >> 4) & 0x3);
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG2, (u16)iRegs[_Rt_].k);
-					} else {
-						LHPRtoR(PPCARG2, &psxRegs.GPR.r[_Rt_].w.l);
-					}
-					CALLFunc((uptr)psxRcntWcount);
-					return;
+            
+            switch (addr) {
+				case 0x1f801040:
+					if (!_Rt_) return;
 
-				case 0x1f801104: case 0x1f801114: case 0x1f801124:
-					LIW(PPCARG1, (addr >> 4) & 0x3);
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG2, (u16)iRegs[_Rt_].k);
-					} else {
-						LHPRtoR(PPCARG2, &psxRegs.GPR.r[_Rt_].w.l);
-					}
-					CALLFunc((uptr)psxRcntWmode);
-					return;
-	
-				case 0x1f801108: case 0x1f801118: case 0x1f801128:
-					LIW(PPCARG1, (addr >> 4) & 0x3);
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG2, (u16)iRegs[_Rt_].k);
-					} else {
-						LHPRtoR(PPCARG2, &psxRegs.GPR.r[_Rt_].w.l);
-					}
-					CALLFunc((uptr)psxRcntWtarget);
-					return;
-			}
-		}
-//		SysPrintf("unhandled w16 %x\n", addr);
-	}
-#endif
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioRead8);
 
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_SH,_Imm_);
-}
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
 
-static void recSW() {
-	
-	// mem[Rs + Im] = Rt
-#if 0
-	if (IsConst(_Rs_)) {
-		u32 addr = iRegs[_Rs_].k + _Imm_;
-		int t = addr >> 16;
+				// sioReadStat16
+				case 0x1f801800:
+					if (!_Rt_) return;
 
-		if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
-			if (IsConst(_Rt_)) {
-				LIW(r3, (u32)iRegs[_Rt_].k);
-			} else {
-				LWPRtoR(r3, &_rRtU_);
-			}
-			STWRtoM((uptr)&psxM[addr & 0x1fffff], r3);
-			return;
-		}
-		if (t == 0x1f80 && addr < 0x1f801000) {
-			if (IsConst(_Rt_)) {
-				LIW(r3, (u32)iRegs[_Rt_].k);
-			} else {
-				LWPRtoR(r3, &_rRtU_);
-			}
-			STWRtoM((uptr)&psxH[addr & 0xfff], r3);
-			return;
-		}
-		if (t == 0x1f80) {
-			switch (addr) {
-				case 0x1f801080: case 0x1f801084: 
-				case 0x1f801090: case 0x1f801094: 
-				case 0x1f8010a0: case 0x1f8010a4: 
-				case 0x1f8010b0: case 0x1f8010b4: 
-				case 0x1f8010c0: case 0x1f8010c4: 
-				case 0x1f8010d0: case 0x1f8010d4: 
-				case 0x1f8010e0: case 0x1f8010e4: 
-				case 0x1f801074:
-				case 0x1f8010f0:
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG1, iRegs[_Rt_].k);
-					} else {
-						LWPRtoR(PPCARG1, &_rRtU_);
-					}
-					STWRtoM((uptr)&psxH[addr & 0xffff], r3);
-					return;
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) cdrRead0);
 
-				case 0x1f801810:
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG1, iRegs[_Rt_].k);
-					} else {
-						LWPRtoR(PPCARG1, &_rRtU_);
-					}
-					CALLFunc((u32)&GPU_writeData);
-					return;
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;	
 
-				case 0x1f801814:
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG1, iRegs[_Rt_].k);
-					} else {
-						LWPRtoR(PPCARG1, &_rRtU_);
-					}
-					CALLFunc((u32)&GPU_writeStatus);
-					return;
-					
-				case 0x1f801820:
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG1, iRegs[_Rt_].k);
-					} else {
-						LWPRtoR(PPCARG1, &_rRtU_);
-					}
-					CALLFunc((u32)&mdecWrite0);
-					return;
+				// sioReadMode16
+				case 0x1f801801:
+					if (!_Rt_) return;
 
-				case 0x1f801824:
-					if (IsConst(_Rt_)) {
-						LIW(PPCARG1, iRegs[_Rt_].k);
-					} else {
-						LWPRtoR(PPCARG1, &_rRtU_);
-					}
-					CALLFunc((u32)&mdecWrite1);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) cdrRead1);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;	
+
+				// sioReadCtrl16
+				case 0x1f801802:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) cdrRead2);
+
+					MR(PutHWReg32(_Rt_),3);
+					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
+
+				// sioReadBaud16
+				case 0x1f801803:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) cdrRead3);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
+				default:
+					 if (!_Rt_) return;
+
+					LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+					LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+					EXTSB(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
 					return;
 			}
 		}
-
-	}
-#endif
-
-	recCallDynaMemVM(_Rs_,_Rt_,MEM_SW,_Imm_);
-}
-
-#else 
-static void preMemWrite(int size) {
-    //ReserveArgs(2);
-    ADDI(3, GetHWReg32(_Rs_), _Imm_);
-
-    switch(size)
-    {
-        case 1:
-            RLWINM(4, GetHWReg32(_Rt_), 0, 24, 31);
-            break;
-        case 2:
-            RLWINM(4, GetHWReg32(_Rt_), 0, 16, 31);
-            break;
-        default:
-            MR(4, GetHWReg32(_Rt_));
+        //	SysPrintf("unhandled r8 %x\n", addr);
     }
-
-    InvalidateCPURegs();
-}
-static void recSB() {
-    preMemWrite(1);
-    CALLFunc((u32) psxMemWrite8);
-}
-
-static void recSH() {
-    preMemWrite(2);
-    CALLFunc((u32) psxMemWrite16);
+#endif
+    preMemRead();
+    CALLFunc((u32) psxMemRead8);
+    if (_Rt_) {
+        EXTSB(PutHWReg32(_Rt_), 3);
+    }
 }
 
-static void recSW() {
-	// mem[Rs + Im] = Rt
-    preMemWrite(4);
-    CALLFunc((u32) psxMemWrite32);
+static void recLBU() {
+    // Rt = mem[Rs + Im] (unsigned)
+#if 1
+    if (IsConst(_Rs_)) {
+        u32 addr = iRegs[_Rs_].k + _Imm_;
+        int t = addr >> 16;
+
+        if ((t & 0xfff0) == 0xbfc0) {
+            if (!_Rt_) return;
+            // since bios is readonly it won't change
+            MapConst(_Rt_, psxRu8(addr));
+            return;
+        }
+        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
+            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80 && addr < 0x1f801000) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+            LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            return;
+        }
+		if (t == 0x1f80) {
+
+			switch (addr) {
+				case 0x1f801040:
+					if (!_Rt_) return;
+
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) sioRead8);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// sioReadStat16
+				case 0x1f801800:
+					if (!_Rt_) return;
+
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) cdrRead0);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;	
+
+				// sioReadMode16
+				case 0x1f801801:
+					if (!_Rt_) return;
+
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) cdrRead1);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;	
+
+				// sioReadCtrl16
+				case 0x1f801802:
+					if (!_Rt_) return;
+
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) cdrRead2);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// sioReadBaud16
+				case 0x1f801803:
+					if (!_Rt_) return;
+
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) cdrRead3);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+				default:
+					if (!_Rt_) return;
+
+					LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+					LBZ(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+					return;
+			}
+		}
+        //	SysPrintf("unhandled r8 %x\n", addr);
+    }
+#endif
+    preMemRead();
+    CALLFunc((u32) psxMemRead8);
+
+    if (_Rt_) {
+        MR(PutHWReg32(_Rt_),3);
+    }
 }
+
+static void recLH() {
+    // Rt = mem[Rs + Im] (signed)
+#if 1
+    if (IsConst(_Rs_)) {
+        u32 addr = iRegs[_Rs_].k + _Imm_;
+        int t = addr >> 16;
+
+        if ((t & 0xfff0) == 0xbfc0) {
+            if (!_Rt_) return;
+            // since bios is readonly it won't change
+            MapConst(_Rt_, psxRs16(addr));
+            return;
+        }
+        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
+            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80 && addr < 0x1f801000) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+            return;
+        }
+		if (t == 0x1f80) {
+            
+            switch (addr) {		
+
+				// sioWrite16
+				case 0x1f801040:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioRead16);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
+
+				// sioReadStat16
+				case 0x1f801044:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadStat16);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;	
+
+				// sioReadMode16
+				case 0x1f801048:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadMode16);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;	
+
+				// sioReadCtrl16
+				case 0x1f80104a:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadCtrl16);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
+
+				// sioReadBaud16
+				case 0x1f80104e:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadBaud16);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
+
+                case 0x1f801100: case 0x1f801110: case 0x1f801120:
+                    if (!_Rt_) return;
+
+                    LIW(3, (addr >> 4) & 0x3);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) psxRcntRcount);
+
+					MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    
+                    return;
+
+                case 0x1f801104: case 0x1f801114: case 0x1f801124:
+                    if (!_Rt_) return;
+
+                    LIW(3, (addr >> 4) & 0x3);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) psxRcntRmode);
+
+                    MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    
+                    return;
+
+                case 0x1f801108: case 0x1f801118: case 0x1f801128:
+                    if (!_Rt_) return;
+
+                    LIW(3, (addr >> 4) & 0x3);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) psxRcntRtarget);
+
+					MR(PutHWReg32(_Rt_),3);
+					EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+                    return;
+
+				default:
+					if (addr >= 0x1f801c00 && addr < 0x1f801e00) {
+						if (!_Rt_) return;
+
+						LIW(3, addr);
+						DisposeHWReg(iRegs[_Rt_].reg);
+						InvalidateCPURegs();
+						CALLFunc((u32) SPU_readRegister);
+						
+						MR(PutHWReg32(_Rt_),3);
+						EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+						return;
+					}
+					else{
+						LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+						LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+						EXTSH(PutHWReg32(_Rt_), GetHWReg32(_Rt_));
+						return;
+					}
+
+            }
+		}
+        //	SysPrintf("unhandled r16 %x\n", addr);
+    }
+#endif
+    preMemRead();
+    CALLFunc((u32) psxMemRead16);
+    if (_Rt_) {
+        EXTSH(PutHWReg32(_Rt_), 3);
+    }
+}
+
+static void recLHU() {
+    // Rt = mem[Rs + Im] (unsigned)
+#if 1
+    if (IsConst(_Rs_)) {
+        u32 addr = iRegs[_Rs_].k + _Imm_;
+        int t = addr >> 16;
+
+        if ((t & 0xfff0) == 0xbfc0) {
+            if (!_Rt_) return;
+            // since bios is readonly it won't change
+            MapConst(_Rt_, psxRu16(addr));
+            return;
+        }
+        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
+            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80 && addr < 0x1f801000) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+            LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80) {
+            
+            switch (addr) {		
+
+				// sioWrite16
+				case 0x1f801040:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioRead16);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;
+
+				// sioReadStat16
+				case 0x1f801044:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadStat16);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;	
+
+				// sioReadMode16
+				case 0x1f801048:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadMode16);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;	
+
+				// sioReadCtrl16
+				case 0x1f80104a:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadCtrl16);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;
+
+				// sioReadBaud16
+				case 0x1f80104e:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioReadBaud16);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;
+
+                case 0x1f801100: case 0x1f801110: case 0x1f801120:
+                    if (!_Rt_) return;
+
+                    LIW(3, (addr >> 4) & 0x3);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) psxRcntRcount);
+                    MR(PutHWReg32(_Rt_),3);
+                    
+                    return;
+
+                case 0x1f801104: case 0x1f801114: case 0x1f801124:
+                    if (!_Rt_) return;
+
+                    LIW(3, (addr >> 4) & 0x3);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) psxRcntRmode);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    
+                    return;
+
+                case 0x1f801108: case 0x1f801118: case 0x1f801128:
+                    if (!_Rt_) return;
+
+                    LIW(3, (addr >> 4) & 0x3);
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) psxRcntRtarget);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    
+                    return;
+
+				default:
+					if (addr >= 0x1f801c00 && addr < 0x1f801e00) {
+						if (!_Rt_) return;
+
+						LIW(3, addr);
+						DisposeHWReg(iRegs[_Rt_].reg);
+						InvalidateCPURegs();
+						CALLFunc((u32) SPU_readRegister);
+
+						MR(PutHWReg32(_Rt_),3);
+
+						return;
+					}
+					else{
+						LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+						LHBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+						return;
+					}
+
+            }
+        }
+        //	SysPrintf("unhandled r16u %x\n", addr);
+    }
+#endif
+    preMemRead();
+    CALLFunc((u32) psxMemRead16);
+    if (_Rt_) {
+        MR(PutHWReg32(_Rt_),3);
+    }
+}
+
+static void recLW() {
+    // Rt = mem[Rs + Im] (unsigned)
+#if 1
+    if (IsConst(_Rs_)) {
+        u32 addr = iRegs[_Rs_].k + _Imm_;
+        int t = addr >> 16;
+
+        if ((t & 0xfff0) == 0xbfc0) {
+            if (!_Rt_) return;
+            // since bios is readonly it won't change
+            MapConst(_Rt_, psxRu32(addr));
+            return;
+        }
+        if ((t & 0x1fe0) == 0 && (t & 0x1fff) != 0) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxM[addr & 0x1fffff]);
+            LWBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80 && addr < 0x1f801000) {
+            if (!_Rt_) return;
+
+            LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+            LWBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+            return;
+        }
+        if (t == 0x1f80) {
+            switch (addr) {
+				// sioWrite32
+				case 0x1f801040:
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) sioRead32);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;
+
+				// GPU_readData
+                case 0x1f801810:
+                    if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) GPU_readData);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;
+
+				// GPU_readStatus
+                case 0x1f801814:
+                    if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) GPU_readStatus);
+
+                    MR(PutHWReg32(_Rt_),3);
+                    return;
+
+
+				// mdecRead0()
+				case 0x1f801820: 
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) mdecRead0);
+
+                    MR(PutHWReg32(_Rt_),3);
+					return;
+				// mdecRead1()
+				case 0x1f801824: 
+					if (!_Rt_) return;
+
+                    DisposeHWReg(iRegs[_Rt_].reg);
+                    InvalidateCPURegs();
+                    CALLFunc((u32) mdecRead1);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRcount 0
+				case 0x1f801100:
+					if (!_Rt_) return;
+
+					LIW(3, 0);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRcount);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRmode 0
+				case 0x1f801104:
+					if (!_Rt_) return;
+
+					LIW(3, 0);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRmode);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRtarget 0
+				case 0x1f801108:
+					if (!_Rt_) return;
+
+					LIW(3, 0);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRtarget);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRcount 1
+				case 0x1f801110:
+					if (!_Rt_) return;
+
+					LIW(3, 1);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRcount);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRmode 1
+				case 0x1f801114:
+					if (!_Rt_) return;
+
+					LIW(3, 1);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRmode);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRtarget 1
+				case 0x1f801118:
+					if (!_Rt_) return;
+
+					LIW(3, 1);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRtarget);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRcount 2
+				case 0x1f801120:
+					if (!_Rt_) return;
+
+					LIW(3, 2);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRcount);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRmode 2
+				case 0x1f801124:
+					if (!_Rt_) return;
+
+					LIW(3, 2);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRmode);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;
+
+				// psxRcntRtarget 2
+				case 0x1f801128:
+					if (!_Rt_) return;
+
+					LIW(3, 2);
+					DisposeHWReg(iRegs[_Rt_].reg);
+					InvalidateCPURegs();
+					CALLFunc((u32) psxRcntRtarget);
+
+					MR(PutHWReg32(_Rt_),3);
+					return;					
+
+                default:
+                    if (!_Rt_) return;
+
+                    LIW(PutHWReg32(_Rt_), (u32) & psxH[addr & 0xffff]);
+                    LWBRX(PutHWReg32(_Rt_), 0, GetHWReg32(_Rt_));
+                    return;
+            }
+        }
+        //		SysPrintf("unhandled r32 %x\n", addr);
+    }
+#endif
+    preMemRead();
+    CALLFunc((u32) psxMemRead32);
+    if (_Rt_) {
+		MR(PutHWReg32(_Rt_),3);
+    }
+}
+#endif
 #endif
 
 static void recSLL() {
