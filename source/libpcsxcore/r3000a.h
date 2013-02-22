@@ -29,6 +29,8 @@ extern "C" {
 #include "psxcounters.h"
 #include "psxbios.h"
 
+extern int cpuRunning;
+
 typedef struct {
 	int  (*Init)();
 	void (*Reset)();

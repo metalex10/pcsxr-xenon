@@ -21,6 +21,8 @@
 #include "input.h"
 #include "button_mapping.h"
 
+#include "rapidxml.hpp"
+
 struct SEMUSettings EMUSettings;
 
 /****************************************************************************

@@ -24,7 +24,7 @@
 #include "misc.h"
 #include "sio.h"
 
-#include "gamecube_plugins.h"
+#include "hard_plugins.h"
 
 int ShowPic = 0;
 

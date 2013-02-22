@@ -1,4 +1,16 @@
+
 #pragma once
+
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#include <input/input.h>
+extern struct controller_data_s xb_ctrl[4];
+extern struct controller_data_s xb_old_ctrl[4];
+
 /*wii input*/
 #define PAD_BUTTON_LEFT	 0x0001
 #define PAD_BUTTON_RIGHT 0x0002
@@ -793,3 +805,24 @@ typedef struct _wpad_encstatus
 {
 	u8 data[32];
 }WPADEncStatus;
+
+uint16_t WPAD_ButtonsDown(int ictrl);
+uint16_t WPAD_ButtonsUp(int ictrl);
+uint16_t WPAD_ButtonsHeld(int ictrl);
+uint16_t PAD_ButtonsDown(int ictrl);
+uint16_t PAD_ButtonsUp(int ictrl);
+uint16_t PAD_ButtonsHeld(int ictrl);
+
+s8 PAD_StickX(int i);
+s8 PAD_StickY(int i);
+s8 PAD_SubStickX(int i);
+s8 PAD_SubStickY(int i);
+u8 PAD_TriggerL(int i);
+u8 PAD_TriggerR(int i);
+
+void XenonInputUpdate();
+void XenonInputInit();
+
+#ifdef __cplusplus
+}
+#endif

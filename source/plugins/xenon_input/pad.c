@@ -19,8 +19,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <input/input.h>
+#include <xetypes.h>
 #include "pad.h"
-//#include "screencapture.h"
+#include "w_input.h"
 
 #define STICK_THRESHOLD 12000
 
@@ -37,77 +38,72 @@ GLOBALDATA g;
 #define	TRIGGER_DEAD_ZONE (256*0.3)
 #define HANDLE_TRIGGER_DEAD_ZONE(x) (((x)<TRIGGER_DEAD_ZONE)?0:(x-TRIGGER_DEAD_ZONE))
 
-
-struct controller_data_s old[2];
 int reset_time = 0;
 
 void PSxInputReadPort(PadDataS* pad, int port) {
     unsigned short pad_status = 0xFFFF;
     int ls_x, ls_y, rs_x, rs_y;
 
-    usb_do_poll();
-    if (get_controller_data(&g.PadState[port].JoyDev, port)) {
-       
-    }
+    XenonInputUpdate();
 
-    if (g.PadState[port].JoyDev.logo) {
+    if (xb_ctrl[port].logo) {
 		SysRunGui();
     }
  
     pad->controllerType = g.cfg.PadDef[port].Type; // Standard Pad
 
-    if (g.PadState[port].JoyDev.a)
+    if (xb_ctrl[port].a)
         pad_status &= PSX_BUTTON_CROSS;
-    if (g.PadState[port].JoyDev.b)
+    if (xb_ctrl[port].b)
         pad_status &= PSX_BUTTON_CIRCLE;
-    if (g.PadState[port].JoyDev.y)
+    if (xb_ctrl[port].y)
         pad_status &= PSX_BUTTON_TRIANGLE;
-    if (g.PadState[port].JoyDev.x)
+    if (xb_ctrl[port].x)
         pad_status &= PSX_BUTTON_SQUARE;
-    if (g.PadState[port].JoyDev.up)
+    if (xb_ctrl[port].up)
         pad_status &= PSX_BUTTON_DUP;
-    if (g.PadState[port].JoyDev.down)
+    if (xb_ctrl[port].down)
         pad_status &= PSX_BUTTON_DDOWN;
-    if (g.PadState[port].JoyDev.left)
+    if (xb_ctrl[port].left)
         pad_status &= PSX_BUTTON_DLEFT;
-    if (g.PadState[port].JoyDev.right)
+    if (xb_ctrl[port].right)
         pad_status &= PSX_BUTTON_DRIGHT;
-    if (g.PadState[port].JoyDev.start)
+    if (xb_ctrl[port].start)
         pad_status &= PSX_BUTTON_START;
-    if (g.PadState[port].JoyDev.back)
+    if (xb_ctrl[port].back)
         pad_status &= PSX_BUTTON_SELECT;
-    if (g.PadState[port].JoyDev.rb)
+    if (xb_ctrl[port].rb)
         pad_status &= PSX_BUTTON_R1;
-    if (g.PadState[port].JoyDev.lb)
+    if (xb_ctrl[port].lb)
         pad_status &= PSX_BUTTON_L1;
-    if (g.PadState[port].JoyDev.rt > 100)
+    if (xb_ctrl[port].rt > 100)
         pad_status &= PSX_BUTTON_R2;
-    if (g.PadState[port].JoyDev.lt > 100)
+    if (xb_ctrl[port].lt > 100)
         pad_status &= PSX_BUTTON_L2;
 
     if (g.cfg.PadDef[port].Type == PSE_PAD_TYPE_STANDARD) {
-        if (g.PadState[port].JoyDev.s1_y > STICK_THRESHOLD)
+        if (xb_ctrl[port].s1_y > STICK_THRESHOLD)
             pad_status &= PSX_BUTTON_DUP;
-        if (g.PadState[port].JoyDev.s1_y<-STICK_THRESHOLD)
+        if (xb_ctrl[port].s1_y<-STICK_THRESHOLD)
             pad_status &= PSX_BUTTON_DDOWN;
-        if (g.PadState[port].JoyDev.s1_x > STICK_THRESHOLD)
+        if (xb_ctrl[port].s1_x > STICK_THRESHOLD)
             pad_status &= PSX_BUTTON_DRIGHT;
-        if (g.PadState[port].JoyDev.s1_x<-STICK_THRESHOLD)
+        if (xb_ctrl[port].s1_x<-STICK_THRESHOLD)
             pad_status &= PSX_BUTTON_DLEFT;
     } else {
 /*        
-        ls_x= (int)(float(g.PadState[port].JoyDev.s1_x/0x500)*256)+128;
-        ls_y= (int)(float(g.PadState[port].JoyDev.s1_y/0x500)*256)+128;
+        ls_x= (int)(float(xb_ctrl[port].s1_x/0x500)*256)+128;
+        ls_y= (int)(float(xb_ctrl[port].s1_y/0x500)*256)+128;
         
-        rs_x= (int)(float(g.PadState[port].JoyDev.s2_x/0x500)*256)+128;
-        rs_y= (int)(float(g.PadState[port].JoyDev.s2_y/0x500)*256)+128;
+        rs_x= (int)(float(xb_ctrl[port].s2_x/0x500)*256)+128;
+        rs_y= (int)(float(xb_ctrl[port].s2_y/0x500)*256)+128;
 */        
         
-        ls_x= (int)((float)(g.PadState[port].JoyDev.s1_x/0x500)*256)+128;
-        ls_y= (int)((float)(g.PadState[port].JoyDev.s1_y/0x500)*256)+128;
+        ls_x= (int)((float)(xb_ctrl[port].s1_x/0x500)*256)+128;
+        ls_y= (int)((float)(xb_ctrl[port].s1_y/0x500)*256)+128;
         
-        rs_x= (int)((float)(g.PadState[port].JoyDev.s2_x/0x500)*256)+128;
-        rs_y= (int)((float)(g.PadState[port].JoyDev.s2_y/0x500)*256)+128;
+        rs_x= (int)((float)(xb_ctrl[port].s2_x/0x500)*256)+128;
+        rs_y= (int)((float)(xb_ctrl[port].s2_y/0x500)*256)+128;
         
         pad->leftJoyX = ls_x;
         pad->leftJoyY = ls_y;
@@ -115,8 +111,6 @@ void PSxInputReadPort(PadDataS* pad, int port) {
         pad->rightJoyY = rs_y;
     }
 
-
-    old[port] = g.PadState[port].JoyDev;
     // Copy Buttons
     pad->buttonStatus = pad_status;
 };

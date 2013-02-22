@@ -38,8 +38,6 @@
 int do_disasm = 0;
 static int force_disasm = 0;
 
-int cpuRunning = 1;
-
 void DCFlushRange(void* startaddr, unsigned int len) {
     if (len == 0) return;
     memdcbf(startaddr, len);
@@ -1464,7 +1462,7 @@ static void recSW() {
     CALLFunc((u32) psxMemWrite32);
 }
 
-#if 0
+#if 1
 static void recLB() {
     preMemRead();
     CALLFunc((u32) psxMemRead8);

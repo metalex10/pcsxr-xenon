@@ -101,10 +101,22 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 	u32 * old_ppcPtr=NULL;
 	
 	InvalidateCPURegs();
+	
+	if (type<MEM_SW)
+		if (rs_reg != rt_reg) {
+			DisposeHWReg(iRegs[rt_reg].reg);
+		}
 
 	int base = GetHWReg32( rs_reg );
 	int data = -1;
 	int addr_emu = 3;
+	
+	ADDI(addr_emu, base, immed);
+	
+	if (type<MEM_SW)
+		if (rs_reg == rt_reg) {
+			DisposeHWReg(iRegs[rt_reg].reg);
+		}
 	
 	if (type<MEM_SW) {
 		if (rt_reg) 
@@ -112,8 +124,6 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 	}
 	else
 		data = GetHWReg32( rt_reg );
-	
-	ADDI(addr_emu, base, immed);
 	
 	if((!(failsafeRec&FAILSAFE_REC_NO_VM)))
 	{
@@ -245,7 +255,7 @@ static void * rewriteDynaMemVM(void* fault_addr, void* accessed_addr)
 		{
 			// install scratchpad offset			
 			
-//			printf("scratch ins %08x %08x\n",aa,fault_op-op);
+			// printf("scratch ins %08x %08x\n",aa,fault_op-op);
 		
 			ppcPtr=op;
 			ADDI(REG_ADDR_HOST,REG_ADDR_HOST,SCRATCHPAD_OFFSET);

@@ -1,24 +1,7 @@
-#if 1
-/****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
- *
- * softdev July 2006
- * crunchy2 May 2007-July 2007
- * Michniewski 2008
- * Tantric 2008-2010
- *
- * snes9xgx.cpp
- *
- * This file controls overall program flow. Most things start and end here!
- ***************************************************************************/
-
-#include <xetypes.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <unistd.h>
-#include "w_input.h"
 #include <libfat/fat.h>
 #include <libntfs/ntfs.h>
 #include <libxtaf/xtaf.h>
@@ -26,6 +9,7 @@
 #include <sys/iosupport.h>
 #include <diskio/ata.h>
 #include <usb/usbmain.h>
+#include <xetypes.h>
 #include <xenon_soc/xenon_power.h>
 #include <xenon_smc/xenon_smc.h>
 #include <xenon_sound/sound.h>
@@ -158,51 +142,3 @@ int main(int argc, char *argv[])
 		} // emulation loop
 	} // main loop
 }
-
-
-
-int _main(int argc, char *argv[])
-{
-	xenon_make_it_faster(XENON_SPEED_FULL);
-	usb_init();
-	usb_do_poll();
-	xenon_ata_init();
-	xenon_atapi_init();
-	xenon_sound_init();
-
-	//InitDeviceThread();
-	//InitGCVideo(); // Initialise video
-	InitVideo();
-	ResetVideo_Menu (); // change to menu video mode
-	//SetupPads();
-	// XTAFMount();
-	
-	//fatInitDefault(); // Initialize libFAT for SD and USB
-	mount_all();
-#if 0
-	DefaultSettings (); // Set defaults
-#endif
-
-	InitFreeType((u8*)font_ttf, font_ttf_size); // Initialize font system
-	
-	savebuffer = (unsigned char *)malloc(SAVEBUFFERSIZE);
-	browserList = (BROWSERENTRY *)malloc(sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
-	
-	InitGUIThreads();
-	LoadLanguage();
-	
-	EMUInterface.ScanRootdir();
-	// EMUInterface.PowerOff();
-	/**/
-	while (1) // main loop
-	{
-		// ResumeDeviceThread();
-		MainMenu(MENU_GAMESELECTION);
-		
-		ConfigRequested = 0;
-		ScreenshotRequested = 0;
-	
-		cmain_loop();
-	} // main loop
-}
-#endif

@@ -27,6 +27,7 @@
 #include "gpu.h"
 #include "gte.h"
 
+int cpuRunning = 1;
 R3000Acpu *psxCpu = NULL;
 psxRegisters psxRegs;
 

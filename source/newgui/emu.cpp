@@ -27,8 +27,12 @@
 #include <vector>
 #include "emu.h"
 
-extern "C" int cpuRunning;
+// plugin !
+#include "peopsxgl/cfg.h"
+
 extern "C" int pcsx_run_gui;
+
+static int emulationRunning = 0;
 
 char *basename(char *path)
 {
@@ -100,7 +104,9 @@ int SEMUInterface::ResetRequested() {
 }
 
 void SEMUInterface::Step() {
-	psxCpu->ExecuteBlock();
+	cpuRunning = 1;
+	emulationRunning = 1;
+	psxCpu->Execute();
 }
 
 int SEMUInterface::Start(const char * filename) {
@@ -111,7 +117,11 @@ int SEMUInterface::Start(const char * filename) {
 	
 	strcpy(Config.Net, "Disabled");
 	strcpy(Config.Cdr, "CDR");
-	strcpy(Config.Gpu, "GPU");
+	if (EMUSettings.use_gpu_soft_plugin) {
+		strcpy(Config.Gpu, "GPUSW");
+	} else {	
+		strcpy(Config.Gpu, "GPUHW");
+	}
 	strcpy(Config.Spu, "SPU");
 	strcpy(Config.Pad1, "PAD1");
 	strcpy(Config.Pad2, "PAD2");
@@ -125,10 +135,18 @@ int SEMUInterface::Start(const char * filename) {
 	// Config.SlowBoot = 1;
 	Config.PsxAuto = 1; // autodetect system
 	
-	Config.Cpu = CPU_DYNAREC;
-	//Config.Cpu =  CPU_INTERPRETER;
+	if (EMUSettings.use_gpu_soft_plugin) {
+		Config.Cpu = CPU_DYNAREC;
+	} else {
+		Config.Cpu =  CPU_INTERPRETER;
+	}
+	
+	xegpu::peops_cfg.bUseFrameSkip = (EMUSettings.framelimit)?TRUE:FALSE;
+	// peops_cfg.iHiResTextures = 1; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
+	xegpu::peops_cfg.iHiResTextures = EMUSettings.hw_filter;
 
 	cpuRunning = 1;
+	emulationRunning = 1;
 	
 	// strcpy(ROMInfo.filename, filename);
 	// strcpy(ROMInfo.diplayname, basename((char*) filename));
@@ -163,12 +181,13 @@ int SEMUInterface::Start(const char * filename) {
 }
 
 int SEMUInterface::Running() {
-	return cpuRunning;
+	return emulationRunning;
 }
 
 int SEMUInterface::PowerOff() {
 	cpuRunning = 0;
-	return cpuRunning;
+	emulationRunning = 0;
+	return emulationRunning;
 }
 
 int SEMUInterface::LoadStates(const char * filename) {

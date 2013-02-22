@@ -11,7 +11,7 @@
 #include "debug.h"
 #include "sio.h"
 #include "misc.h"
-#include "gamecube_plugins.h"
+#include "hard_plugins.h"
 
 
 #include <xenos/xenos.h>

@@ -418,7 +418,7 @@ XRAUDIO_SPUplayCDDAchannel} \
 } }
 
 #define GPU_PEOPS_PLUGIN \
-{ "/GPU",      \
+{ "/GPUSW",      \
 18,         \
 { { "GPUinit",  \
 PEOPS_GPUinit }, \
@@ -460,7 +460,7 @@ PEOPS_GPUupdateLace} \
 
 	// HW GPU
 #define GPU_HW_PEOPS_PLUGIN \
-{ "/GPU",      \
+{ "/GPUHW",      \
 18,         \
 { { "GPUinit",  \
 HW_GPUinit }, \

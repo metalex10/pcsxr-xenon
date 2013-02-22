@@ -18,7 +18,7 @@ MACHDEP =  -DXENON -m32 -maltivec -fno-pic  -fno-pic -mpowerpc64 -mhard-float -L
 #---------------------------------------------------------------------------------
 
 GUI_SRC			:=  source/newgui/fonts source/newgui/gui source/newgui/images source/newgui/lang source/newgui/sounds source/newgui/utils source/newgui 
-GUI_INC         :=  source/newgui
+GUI_INC         :=  source/newgui source/newgui/utils/rapidxml-1.13
 
 GUI_INCLUDE	:=  -I$(LIBXENON_INC)/freetype2
 GUI_LIBS	:=  -lfreetype
@@ -47,9 +47,9 @@ PLUGINS		:=  $(PLUGINS_GPU) $(PLUGINS_SPU) $(PLUGINS_INPUT) $(PLUGINS_MISC)
 CORE		:=  source/shaders lib/zlib source/libpcsxcore source/ppcr source/ppcr/disasm source/httpd
 #CORE		:=  lib/zlib source/libpcsxcore_df source/ppc
 #LIB		:=  source/fakegl
-SOURCES		:=  source/main  source/main $(PLUGINS) $(CORE) $(GUI_SRC)
+SOURCES		:=  source/main  source/common  source/main $(PLUGINS) $(CORE) $(GUI_SRC)
 DATA		:=
-INCLUDES	:=  shaders include lib/zlib source/libpcsxcore $(GUI_INC)
+INCLUDES	:=  shaders include lib/zlib source/libpcsxcore source/common source/plugins $(GUI_INC)
 
 #---------------------------------------------------------------------------------
 # options for code generation

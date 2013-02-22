@@ -1090,7 +1090,7 @@ static void intReset() {
 }
 
 static void intExecute() {
-	for (;;) 
+	while(cpuRunning)
 		execI();
 }
 

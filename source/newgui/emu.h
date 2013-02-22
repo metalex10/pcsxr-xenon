@@ -98,6 +98,13 @@ struct SEMUSettings{
 	int		SFXVolume;
 	int		Rumble;
 	int 	language;
+	
+	// PCSX Settings
+	int use_interpreter;
+	int use_gpu_soft_plugin;
+	int hw_filter;
+	int sw_filter;
+	int framelimit;
 };
 
 struct SROMInfo {	

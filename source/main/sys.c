@@ -6,7 +6,7 @@
 #include "misc.h"
 //#include "cheat.h"
 
-#include "gamecube_plugins.h"
+#include "hard_plugins.h"
 
 #define NUM_PLUGINS 8
 
@@ -109,7 +109,7 @@ void SysUpdate() {
 int pcsx_run_gui = 0;
 
 void SysRunGui() {
-#ifdef USE_GUI
 	pcsx_run_gui = 1;
-#endif
+	// stop emulation
+	cpuRunning = 0;
 }
