@@ -29,7 +29,7 @@
 #include "stdafx.h"
 #include "externals.h"
 #include "cfg.h"
-
+#include "psxcommon.h"
 
 
 namespace xegpu {
@@ -52,7 +52,7 @@ namespace xegpu {
 		//         6: Extended + smoothed Sprites
 		peops_cfg.iFilterType = 6;
 
-		peops_cfg.bUseFrameLimit = FALSE; //bUseFrameLimit = TRUE;
+		peops_cfg.bUseFrameLimit = TRUE;
 		peops_cfg.bUseFrameSkip = FALSE;
 		peops_cfg.iFrameLimit = 2;
 		peops_cfg.fFrameRate = 200.0f;
@@ -85,7 +85,7 @@ namespace xegpu {
 		peops_cfg.bKeepRatio = FALSE;
 		peops_cfg.iVRamSize = 256;
 		peops_cfg.iTexGarbageCollection = 1;
-		peops_cfg.iHiResTextures = 1; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
+		peops_cfg.iHiResTextures = 0;
 
 		if (peops_cfg.iUseMask) peops_cfg.iZBufferDepth = 16; // set zbuffer depth
 		else peops_cfg.iZBufferDepth = 0;
@@ -98,6 +98,9 @@ namespace xegpu {
 		peops_cfg.dwCfgFixes = 0x1; //f7 fixe
 		if (peops_cfg.bUseFixes) peops_cfg.dwActFixes = peops_cfg.dwCfgFixes; // init game fix global
 
+		
+		peops_cfg.bUseFrameLimit = Config.UseFrameLimit; //bUseFrameLimit = TRUE;
+		peops_cfg.iHiResTextures = Config.GpuFilter; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
 	}
 
 }

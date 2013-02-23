@@ -156,6 +156,9 @@ typedef struct {
 #ifdef _WIN32
 	char Lang[256];
 #endif
+	// Global settings
+	int UseFrameLimit;
+	int GpuFilter;
 } PcsxConfig;
 
 extern PcsxConfig Config;

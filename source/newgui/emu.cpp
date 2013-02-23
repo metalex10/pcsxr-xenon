@@ -27,9 +27,6 @@
 #include <vector>
 #include "emu.h"
 
-// plugin !
-#include "peopsxgl/cfg.h"
-
 extern "C" int pcsx_run_gui;
 
 static int emulationRunning = 0;
@@ -117,12 +114,8 @@ int SEMUInterface::Start(const char * filename) {
 	
 	strcpy(Config.Net, "Disabled");
 	strcpy(Config.Cdr, "CDR");
-	if (EMUSettings.use_gpu_soft_plugin) {
-		strcpy(Config.Gpu, "GPUSW");
-	} else {	
-		strcpy(Config.Gpu, "GPUHW");
-	}
 	strcpy(Config.Spu, "SPU");
+	strcpy(Config.Gpu, "GPUHW");
 	strcpy(Config.Pad1, "PAD1");
 	strcpy(Config.Pad2, "PAD2");
 	strcpy(Config.Bios, "SCPH1001.BIN"); // Use actual BIOS
@@ -135,15 +128,21 @@ int SEMUInterface::Start(const char * filename) {
 	// Config.SlowBoot = 1;
 	Config.PsxAuto = 1; // autodetect system
 	
-	if (EMUSettings.use_gpu_soft_plugin) {
-		Config.Cpu = CPU_DYNAREC;
+	if (EMUSettings.use_interpreter) {
+		Config.Cpu = CPU_INTERPRETER;
 	} else {
-		Config.Cpu =  CPU_INTERPRETER;
+		Config.Cpu = CPU_DYNAREC;
 	}
 	
-	xegpu::peops_cfg.bUseFrameSkip = (EMUSettings.framelimit)?TRUE:FALSE;
-	// peops_cfg.iHiResTextures = 1; //0: None (standard) ,1: 2xSaI (much vram needed) ,2: Stretched (filtering needed)
-	xegpu::peops_cfg.iHiResTextures = EMUSettings.hw_filter;
+	// Gpu plugin options	
+	Config.UseFrameLimit = EMUSettings.framelimit;
+	if (EMUSettings.use_gpu_soft_plugin) {
+		strcpy(Config.Gpu, "GPUSW");
+		Config.GpuFilter = EMUSettings.sw_filter;
+	} else {	
+		strcpy(Config.Gpu, "GPUHW");
+		Config.GpuFilter = EMUSettings.hw_filter;
+	}
 
 	cpuRunning = 1;
 	emulationRunning = 1;

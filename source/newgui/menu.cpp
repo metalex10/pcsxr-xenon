@@ -2730,9 +2730,9 @@ static int MenuSettingsMenu() {
 				sprintf(options.value[SETTING_CPU], "Dynarec");
 
 			if (EMUSettings.use_gpu_soft_plugin > 0)
-				sprintf(options.value[SETTING_GPU], "Hardware");
-			else
 				sprintf(options.value[SETTING_GPU], "Software");
+			else
+				sprintf(options.value[SETTING_GPU], "Hardware");
 
 			if (EMUSettings.framelimit == 1)
 				sprintf(options.value[SETIING_FRAMELIMIT], "Enabled");
