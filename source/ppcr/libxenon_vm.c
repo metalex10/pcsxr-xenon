@@ -42,36 +42,31 @@ void recCallDynaMem(int addr, int data, int type)
 {
 	if(addr!=3)
 		MR(3, addr);
-		
+
 	if (type<MEM_SW)
 	{
 		switch (type)
 		{
 			case MEM_LB:
 				CALLFunc((u32) psxMemRead8);
-				if (data != -1)
-					EXTSB(data, 3);
-				return;
+				EXTSB(data, 3);
+				break;
 			case MEM_LBU:
 				CALLFunc((u32) psxMemRead8);
-				if (data != -1)
-					MR(data,3);
-				return;
+				MR(data,3);
+				break;
 			case MEM_LH:
 				CALLFunc((u32) psxMemRead16);
-				if (data != -1)
-					EXTSH(data, 3);
-				return;
+				EXTSH(data, 3);
+				break;
 			case MEM_LHU:
 				CALLFunc((u32) psxMemRead16);
-				if (data != -1)
-					MR(data,3);
-				return;
+				MR(data,3);
+				break;
 			case MEM_LW:
 				CALLFunc((u32) psxMemRead32);
-				if (data != -1)
-					MR(data,3);
-				return;
+				MR(data,3);
+				break;
 		}
 	}
 	else
@@ -81,15 +76,15 @@ void recCallDynaMem(int addr, int data, int type)
 			case MEM_SB:
 	            RLWINM(4, data, 0, 24, 31);
 				CALLFunc((u32) psxMemWrite8);
-				return;
+				break;
 			case MEM_SH:
 	            RLWINM(4, data, 0, 16, 31);
 				CALLFunc((u32) psxMemWrite16);
-				return;
+				break;
 			case MEM_SW:
 				MR(4, data);
 				CALLFunc((u32) psxMemWrite32);
-				return;
+				break;
 		}
 	}
 }
@@ -99,33 +94,21 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 	u32 * preWrite=NULL;
 	u32 * preCall=NULL;
 	u32 * old_ppcPtr=NULL;
-	
+
 	InvalidateCPURegs();
-	
-	if (type<MEM_SW)
-		if (rs_reg != rt_reg) {
-			DisposeHWReg(iRegs[rt_reg].reg);
-		}
 
 	int base = GetHWReg32( rs_reg );
 	int data = -1;
 	int addr_emu = 3;
-	
-	ADDI(addr_emu, base, immed);
-	
+
 	if (type<MEM_SW)
-		if (rs_reg == rt_reg) {
-			DisposeHWReg(iRegs[rt_reg].reg);
-		}
-	
-	if (type<MEM_SW) {
-		if (rt_reg) 
-			data = PutHWReg32( rt_reg );
-	}
+		data = PutHWReg32( rt_reg );
 	else
 		data = GetHWReg32( rt_reg );
-	
-	if((!(failsafeRec&FAILSAFE_REC_NO_VM)))
+
+	ADDI(addr_emu, base, immed);
+
+	if(!(failsafeRec&FAILSAFE_REC_NO_VM))
 	{
 		RLWINM(REG_ADDR_HOST,addr_emu,0,3,31);
 		ADDIS(REG_ADDR_HOST,REG_ADDR_HOST,MEMORY_VM_BASE>>16);
@@ -137,7 +120,7 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 			case MEM_LB:
 			{
 //				LIS(REG_ADDR_HOST,0x3040);
-				
+
 				LBZ(data, 0, REG_ADDR_HOST);
 				EXTSB(data, data);
 				break;
@@ -145,14 +128,14 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 			case MEM_LBU:
 			{
 //				LIS(REG_ADDR_HOST,0x3041);
-				
+
 				LBZ(data, 0, REG_ADDR_HOST);
 				break;
 			}
 			case MEM_LH:
 			{
 //				LIS(REG_ADDR_HOST,0x3042);
-				
+
 				LHBRX(data, 0, REG_ADDR_HOST);
 				EXTSH(data, data);
 				break;
@@ -160,21 +143,21 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 			case MEM_LHU:
 			{
 //				LIS(REG_ADDR_HOST,0x3043);
-				
+
 				LHBRX(data, 0, REG_ADDR_HOST);
 				break;
 			}
 			case MEM_LW:
 			{
 //				LIS(REG_ADDR_HOST,0x3044);
-				
+
 				LWBRX(data, 0, REG_ADDR_HOST);
 				break;
 			}
 			case MEM_SB:
 			{
 //				LIS(REG_ADDR_HOST,0x3050);
-				
+
 				STB(data, 0, REG_ADDR_HOST);
 				SET_INVALID_CODE(1);
 				break;
@@ -182,7 +165,7 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 			case MEM_SH:
 			{
 //				LIS(REG_ADDR_HOST,0x3052);
-				
+
 				STHBRX(data, 0, REG_ADDR_HOST);
 				SET_INVALID_CODE(1);
 				break;
@@ -200,7 +183,7 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 			default:
 				assert(0);
 		}
-		
+
 		// Skip over else
 		preCall = ppcPtr;
 		B(0);
@@ -215,7 +198,7 @@ void recCallDynaMemVM(int rs_reg, int rt_reg, memType type, int immed)
 	}
 
 	recCallDynaMem(addr_emu, data, type);
-	
+
 	if(!(failsafeRec&FAILSAFE_REC_NO_VM))
 	{
 		old_ppcPtr=ppcPtr;
@@ -232,9 +215,9 @@ static void * rewriteDynaMemVM(void* fault_addr, void* accessed_addr)
 	u32 * op;
 	u32 aa=(u32)accessed_addr;
 	int scratch_installed=0;
-	
+
 	// scratchpad accesses (scratchpad offset trick)
-	
+
 	// sratchpad is mapped at the top of the previous VM page (0x1f7f0000).
 	// when scratchpad is accessed the first time, I add an offset to the mem
 	// address, so that it falls into the mapped scratchpad.
@@ -245,36 +228,36 @@ static void * rewriteDynaMemVM(void* fault_addr, void* accessed_addr)
 	if((aa & 0x1ffffc00) == 0x1f800000)
 	{
 		op=fault_op;
-	
+
 		while(*op!=PPC_NOP )
 		{
 			--op;
 		}
-		
+
 		if((fault_op-op)<7)
 		{
 			// install scratchpad offset			
-			
-			// printf("scratch ins %08x %08x\n",aa,fault_op-op);
-		
+
+//			printf("scratch ins %08x %08x\n",aa,fault_op-op);
+
 			ppcPtr=op;
 			ADDI(REG_ADDR_HOST,REG_ADDR_HOST,SCRATCHPAD_OFFSET);
-		
+
 			scratch_installed=1;
 		}
 		else
 		{
 			// remove scratchpad offset
-			
+
 			op=fault_op;
 
 			while((*op>>PPC_OPCODE_SHIFT)!=PPC_OPCODE_ADDI || (*op&&0xffff)!=SCRATCHPAD_OFFSET)
 			{
 				--op;
 			}
-			
+
 			printf("scratch rem %08x %08x\n",aa,fault_op-op);
-		
+
 			ppcPtr=op;
 			NOP();
 		}
@@ -285,7 +268,7 @@ static void * rewriteDynaMemVM(void* fault_addr, void* accessed_addr)
     // enabling slow access by adding a jump from the fault address to the slow mem access code
 
 	op=fault_op;
-	
+
 	while((*op>>PPC_OPCODE_SHIFT)!=PPC_OPCODE_B || (*op&1)!=0)
 	{
 		++op;
@@ -319,7 +302,7 @@ void * recDynaMemVMSegfaultHandler(int pir_,void * srr0,void * dar,int write)
     else
     {
         printf("VM GPF !!! %d %p %p %d\n",pir_,srr0,dar,write);
-		
+
 		// use the standard segfault handler
 	    vm_set_user_mapping_segfault_handler(NULL);
         return NULL;
@@ -336,9 +319,13 @@ void recInitDynaMemVM()
     
     // map ram
     vm_create_user_mapping(base,((u32)&psxM[0])&0x7fffffff,2*1024*1024,VM_WIMG_CACHED);
+	vm_create_user_mapping(base+0x80000000,((u32)&psxM[0])&0x7fffffff,2*1024*1024,VM_WIMG_CACHED);
+	vm_create_user_mapping(base+0xa0000000,((u32)&psxM[0])&0x7fffffff,2*1024*1024,VM_WIMG_CACHED);
 
     // map bios
     vm_create_user_mapping(base+0x1fc00000,((u32)&psxR[0])&0x7fffffff,512*1024,VM_WIMG_CACHED_READ_ONLY);
+	vm_create_user_mapping(base+0x9fc00000,((u32)&psxR[0])&0x7fffffff,512*1024,VM_WIMG_CACHED_READ_ONLY);
+	vm_create_user_mapping(base+0xbfc00000,((u32)&psxR[0])&0x7fffffff,512*1024,VM_WIMG_CACHED_READ_ONLY);
 
     // map scratchpad (special mapping, see rewriteDynaMemVM)
     vm_create_user_mapping(base+0x1f7f0000,((u32)&psxM[0x210000])&0x7fffffff,64*1024,VM_WIMG_CACHED);
@@ -349,4 +336,3 @@ void recDestroyDynaMemVM()
     vm_set_user_mapping_segfault_handler(NULL);
     vm_destroy_user_mapping(MEMORY_VM_BASE,MEMORY_VM_SIZE);
 }
-

@@ -1412,7 +1412,7 @@ static void preMemWrite(int size) {
     InvalidateCPURegs();
 }
 
-#if 0
+#if 1
 
 static void recLB() {
 	recCallDynaMemVM(_Rs_,_Rt_,MEM_LB,_Imm_);
