@@ -319,13 +319,9 @@ void recInitDynaMemVM()
     
     // map ram
     vm_create_user_mapping(base,((u32)&psxM[0])&0x7fffffff,2*1024*1024,VM_WIMG_CACHED);
-	vm_create_user_mapping(base+0x80000000,((u32)&psxM[0])&0x7fffffff,2*1024*1024,VM_WIMG_CACHED);
-	vm_create_user_mapping(base+0xa0000000,((u32)&psxM[0])&0x7fffffff,2*1024*1024,VM_WIMG_CACHED);
 
     // map bios
     vm_create_user_mapping(base+0x1fc00000,((u32)&psxR[0])&0x7fffffff,512*1024,VM_WIMG_CACHED_READ_ONLY);
-	vm_create_user_mapping(base+0x9fc00000,((u32)&psxR[0])&0x7fffffff,512*1024,VM_WIMG_CACHED_READ_ONLY);
-	vm_create_user_mapping(base+0xbfc00000,((u32)&psxR[0])&0x7fffffff,512*1024,VM_WIMG_CACHED_READ_ONLY);
 
     // map scratchpad (special mapping, see rewriteDynaMemVM)
     vm_create_user_mapping(base+0x1f7f0000,((u32)&psxM[0x210000])&0x7fffffff,64*1024,VM_WIMG_CACHED);

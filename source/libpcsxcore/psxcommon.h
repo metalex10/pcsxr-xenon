@@ -159,6 +159,7 @@ typedef struct {
 	// Global settings
 	int UseFrameLimit;
 	int GpuFilter;
+	int use_experimental_dr;
 } PcsxConfig;
 
 extern PcsxConfig Config;

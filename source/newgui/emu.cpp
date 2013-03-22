@@ -30,6 +30,8 @@
 extern "C" int pcsx_run_gui;
 
 static int emulationRunning = 0;
+extern "C" int use_experimental_dr;
+extern "C" void cdrcimg_set_fname(const char *fname);
 
 char *basename(char *path)
 {
@@ -62,7 +64,7 @@ static void _SetIso(const char * fname) {
 	}
 	uint8_t header[0x10];
 	int n = fread(header, 0x10, 1, fd);
-/*
+
 	if (header[0] == 0x78 && header[1] == 0xDA) {
 		printf("Use CDRCIMG for  %s\r\n", fname);
 		strcpy(Config.Cdr, "CDRCIMG");
@@ -70,7 +72,6 @@ static void _SetIso(const char * fname) {
 	} else {
 		SetIsoFile(fname);
 	}
-	*/
 	SetIsoFile(fname);
 	fclose(fd);
 }

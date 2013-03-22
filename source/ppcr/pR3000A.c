@@ -1413,6 +1413,93 @@ static void preMemWrite(int size) {
 }
 
 #if 1
+static void recLB() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_LB,_Imm_);
+	} else {
+		preMemRead();
+		CALLFunc((u32) psxMemRead8);
+		if (_Rt_) {
+			EXTSB(PutHWReg32(_Rt_), 3);
+		}
+	}
+}
+
+static void recLBU() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_LBU,_Imm_);
+	} else {
+		preMemRead();
+		CALLFunc((u32) psxMemRead8);
+
+		if (_Rt_) {
+			MR(PutHWReg32(_Rt_),3);
+		}
+	}
+}
+
+static void recLH() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_LH,_Imm_);		
+	} else {
+		preMemRead();
+		CALLFunc((u32) psxMemRead16);
+		if (_Rt_) {
+			EXTSH(PutHWReg32(_Rt_), 3);
+		}
+	}
+}
+
+static void recLHU() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_LHU,_Imm_);
+	} else {
+		preMemRead();
+		CALLFunc((u32) psxMemRead16);
+		if (_Rt_) {
+			MR(PutHWReg32(_Rt_),3);
+		}
+	}
+}
+
+static void recLW() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_LW,_Imm_);
+	} else {
+		preMemRead();
+		CALLFunc((u32) psxMemRead32);
+		if (_Rt_) {
+			MR(PutHWReg32(_Rt_),3);
+		}
+	}
+}
+static void recSB() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_SB,_Imm_);
+	} else {
+		preMemWrite(1);
+		CALLFunc((u32) psxMemWrite8);
+	}
+}
+
+static void recSH() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_SH,_Imm_);
+	} else {
+		preMemWrite(2);
+		CALLFunc((u32) psxMemWrite16);
+	}
+}
+
+static void recSW() {
+	if(Config.use_experimental_dr) {
+		recCallDynaMemVM(_Rs_,_Rt_,MEM_SW,_Imm_);
+	} else {
+		preMemWrite(4);
+		CALLFunc((u32) psxMemWrite32);
+	}
+}
+#elif 1
 
 static void recLB() {
 	recCallDynaMemVM(_Rs_,_Rt_,MEM_LB,_Imm_);

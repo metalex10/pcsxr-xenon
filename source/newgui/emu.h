@@ -104,7 +104,8 @@ struct SEMUSettings{
 	int use_gpu_soft_plugin;
 	int hw_filter;
 	int sw_filter;
-	int framelimit;
+	int framelimit;	
+	int use_experimental_dr;
 };
 
 struct SROMInfo {	

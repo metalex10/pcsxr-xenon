@@ -71,6 +71,9 @@ SavePrefs (bool silent)
 	xml_node<>* sw_filter = doc.allocate_node(node_element, "sw_filter");	
 	emuconfig->append_node(sw_filter);
 	
+	xml_node<>* use_experimental_dr = doc.allocate_node(node_element, "use_experimental_dr");	
+	emuconfig->append_node(use_experimental_dr);
+	
 	if (!silent)
 			InfoPrompt("Preferences saved");
 	return true;
