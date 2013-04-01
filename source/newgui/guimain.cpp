@@ -84,12 +84,12 @@ int main(int argc, char *argv[])
 	usb_do_poll();
 	xenon_ata_init();
 	xenon_atapi_init();
-	xenon_sound_init();
 
 	InitDeviceThread();
 	//InitGCVideo(); // Initialise video
 	InitVideo();
 	ResetVideo_Menu (); // change to menu video mode
+	xenon_sound_init();
 	SetupPads();
 	// XTAFMount();
 	
